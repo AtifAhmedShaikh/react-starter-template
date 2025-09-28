@@ -1,0 +1,26 @@
+import React from "react";
+import ReactDOM from "react-dom/client";
+import AppRouter from "@/router/Router"; // or App.jsx
+import { Provider } from "react-redux";
+import { store } from "@/stores"; // <- adjust to your actual store path
+import "./index.css";
+import { Toaster } from "sonner";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ErrorBoundry } from "./components/Error/ErrorBoundry";
+import { ErrorBoundary } from "react-error-boundary";
+
+const queryClient = new QueryClient()
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <Toaster position="top-right" icons={true} richColors />
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+         <ErrorBoundary FallbackComponent={ErrorBoundry}>
+            <AppRouter />
+         </ErrorBoundary>
+      </QueryClientProvider>
+    </Provider>
+  </React.StrictMode>
+);
