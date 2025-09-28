@@ -8,6 +8,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import pdfReducer from "./slices/pdfSlice";
 import reportsReducer from "./slices/reportsSlice";
 import dashboardReducer from "./slices/dashboardSlice";
+import modalReducer from "./slices/modalSlice";
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +19,7 @@ const appReducer = combineReducers({
   pdf: pdfReducer,
   reports: reportsReducer,
   dashboard: dashboardReducer,
+  modal: modalReducer,
 });
 
 // Root reducer that resets all slices

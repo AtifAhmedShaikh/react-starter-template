@@ -2,6 +2,7 @@
 
 import { setupNotificationListenersRedux } from "@/socket/listener/notificationListener";
 import { connectSocket, disconnectSocket, selectIsConnected, selectSocketInstance } from "@/stores/slices/socketSlice";
+import ModalManager from "@/components/reuseable/ModalManager";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
@@ -27,5 +28,10 @@ export default function SocketLayout() {
   }, [isSocketConnected, dispatch, socket]);
 
 
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <ModalManager />
+    </>
+  );
 }

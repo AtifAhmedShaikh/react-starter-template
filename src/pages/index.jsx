@@ -1,45 +1,61 @@
+// Main pages
 export { default as Dashboard } from './Dashboard'
-export { default as LodgeComplaintPage } from './LodgeComplaint/LodgeComplaintPage'
-export { default as TrackComplaintsPage } from './TrackComplaints/TrackComplaintsPage'
-export { default as LoginPage } from './login/LoginPage'
-export { default as SignUpPage } from './signUp/SignUpPage'
-export { default as ChangePasswordPage } from './ChangePassword/ChangePasswordPage'
-export { default as SettingsPage } from './Settings/SettingsPage'
-export { default as EditProfilePage } from './EditProfile/EditProfilePage'
-export { default as LogoutPage } from './logout/LogoutPage'
-export { default as NewComplaintsPage } from './NewComplaints/NewComplaintsPage'
-export { default as ChargeApprovalRequetsPage } from './ChargeApprovalsRequests/ChargeApprovalsRequestsPage'
-export {default as UnauthorizedAccessPage} from './Unauthorized/UnauthorizedAccessPage'
-export {default as ComplaintDetailsPage} from './ComplaintDetails/ComplaintDetailsPage'
-export {default as HomePage} from './Home/HomePage'
-export {default as AboutPage} from './About/AboutPage'
-export {default as ContactUsPage} from './Contact/ContactUsPage'
-export {default as NewlyForwardedPage} from './NewlyForwarded/NewlyForwardedPage'
-export {default as ReportsGenerationPage} from './Reports/ReportsGenerationPage' 
-export {default as NotFound} from './NotFound'
+export { default as HomePage } from './Home'
+export { default as AboutPage } from './About'
+export { default as ContactUsPage } from './Contact'
+export { default as NotFound } from './NotFound'
+export { default as UnauthorizedAccessPage } from './Unauthorized'
 
+// Auth pages
+export { default as LoginPage } from './Login'
+export { default as SignUpPage } from './SignUp'
+export { default as ForgotPasswordPage } from './ForgotPassword'
+export { default as LogoutPage } from './Logout'
 
-export { default as ForgotPasswordPage } from './ForgotPassowrd/ForgetPasswordPage'
-export { default as InboxComplaintsPage } from './InboxComplaints/InboxComplaintsPage'
-export { default as SentComplaintsPage } from './SentComplaints/SentComplaintsPage'
-export { default as ResolvedComplaintsPage } from './ResolvedComplaints/ResolvedComplaintsPage'
-export { default as DisposeWithActionComplaintsPage } from './DisposeWithAction/DisposeWithActionPage'
-export { default as DisposeWithoutActionComplaintsPage } from './DisposeWithoutAction/DisposeWithoutActionPage'
-export { default as AllComplaintsPage } from './AllComplaints/AllComplaintsPage'
-export { default as NotificationsPage } from './Notification/NotificationPage'
-export { default as ComplainerComplaintsPage } from './ComplaintsByUser/ComplaintsByUserPage'
-export { default as ResolvedWithoutComplaintsPage } from './ResolvewithoutAction/ResolvedWithoutActionPage'
-export { default as TutorialsPage } from './Tutorials/TutorialsPage'
-export { default as TutorialPage } from './Tutorial/TutorialPage'
-export { default as ManualPage } from './Manual/ManualPage'
-export { default as LodgeOpenComplaintPage } from './OpenComplainant/OpenComplaintPage'
+// User management pages
+export { default as ChangePasswordPage } from './ChangePassword'
+export { default as SettingsPage } from './Settings'
+export { default as EditProfilePage } from './EditProfile'
 
-export { default as AdminUsersPage } from './admins/AdminsPage'
-export { default as AdminProfileDetailsPage } from './admins/AdminProfileDetailsPage'
-export { default as ComplainantsPage } from './complainants/ComplainantsPage'
+// Item management pages (generic naming)
+export { default as LodgeComplaintPage } from './LodgeItem'
+export { default as LodgeOpenComplaintPage } from './OpenItem'
+export { default as TrackComplaintsPage } from './TrackItems'
+export { default as TrackOpenComplaintsPage } from './TrackOpenItems'
+export { default as ComplaintDetailsPage } from './ItemDetails'
+export { default as NewComplaintsPage } from './NewItems'
+export { default as InboxComplaintsPage } from './InboxItems'
+export { default as SentComplaintsPage } from './SentItems'
+export { default as ResolvedComplaintsPage } from './ResolvedItems'
+export { default as ResolvedWithoutComplaintsPage } from './ResolvedWithoutAction'
+export { default as DisposeWithActionComplaintsPage } from './DisposeWithAction'
+export { default as DisposeWithoutActionComplaintsPage } from './DisposeWithoutAction'
+export { default as AllComplaintsPage } from './AllItems'
+export { default as NewlyForwardedPage } from './NewlyForwarded'
+export { default as ComplainerComplaintsPage } from './UserItems'
 
-export { default as MobileAppReleasePage } from './MobileApp/MobileAppReleasePage'
+// Admin pages
+export { default as AdminUsersPage } from './Admins'
+export { default as AdminProfileDetailsPage } from './AdminProfile'
+export { default as ComplainantsPage } from './Users'
+export { default as ChargeApprovalRequetsPage } from './ChargeApprovals'
 
+// Reports and analytics
+export { default as ReportsGenerationPage } from './Reports'
+export { default as StatisticsPage } from './Statistics'
+
+// Notifications and communication
+export { default as NotificationsPage } from './Notifications'
+
+// Help and documentation
+export { default as TutorialsPage } from './Tutorials'
+export { default as TutorialPage } from './Tutorial'
+export { default as ManualPage } from './Manual'
+
+// Additional pages
+export { default as MobileAppReleasePage } from './MobileApp'
+export { default as PrivacyPolicyPage } from './PrivacyPolicy'
+export { default as ServicesPage } from './Services'
 export { default as ReferComplaintsPage } from './DisposeWithoutAction/ReferComplaintsPage'
 
 

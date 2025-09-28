@@ -1,7 +1,6 @@
 "use client"
 
-import DashboardCharts from "@/components/Dashboard/Dashboard";
-import SummaryCards from "@/components/Dashboard/SummaryCards"; // Optional, if you've built it
+import GenericDashboard from "@/components/Dashboard/GenericDashboard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchDashboardData, selectDashboard } from "@/stores/slices/dashboardSlice";
 import { useEffect } from "react";
@@ -46,17 +45,63 @@ const DashboardPage = () => {
     )
   }
 
+  // Transform the data to match the expected format for GenericDashboard
+  const transformedData = data ? {
+    // Summary data
+    totalItems: data.totalComplaints || 0,
+    newItems: data.newComplaintsCount || 0,
+    pendingItems: data.openComplaintsCount || 0,
+    completedItems: data.handledComplaintsCount || 0,
+    totalUsers: data.totalUsers || 0,
+    activeUsers: data.totalAdmins || 0,
+    
+    // Chart data - transform existing data to match expected format
+    statusBreakdown: data.groupedStatusStats?.map(item => ({
+      status: item.value,
+      count: item.count
+    })) || [],
+    
+    categoryDistribution: data.groupedOffenceStats?.map(item => ({
+      category: item.value,
+      count: item.count
+    })) || [],
+    
+    locationStats: data.groupedCityUsers?.map(item => ({
+      location: item.value,
+      count: item.count
+    })) || [],
+    
+    trendAnalysis: data.groupedTypeOfPersonStats?.map(item => ({
+      month: item.value,
+      count: item.count
+    })) || [],
+    
+    departmentStats: data.groupedZoneStats?.map(item => ({
+      department: item.value,
+      total: item.total || 0,
+      pending: item.opened || 0,
+      completed: item.resolved || 0
+    })) || [],
+    
+    performanceMetrics: data.groupedZoneStats?.map(item => ({
+      metric: item.value,
+      value: item.total || 0
+    })) || [],
+    
+    comprehensiveAnalysis: data.groupedZoneStats?.map(item => ({
+      category: item.value,
+      total: item.total || 0,
+      pending: item.opened || 0,
+      completed: item.resolved || 0,
+      rejected: 0 // Add if available in your data
+    })) || []
+  } : null;
+
   return (
-    <div className="p-1 sm:p-2 space-y-2 sm:space-y-3">
-      <div className="space-y-1 p-2 sm:p-3">
-        <h1 className="text-base sm:text-xl lg:text-2xl font-bold text-primary leading-tight">
-          Enquiries & Anti-Corruption Establishment Sindh
-        </h1>
-        <p className="text-xs sm:text-sm text-slate-500 font-medium">Dashboard Statistics</p>
-      </div>
-      <SummaryCards data={data} />
-      <DashboardCharts data={data} />
-    </div>
+    <GenericDashboard 
+      data={transformedData} 
+      title="Analytics Dashboard" 
+    />
   )
 }
 
