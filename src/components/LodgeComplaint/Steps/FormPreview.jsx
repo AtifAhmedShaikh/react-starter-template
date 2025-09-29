@@ -2,17 +2,18 @@
 
 import FilePreviewOnly from "@/components/reuseable/FilePreviewOnly";
 import { selectUser } from "@/stores/slices/authSlice";
-import { selectCities, selectDepartments, selectOffences, selectTypeOfPersons, selectZones } from "@/stores/slices/metadataSlice";
+import { selectCities } from "@/stores/slices/metadataSlice";
 import { useFormContext } from "react-hook-form";
 import { useSelector } from "react-redux";
 
 const ComplaintFormPreview = ({ attachments = [] }) => {
     const user = useSelector(selectUser)
     const cities = useSelector(selectCities)
-    const offences = useSelector(selectOffences)
-    const typeOfPersons = useSelector(selectTypeOfPersons)
-    const zones = useSelector(selectZones)
-    const departments = useSelector(selectDepartments)
+    // Generic placeholders for future API integration
+    const offences = [] // Will be fetched from API in future
+    const typeOfPersons = [] // Will be fetched from API in future
+    const zones = [] // Will be fetched from API in future
+    const departments = [] // Will be fetched from API in future
     const { getValues, register, formState: { errors } } = useFormContext();
 
     const data = getValues();

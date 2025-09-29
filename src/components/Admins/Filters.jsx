@@ -1,7 +1,9 @@
 import MultiSelectField from "@/components/reuseable/MultiSelectField";
 import { Button } from "@/components/ui/button";
-import { fetchCitiesAsync, fetchRolesAsync, selectCities, selectCitiesLoading, selectRoles, selectRolesLoading } from "@/stores/slices/metadataSlice";
-import { PlusCircle, X as XCircle } from "lucide-react";
+import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import { fetchRolesAsync, selectRoles, selectRolesLoading } from "@/stores/slices/metadataSlice";
+import { X as XCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
@@ -11,13 +13,14 @@ export default function Filters({ filters, setFilters }) {
     const dispatch = useDispatch();
 
     const cities = useSelector(selectCities);
-    const citiesLoading = useSelector(selectCitiesLoading);
-    const roles = useSelector(selectRoles);
-    const rolesLoading = useSelector(selectRolesLoading);
+
+    // Generic placeholders for future API integration
+    const roles = []; // Will be fetched from API in future
+    const rolesLoading = false;
 
     useEffect(() => {
         dispatch(fetchCitiesAsync()); // should fetch only level 3
-        dispatch(fetchRolesAsync());
+        // dispatch(fetchRolesAsync());
     }, [dispatch]);
 
     const updateFilter = (key, value) => {
@@ -66,10 +69,10 @@ export default function Filters({ filters, setFilters }) {
 
                     <MultiSelectField
                         label="Cities"
-                        options={cities}
-                        isLoading={citiesLoading}
+                        options={cities.data}
+                        isLoading={cities.loading}
                         valueKey="id"
-                        labelKey="name"
+                        labelKey="value"
                         value={filters.cities}
                         onChange={(val) => updateFilter("cities", val)}
                     />
@@ -87,7 +90,7 @@ export default function Filters({ filters, setFilters }) {
                 {Array.isArray(filters?.cities) ? filters.cities.map((id) => (
                     <Tag
                         key={id}
-                        label={`City: ${getLabelById(id, cities, "name")}`}
+                        label={`City: ${getLabelById(id, cities, "value")}`}
                         onRemove={() => removeFilter("cities", id)}
                     />
                 )) : ""}

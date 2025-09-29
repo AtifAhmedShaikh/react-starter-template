@@ -1,17 +1,15 @@
 import { AppSidebar } from "@/components/sidebar/SidebarApp"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { Outlet } from "react-router-dom"
-import NotificationDropdown from "../Notifications/NotificationDropdown"
-import { ErrorBoundary } from "react-error-boundary"
-import { ErrorBoundry } from "../Error/ErrorBoundry"
-import { usePermissions } from "@/hooks/usePermissions"
 import { PermissionKeys } from "@/constants/permissions"
-import { useSelector } from "react-redux"
-import { selectCurrentCharge } from "@/stores/slices/authSlice"
+import { usePermissions } from "@/hooks/usePermissions"
+import { ErrorBoundary } from "react-error-boundary"
+import { Outlet } from "react-router-dom"
+import { ErrorBoundaryFallback } from "../Error/ErrorBoundaryFallback"
+import NotificationDropdown from "../Notifications/NotificationDropdown"
 
 export default function SidebarLayout() {
   const { hasPermission } = usePermissions();
-  const selectedCharge = useSelector(selectCurrentCharge);
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen">
@@ -28,7 +26,7 @@ export default function SidebarLayout() {
               {hasPermission(PermissionKeys.can_view_notifications) ? <NotificationDropdown /> : ""}
             </div>
           </div>
-          <ErrorBoundary FallbackComponent={ErrorBoundry}>
+          <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
             <Outlet />
           </ErrorBoundary>
         </main>

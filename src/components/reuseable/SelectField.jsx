@@ -1,3 +1,4 @@
+// components/form/SelectField.jsx
 import {
   Select,
   SelectContent,
@@ -6,18 +7,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import { Controller, useFormContext } from "react-hook-form";
 
 const SelectField = ({
   label,
   name,
-  options = [],
+  options,
   placeholder,
   error = "",
-  className = "",
+  className,
   variant = "outlined",
+  isLoading = false,
+  disabled = false,
 }) => {
-  const { control } = useFormContext(); // ✅ Fix: hook into parent form
+  const { control } = useFormContext();
 
   const getVariantClasses = () => {
     switch (variant) {
@@ -32,17 +36,18 @@ const SelectField = ({
   };
 
   return (
-    <div className="flex flex-col gap-1 w-full">
-      <label className="font-medium">{label}</label>
+    <div className="flex flex-col  w-full">
+      <label className="font-medium sm:text-sm text-xs">{label}</label>
 
       <Controller
         name={name}
         control={control}
+        defaultValue=""
         render={({ field }) => (
-          <Select value={field.value} onValueChange={field.onChange}>
+          <Select value={field.value ?? ""} onValueChange={field.onChange} disabled={disabled}>
             <SelectTrigger
               className={cn(
-                "w-full h-12 mx-1 transition-all sm:text-sm text-xs",
+                "w-full h-12 mx-1 border-2 transition-all sm:text-sm text-xs py-2",
                 getVariantClasses(),
                 error
                   ? "border-red-500 bg-red-50/50 focus:ring-2 focus:ring-red-500/20"
@@ -54,23 +59,21 @@ const SelectField = ({
             </SelectTrigger>
 
             <SelectContent className="max-h-60">
-              {options?.length ? (
-                options.map((opt, index) => (
-                  <SelectItem key={index} value={opt?.id}>
-                    {opt?.value}
-                  </SelectItem>
-                ))
+              {isLoading ? (
+                <SelectItem disabled className={"flex gap-4"}><span className="animate-spin"><Loader2 /></span>Loading...</SelectItem>
               ) : (
-                <SelectItem value="-" disabled>
-                  No options available
-                </SelectItem>
+                options?.map((opt, index) =>
+                  opt?.id != null ? (
+                    <SelectItem key={index} value={String(opt.id)}>
+                      {opt.value}
+                    </SelectItem>
+                  ) : null
+                )
               )}
-
             </SelectContent>
           </Select>
         )}
       />
-
       {error && <p className="text-red-500 text-xs mt-1">{error}</p>}
     </div>
   );

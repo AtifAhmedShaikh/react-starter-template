@@ -5,14 +5,17 @@ import { COMPLAINT_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
 import { completeSchema } from "@/schema/chargeSchema";
 import {
-  fetchChargesByLocationAsync,
   fetchLocationByIdAsync,
-  selectForwardDetails,
-  selectForwardDetailsLoading,
   selectLocationById,
   selectLocationByIdLoading,
-  selectStatus,
 } from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import {
+//   fetchChargesByLocationAsync,
+//   selectForwardDetails,
+//   selectForwardDetailsLoading,
+//   selectStatus,
+// } from "@/stores/slices/metadataSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,12 +31,13 @@ export const useForwardCharges = ({ complaint, handleForwardSubmit }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Redux selectors
-  const forwardDetails = useSelector(selectForwardDetails);
-  const forwardDetailsLoading = useSelector(selectForwardDetailsLoading);
+  // Generic placeholders for future API integration
+  const forwardDetails = { roles: [] }; // Will be fetched from API in future
+  const forwardDetailsLoading = false;
   const locationById = useSelector(selectLocationById);
   const locationByIdLoading = useSelector(selectLocationByIdLoading);
   const dispatch = useDispatch();
-  const statusArray = useSelector(selectStatus);
+  const statusArray = []; // Will be fetched from API in future
 
   // Form setup
   const form = useForm({

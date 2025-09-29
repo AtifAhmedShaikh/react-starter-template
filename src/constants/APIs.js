@@ -80,3 +80,7 @@ export const ADMIN_APIS = {
   GET_ADMIN_PROFILE_DETAILS: "/api/admins/getAdminProfileDetails",
   GET_COMPLAINANTS: "/api/admins/getAllComplainants",
 };
+
+export const METADATA_APIS = {
+  GET_ALL_CITIES: "/api/metadata/cities",
+};

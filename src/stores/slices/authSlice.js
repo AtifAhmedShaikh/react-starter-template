@@ -3,12 +3,9 @@ import {
   forgotPassword,
   login,
   logout,
-  registerUser,
-  resendOtp,
   resetPassword,
   updateUser,
   updateUserSensitiveFields,
-  verifyAccount,
 } from "@/apis/authApis";
 import { HTTP_METHODS } from "@/constants";
 import { AUTH_APIS } from "@/constants/APIs";
@@ -70,39 +67,6 @@ export const checkAuthAsync = createAsyncThunk(
   },
 );
 
-export const verifyAccountAsync = createAsyncThunk(
-  "auth/verifyAccount",
-  async (otpInfo, { rejectWithValue }) => {
-    try {
-      return await verifyAccount(otpInfo);
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
-  },
-);
-
-export const registerUserAsync = createAsyncThunk(
-  "auth/registerUser",
-  async (userData, { rejectWithValue }) => {
-    try {
-      return await registerUser(userData);
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
-  },
-);
-
-export const resendOtpAsync = createAsyncThunk(
-  "auth/resendOtp",
-  async ({ cnic }, { rejectWithValue }) => {
-    try {
-      return await resendOtp({ cnic });
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
-  },
-);
-
 export const forgotPasswordAsync = createAsyncThunk(
   "auth/forgotPassword",
   async (cnic, { rejectWithValue }) => {
@@ -125,7 +89,7 @@ export const resetPasswordAsync = createAsyncThunk(
   },
 );
 
-export const changeProfileImage = createAsyncThunk(
+export const changeProfileImageAsync = createAsyncThunk(
   "auth/changeProfileImage",
   async (data, { rejectWithValue }) => {
     try {
@@ -183,16 +147,6 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.isAuthenticated = false;
       })
-      .addCase(registerUserAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(registerUserAsync.fulfilled, (state) => {
-        state.status = "idle";
-      })
-      .addCase(registerUserAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
       .addCase(logoutAsync.fulfilled, (state) => {
         state.user = null;
         state.isAuthenticated = false;
@@ -204,10 +158,8 @@ const authSlice = createSlice({
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.user = action.payload?.data?.user;
+        state.permissions = action.payload?.data?.permissions || [];
         state.isAuthenticated = true;
-        if (action.payload?.data?.currentCharge) {
-          state.selectedCharge = action.payload?.data?.currentCharge;
-        }
       })
       .addCase(checkAuthAsync.rejected, (state, action) => {
         state.status = "failed";
@@ -234,10 +186,10 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
-      .addCase(changeProfileImage.pending, (state) => {
+      .addCase(changeProfileImageAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(changeProfileImage.fulfilled, (state, action) => {
+      .addCase(changeProfileImageAsync.fulfilled, (state, action) => {
         const updatedUser = {
           profileImage: action.payload?.data?.profileImage,
         };
@@ -245,7 +197,7 @@ const authSlice = createSlice({
         state.status = "idle";
         state.user = { ...state.user, ...updatedUser };
       })
-      .addCase(changeProfileImage.rejected, (state, action) => {
+      .addCase(changeProfileImageAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -271,22 +223,16 @@ const authSlice = createSlice({
   },
 });
 
-const emptyPermissions = []; // stable reference
-
 // Selectors
 export const selectAuth = (state) => state.auth || initialState;
 export const selectUser = (state) => state.auth?.user || initialState?.user;
-export const selectUserRole = (state) => state.auth.user?.Role?.roleName || "";
-export const selectUserPermissions = (state) =>
-  state.auth.user?.permissions || emptyPermissions;
-export const selectAssignedCharges = (state) =>
-  state.auth.user?.chargesAssigned || []; // holds charges which is assigned to the current user
-export const selectUserCNIC = (state) => state.auth.user?.cnic || "";
+export const selectUserRole = (state) => state.auth.user?.role?.value;
+export const selectUserPermissions = (state) => state.auth.permissions || [];
+
 export const selectIsAuthenticated = (state) =>
   state.auth.isAuthenticated || false;
-export const selectLoadingStatus = (state) => state.auth.status || "idle";
+
 export const selectActiveTab = (state) => state.auth?.activeTabItem || "";
-export const selectCurrentCharge = (state) => state.auth?.selectedCharge || {};
 
 // Actions
 export const {

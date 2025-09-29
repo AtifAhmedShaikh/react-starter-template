@@ -44,6 +44,8 @@ function Button({
   asChild = false,
   children,
   loading = false,
+  loadingLabel = "Loading",
+  disabled = false,
   ...props
 }) {
   const Comp = asChild ? Slot : "button"
@@ -53,11 +55,12 @@ function Button({
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }), loading && "opacity-75")}
       {...props}
+      disabled={loading||disabled}
     >
       {loading ? (
         <>
           <Loader2 className="animate-spin" />
-          Loading
+          {loadingLabel}
         </>
       ) : (
         children

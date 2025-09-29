@@ -10,7 +10,7 @@ import {
   SidebarMenuItem
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
-import { selectActiveTab, selectCurrentCharge, selectUser, setActiveTabItem } from "@/stores/slices/authSlice"
+import { selectActiveTab, selectUser, selectUserRole, setActiveTabItem } from "@/stores/slices/authSlice"
 import { LogOut } from "lucide-react"
 import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
@@ -21,18 +21,18 @@ import { useSidebarMenuLinks } from "./sidebarMenuLinks"
 import { usePermissions } from "@/hooks/usePermissions"
 import { useDispatch } from "react-redux"
 import { useLocation, useNavigate } from "react-router-dom"
-import { PermissionKeys } from "@/constants/permissions"
 
 
 export function AppSidebar() {
   const user = useSelector(selectUser);
-  const selectedCharge = useSelector(selectCurrentCharge);
+
   const { hasPermission } = usePermissions();
   const sidebarMenuLinks = useSidebarMenuLinks()
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const activeTab = useSelector(selectActiveTab)
+  const activeTab = useSelector(selectActiveTab);
+  const userRole = useSelector(selectUserRole);
 
   // Filter links based on user permissions
   const filteredLinks = sidebarMenuLinks.filter(link =>
@@ -77,9 +77,7 @@ export function AppSidebar() {
           {user?.fullName}
         </h2>
         <h3 className="text-xs text-center capitalize">
-          {hasPermission(PermissionKeys.can_view_held_charge) ? <p>
-            <span className="font-bold"> {selectedCharge?.chargeName}</span>
-          </p> : user?.role}
+          {userRole}
         </h3>
       </div>
       <SidebarContent>

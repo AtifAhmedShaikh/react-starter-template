@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { changeProfileImage, selectUser } from "@/stores/slices/authSlice";
+import { changeProfileImageAsync, selectUser } from "@/stores/slices/authSlice";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,7 +28,7 @@ export default function ChangeProfileImage() {
       const formData = new FormData();
       formData.append("file", image);
   
-      const result = await dispatch(changeProfileImage(formData));
+      const result = await dispatch(changeProfileImageAsync(formData));
   
       if (result?.payload?.success) {
         toast.success(result.payload.message || "Profile image updated successfully");

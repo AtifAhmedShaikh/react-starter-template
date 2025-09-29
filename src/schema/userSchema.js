@@ -15,17 +15,11 @@ export const contactUsFormSchema = yup.object().shape({
     ),
 });
 
-export const userRegiserSchema = yup.object().shape({
+export const userRegisterSchema = yup.object().shape({
   fullName: yup
     .string()
     .required("Name is required")
     .min(3, "Name must be at least 3 characters")
-    .max(30)
-    .matches(/^[a-zA-Z\s]*$/, "Only letters and spaces allowed"),
-  fatherName: yup
-    .string()
-    .required("Father's Name is required")
-    .min(3, "Father's name must be at least 3 characters")
     .max(30)
     .matches(/^[a-zA-Z\s]*$/, "Only letters and spaces allowed"),
   cnic: yup
@@ -42,9 +36,8 @@ export const userRegiserSchema = yup.object().shape({
     .string()
     .required("Address is required")
     .min(10, "Address must be at least 10 characters")
-    .max(100, "Address must not exceed 100 characters"),
-  city: yup.string().required("City is required"),
-  country: yup.string().required("Country is required"),
+    .max(200, "Address must not exceed 200 characters"),
+  cityId: yup.string().required("City is required"),
   password: yup
     .string()
     .required("Password is required")

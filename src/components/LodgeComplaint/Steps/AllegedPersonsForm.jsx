@@ -7,11 +7,12 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import {
-    fetchDepartmentsAsync,
-    selectDepartments,
-    selectDepartmentsLoading,
-} from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import {
+//     fetchDepartmentsAsync,
+//     selectDepartments,
+//     selectDepartmentsLoading,
+// } from "@/stores/slices/metadataSlice";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
@@ -28,18 +29,19 @@ const AllegedPersonsForm = () => {
     name: "allegedPersons",
   });
 
+  // Generic placeholders for future API integration
   const selectors = {
-    departments: useSelector(selectDepartments),
-    departmentsLoading: useSelector(selectDepartmentsLoading),
+    departments: [], // Will be fetched from API in future
+    departmentsLoading: false,
   };
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
   const removedEditedIndex = useRef(null);
 
-  useEffect(() => {
-    dispatch(fetchDepartmentsAsync());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchDepartmentsAsync());
+  // }, [dispatch]);
 
   useEffect(() => {
     if (editingIndex !== null && !fields[editingIndex]) {

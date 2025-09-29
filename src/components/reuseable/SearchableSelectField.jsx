@@ -21,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 
-const ComboboxField = ({
+const SearchableSelectField = ({
   name,
   label,
   placeholder = "Select...",
@@ -55,8 +55,9 @@ const ComboboxField = ({
         control={control}
         defaultValue=""
         render={({ field }) => {
-          const selectedLabel =
-            options.find((item) => String(item[valueKey]) === String(field.value))?.[labelKey] ||
+          const selectedLabel = Array.isArray(options) ?
+            options.find((item) => String(item[valueKey]) === String(field.value))?.[labelKey] :
+            options?.[valueKey] ||
             "";
 
           return (
@@ -96,11 +97,10 @@ const ComboboxField = ({
                       <>
                         <CommandEmpty>No options found.</CommandEmpty>
                         <CommandGroup>
-                          {options.map((item) => {
+                          {!Array.isArray(options)?"":  options.map((item) => {
                             const itemValue = String(item[valueKey]);
                             const itemLabel = item[labelKey];
                             const isDisabled = disableKey && item[disableKey]; // ✅ Check condition
-
                             return (
                               <CommandItem
                                 key={itemValue}
@@ -140,4 +140,4 @@ const ComboboxField = ({
   );
 };
 
-export default ComboboxField;
+export default SearchableSelectField;

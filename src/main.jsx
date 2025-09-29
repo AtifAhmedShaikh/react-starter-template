@@ -6,7 +6,7 @@ import { store } from "@/stores"; // <- adjust to your actual store path
 import "./index.css";
 import { Toaster } from "sonner";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { ErrorBoundry } from "./components/Error/ErrorBoundry";
+import { ErrorBoundaryFallback } from "./components/Error/ErrorBoundaryFallback";
 import { ErrorBoundary } from "react-error-boundary";
 
 const queryClient = new QueryClient()
@@ -17,9 +17,9 @@ root.render(
     <Toaster position="top-right" icons={true} richColors />
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-         <ErrorBoundary FallbackComponent={ErrorBoundry}>
-            <AppRouter />
-         </ErrorBoundary>
+        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+          <AppRouter />
+        </ErrorBoundary>
       </QueryClientProvider>
     </Provider>
   </React.StrictMode>

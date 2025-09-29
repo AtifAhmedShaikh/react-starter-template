@@ -1,4 +1,4 @@
-export function ErrorBoundry({ error, resetErrorBoundary }) {
+export function ErrorBoundaryFallback({ error, resetErrorBoundary }) {
   return (
     <div className="flex items-center justify-center min-h-screen bg-red-50">
       <div className="bg-white p-6 rounded-xl shadow text-center max-w-md">

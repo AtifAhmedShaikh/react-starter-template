@@ -4,7 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { PermissionKeys } from "@/constants/permissions";
 import { usePermissions } from "@/hooks/usePermissions";
-import { fetchDepartmentsAsync, fetchOffencesAsync, fetchStatusAsync, fetchTypeOfPersonsAsync, fetchZonesAsync, selectOffences, selectOffencesLoading, selectStatus, selectStatusLoading, selectTypeOfPersons, selectTypeOfPersonsLoading, selectZones, selectZonesLoading } from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import { fetchDepartmentsAsync, fetchOffencesAsync, fetchStatusAsync, fetchTypeOfPersonsAsync, fetchZonesAsync, selectOffences, selectOffencesLoading, selectStatus, selectStatusLoading, selectTypeOfPersons, selectTypeOfPersonsLoading, selectZones, selectZonesLoading } from "@/stores/slices/metadataSlice";
 import { PlusCircle, X as XCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,23 +16,23 @@ export default function AdvancedFilters({ onApply, filters, setFilters }) {
     const [searchParams, setSearchParams] = useSearchParams();
     const dispatch = useDispatch();
 
-    const offences = useSelector(selectOffences);
-    const offenceLoading = useSelector(selectOffencesLoading);
-    const typeOfPersons = useSelector(selectTypeOfPersons);
-    const typeOfPersonsLoading = useSelector(selectTypeOfPersonsLoading);
-    const zones = useSelector(selectZones);
-    const zonesLoading = useSelector(selectZonesLoading);
-    const statuses = useSelector(selectStatus);
-    const statusesLoading = useSelector(selectStatusLoading);
+    // Generic placeholders for future API integration
+    const offences = []; // Will be fetched from API in future
+    const offenceLoading = false;
+    const typeOfPersons = []; // Will be fetched from API in future
+    const typeOfPersonsLoading = false;
+    const zones = []; // Will be fetched from API in future
+    const zonesLoading = false;
+    const statuses = []; // Will be fetched from API in future
+    const statusesLoading = false;
 
-    useEffect(() => {
-        dispatch(fetchZonesAsync());
-        dispatch(fetchOffencesAsync());
-        dispatch(fetchTypeOfPersonsAsync());
-        dispatch(fetchStatusAsync());
-        dispatch(fetchDepartmentsAsync())
-
-    }, [dispatch]);
+    // useEffect(() => {
+    //     dispatch(fetchZonesAsync());
+    //     dispatch(fetchOffencesAsync());
+    //     dispatch(fetchTypeOfPersonsAsync());
+    //     dispatch(fetchStatusAsync());
+    //     dispatch(fetchDepartmentsAsync())
+    // }, [dispatch]);
 
     const updateFilter = (key, value) => {
         setFilters((prev) => ({ ...prev, [key]: value }));

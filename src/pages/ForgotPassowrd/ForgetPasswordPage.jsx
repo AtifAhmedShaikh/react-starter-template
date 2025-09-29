@@ -1,6 +1,9 @@
+import Footer from "@/components/layouts/Footer";
+import Navbar from "@/components/layouts/Navbar";
 import { ResetPasswordOtpModal } from "@/components/reuseable/ResetPasswordOtpMode";
 import { TextField } from "@/components/reuseable/TextField";
-import { forgotPasswordAsync, selectLoadingStatus, setTemporaryValue } from "@/stores/slices/authSlice";
+import { forgotPasswordAsync, setTemporaryValue } from "@/stores/slices/authSlice";
+import { formatCNICInput } from "@/utils/formatters";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CheckCircle, XCircle } from "lucide-react";
 import { useState } from "react";
@@ -10,10 +13,6 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { forgotPasswordSchema } from "../../schema/userSchema";
-import { useSelector } from "react-redux";
-import Navbar from "@/components/layouts/Navbar";
-import Footer from "@/components/layouts/Footer";
-import { formatCNICInput } from "@/utils/formatters";
 
 const ForgotPasswordPage = () => {
     const [success, setSuccess] = useState("");
@@ -21,7 +20,7 @@ const ForgotPasswordPage = () => {
     const [showOTPModal, setShowOTPModal] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const loadingStatus = useSelector(selectLoadingStatus);
+
 
     const {
         register,
@@ -134,7 +133,6 @@ const ForgotPasswordPage = () => {
                         <button
                             type="submit"
                             className="bg-black text-white w-full py-2 rounded-lg hover:bg-gray-800 transition"
-                            loading={loadingStatus == "loading"}
                         >
                             Forgot Password
                         </button>

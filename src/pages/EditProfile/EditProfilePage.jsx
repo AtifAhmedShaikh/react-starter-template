@@ -1,5 +1,5 @@
 import ChangeProfileImage from "@/components/Profile/ChangeProfile";
-import ComboboxField from "@/components/reuseable/ComboboxField";
+import ComboboxField from "@/components/reuseable/SearchableSelectField";
 import { OtpPromptModal } from "@/components/reuseable/OTPPromptModal";
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
@@ -8,11 +8,10 @@ import { usePermissions } from "@/hooks/usePermissions";
 import { encryptValue } from "@/lib/encryption";
 import { editProfileSchema } from "@/schema/userSchema";
 import { selectUser, updateUserAsync, updateUserSensitiveFeildsAsync } from "@/stores/slices/authSlice";
-import { fetchCitiesAsync, selectCities, selectCitiesLoading } from "@/stores/slices/metadataSlice";
+import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
 import { deformatCnic, formatCharacterOnlyInput, formatCnic, formatCNICInput, formatMobileNumber, formatPhoneNumberInput } from "@/utils/formatters";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Info } from "lucide-react";
-import { CheckCheck, CheckCircle, Lock, XCircle } from "lucide-react";
+import { CheckCheck, CheckCircle, Info, Lock, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FormProvider, useForm } from "react-hook-form";
@@ -22,7 +21,6 @@ import { toast } from "sonner";
 const EditProfilePage = () => {
     const user = useSelector(selectUser);
     const cities = useSelector(selectCities);
-    const cityLoading = useSelector(selectCitiesLoading);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const dispatch = useDispatch();
@@ -37,7 +35,6 @@ const EditProfilePage = () => {
     const { hasPermission } = usePermissions();
     const canEditProfile = hasPermission(PermissionKeys.can_edit_profile)
     const canChangeProfileImage = hasPermission(PermissionKeys.can_change_profile_image)
-
 
     const methods = useForm({
         resolver: yupResolver(editProfileSchema),
@@ -359,15 +356,14 @@ const EditProfilePage = () => {
                             name="city"
                             label="City"
                             placeholder={"Select city"}
-                            options={cities}
+                            options={cities.data}
                             valueKey="id"        // or whatever your city object key is
-                            labelKey="name"      // adjust if cities have a different label field
+                            labelKey="value"      // adjust if cities have a different label field
                             error={errors.city?.message}
-                            isLoading={cityLoading}
+                            isLoading={false}
                             disabled={!isEditing || !canEditProfile}
                         />
                     </div>
-
                     {error && (
                         <div className="text-red-600 col-span-2 flex gap-2 items-center text-sm">
                             <XCircle size={18} /> {error}

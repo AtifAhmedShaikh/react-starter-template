@@ -1,11 +1,12 @@
 import { useFormContext, useFieldArray } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { fetchDepartmentsAsync, selectDepartments, selectDepartmentsLoading } from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import { fetchDepartmentsAsync, selectDepartments, selectDepartmentsLoading } from "@/stores/slices/metadataSlice";
 import { TextField } from "@/components/reuseable/TextField";
 import SelectField from "../SelectField";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import ComboboxField from "@/components/reuseable/ComboboxField";
+import ComboboxField from "@/components/reuseable/SearchableSelectField";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
@@ -13,13 +14,14 @@ const AllegedPeronsForm = () => {
     const { control, register, formState: { errors } } = useFormContext();
     const dispatch=useDispatch()
     const { fields, append, remove } = useFieldArray({ control, name: "allegedPersons" });
+    // Generic placeholders for future API integration
     const selectors = {
-        departments: useSelector(selectDepartments),
-        departmentsLoading: useSelector(selectDepartmentsLoading),
+        departments: [], // Will be fetched from API in future
+        departmentsLoading: false,
     }
-      useEffect(() => {
-            dispatch(fetchDepartmentsAsync())
-        }, []);
+    // useEffect(() => {
+    //       dispatch(fetchDepartmentsAsync())
+    //   }, []);
 
     return (
         <div className="sm:min-h-96">

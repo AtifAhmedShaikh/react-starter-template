@@ -1,4 +1,4 @@
-import ComboboxField from "@/components/reuseable/ComboboxField";
+import ComboboxField from "@/components/reuseable/SearchableSelectField";
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
 import {

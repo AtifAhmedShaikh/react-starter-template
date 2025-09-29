@@ -1,8 +1,9 @@
-import ComboboxField from "@/components/reuseable/ComboboxField";
+import ComboboxField from "@/components/reuseable/SearchableSelectField";
 import SelectField from "../SelectField";
 import TextAreaField from "@/components/reuseable/TextArea";
 import { TextField } from "@/components/reuseable/TextField";
-import { fetchOffencesAsync, fetchTypeOfPersonsAsync, fetchZonesAsync, selectOffences, selectOffencesLoading, selectTypeOfPersons, selectTypeOfPersonsLoading, selectZones, selectZonesLoading } from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import { fetchOffencesAsync, fetchTypeOfPersonsAsync, fetchZonesAsync, selectOffences, selectOffencesLoading, selectTypeOfPersons, selectTypeOfPersonsLoading, selectZones, selectZonesLoading } from "@/stores/slices/metadataSlice";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -12,20 +13,21 @@ import TextAreaWithSpeech from "@/components/reuseable/TextAreaWithSpeech";
 const ComplaintDetailsForm = () => {
     const { register, formState: { errors } } = useFormContext();
     const dispatch = useDispatch()
+    // Generic placeholders for future API integration
     const selectors = {
-        offences: useSelector(selectOffences),
-        offenceLoading: useSelector(selectOffencesLoading),
-        typeOfPersons: useSelector(selectTypeOfPersons),
-        typeOfPersonsLoading: useSelector(selectTypeOfPersonsLoading),
-        zones: useSelector(selectZones),
-        zonesLoading: useSelector(selectZonesLoading),
+        offences: [], // Will be fetched from API in future
+        offenceLoading: false,
+        typeOfPersons: [], // Will be fetched from API in future
+        typeOfPersonsLoading: false,
+        zones: [], // Will be fetched from API in future
+        zonesLoading: false,
     };
 
-    useEffect(() => {
-        dispatch(fetchZonesAsync())
-        dispatch(fetchOffencesAsync())
-        dispatch(fetchTypeOfPersonsAsync())
-    }, []);
+    // useEffect(() => {
+    //     dispatch(fetchZonesAsync())
+    //     dispatch(fetchOffencesAsync())
+    //     dispatch(fetchTypeOfPersonsAsync())
+    // }, []);
 
     return (
         <div className="sm:p-5 p-4 shadow-md rounded-lg border">

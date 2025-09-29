@@ -7,7 +7,8 @@ import { COMPLAINT_STATUS, HTTP_METHODS } from "@/constants";
 import { COMPLAINT_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
 import { forwardToACCSchema } from "@/schema/complaintSchema";
-import { fetchForwardToCommittieeDetailsAsync, selectACCCommittees, selectStatus } from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import { fetchForwardToCommittieeDetailsAsync, selectACCCommittees, selectStatus } from "@/stores/slices/metadataSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
@@ -23,9 +24,10 @@ const ForwardToAccCommitteeModel = ({ isOpen, onClose, complaint, onSubmit }) =>
   const [memberLevel, setMemberLevel] = useState(null);
   const [correspondingCommittees, setCorrespondingCommittees] = useState([]);
   const dispatch = useDispatch();
-  const statusesArray = useSelector(selectStatus)
+  // Generic placeholders for future API integration
+  const statusesArray = []; // Will be fetched from API in future
 
-  const accCommittiees = useSelector(selectACCCommittees);
+  const accCommittiees = []; // Will be fetched from API in future
 
   const methods = useForm({
     resolver: yupResolver(forwardToACCSchema),

@@ -1,15 +1,13 @@
-import ComboboxField from "@/components/reuseable/ComboboxField";
-import { LoadingScreen } from "@/components/reuseable/Loading";
-import SelectField from "@/components/reuseable/SelectFieldV2";
+import ComboboxField from "@/components/reuseable/SearchableSelectField";
+import SelectField from "@/components/reuseable/SelectField";
 import { TextField } from "@/components/reuseable/TextField";
 import { COUNTRIES } from "@/constants";
 import { COMPLAINT_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
-import { fetchCitiesAsync, selectCities, selectCitiesLoading } from "@/stores/slices/metadataSlice";
+import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
 import { deformatCnic, formatCNICInput, formatMobileNumber, formatPhoneNumberInput } from "@/utils/formatters";
 import { Loader2 } from "lucide-react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
@@ -23,7 +21,7 @@ const UserInformationForm = () => {
 
     const selectors = {
         cities: useSelector(selectCities),
-        citiesLoading: useSelector(selectCitiesLoading),
+        citiesLoading: false,
     };
 
     const cnicValue = watch("cnic");

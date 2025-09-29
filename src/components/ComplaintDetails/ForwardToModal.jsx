@@ -3,12 +3,15 @@ import { COMPLAINT_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
 import { completeSchema } from "@/schema/chargeSchema";
 import {
-  fetchChargesByLocationAsync,
   fetchLocationByIdAsync,
-  selectForwardDetails,
-  selectForwardDetailsLoading,
-  selectStatus
 } from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import {
+//   fetchChargesByLocationAsync,
+//   selectForwardDetails,
+//   selectForwardDetailsLoading,
+//   selectStatus
+// } from "@/stores/slices/metadataSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { ChevronLeft, ChevronRight, Plus, X as CrossIcon } from "lucide-react";
@@ -16,7 +19,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import ComboboxField from "../reuseable/ComboboxField";
+import ComboboxField from "../reuseable/SearchableSelectField";
 import ModalWrapper from "../reuseable/ModalWrapper";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
@@ -38,9 +41,10 @@ const ForwardToChargesModal = ({ isOpen, onClose, complaint, handleForwardSubmit
   const { hasPermission } = usePermissions()
 
   // Redux
-  const forwardDetails = useSelector(selectForwardDetails);
-  const forwardDetailsLoading = useSelector(selectForwardDetailsLoading);
-  const statusList = useSelector(selectStatus);
+  // Generic placeholders for future API integration
+  const forwardDetails = { roles: [] }; // Will be fetched from API in future
+  const forwardDetailsLoading = false;
+  const statusList = []; // Will be fetched from API in future
 
   // State
   const [currentStep, setCurrentStep] = useState(0);

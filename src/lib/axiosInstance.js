@@ -2,18 +2,17 @@ import { SENSITIVE_FIELDS } from "@/constants";
 import axios from "axios";
 import JsCookies from "js-cookie";
 import { encryptSensitiveFields } from "./encryption";
+import { BACKEND_URL, ENABLE_ENCRYPTION } from "@/config/configManager";
 
 // Create an instance of axios with custom configuration
 export const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: BACKEND_URL,
   timeout: 50000,
   responseType: "json",
 });
 
 // Add a request interceptor to include the authorization token
 axiosInstance.interceptors.request.use(async (config) => {
-  const ENABLE_ENCRYPTION = import.meta?.env?.VITE_ENABLE_ENCRYPTION === "true";
-
   const token = localStorage.getItem("accessToken");
   if (token) {
     config.headers["Authorization"] = `Bearer ${token}`;

@@ -1,11 +1,12 @@
 // A singleton to hold the socket instance
+import { BACKEND_URL } from "@/config/configManager";
 import { io } from "socket.io-client";
 
 let socket = null;
 
 export const createSocketConnection = (token) => {
   if (!socket) {
-    socket = io(import.meta.env.VITE_BACKEND_URL, {
+    socket = io(BACKEND_URL, {
       transports: ["websocket"],
       path: "/ws/socket.io",
       auth: { token },

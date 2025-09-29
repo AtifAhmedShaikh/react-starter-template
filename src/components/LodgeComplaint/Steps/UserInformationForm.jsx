@@ -1,9 +1,9 @@
-import ComboboxField from "@/components/reuseable/ComboboxField";
+import ComboboxField from "@/components/reuseable/SearchableSelectField";
 import { TextField } from "@/components/reuseable/TextField";
 import { PermissionKeys } from "@/constants/permissions";
 import { usePermissions } from "@/hooks/usePermissions";
 import { selectUser } from "@/stores/slices/authSlice";
-import { fetchCitiesAsync, selectCities, selectCitiesLoading } from "@/stores/slices/metadataSlice";
+import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +17,8 @@ const UserInformationForm = () => {
     const isPreFilled = !hasPermission(PermissionKeys.edit_user_info_on_lodged_complaint) // If have this permission, so user can edit user info while lodged complaint
     const selectors = {
         cities: useSelector(selectCities),
-        citiesLoading: useSelector(selectCitiesLoading),
+        citiesLoading:false,
     };
-
-
 
     useEffect(() => {
         dispatch(fetchCitiesAsync())

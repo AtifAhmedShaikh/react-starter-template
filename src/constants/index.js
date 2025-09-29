@@ -201,7 +201,7 @@ export const COUNTRIES = [
   { id: "Zimbabwe", value: "Zimbabwe" },
 ];
 
-export const OTP_TIMER = 60 * 5;
+export const OTP_TIMER = 60 * 1;
 
 export const ACCEPT_FILES = "image/*, application/pdf";
 export const MAX_FILE_LIMIT = 7;

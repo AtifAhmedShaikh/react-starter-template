@@ -2,54 +2,38 @@ import SidebarLayout from "@/components/sidebar/SidebarLayout";
 import { PermissionKeys } from "@/constants/permissions";
 import {
   AboutPage,
-  AllComplaintsPage,
+  AdminProfilePage,
+  AdminsPage,
   ChangePasswordPage,
-  ChargeApprovalRequetsPage,
-  ComplainerComplaintsPage,
-  ComplaintDetailsPage,
   ContactUsPage,
   Dashboard,
-  DisposeWithActionComplaintsPage,
-  DisposeWithoutActionComplaintsPage,
   EditProfilePage,
   ForgotPasswordPage,
   HomePage,
-  InboxComplaintsPage,
-  LodgeComplaintPage,
-  LodgeOpenComplaintPage,
+  ItemsPage,
   LoginPage,
   LogoutPage,
   ManualPage,
-  NewComplaintsPage,
-  NewlyForwardedPage,
+  MobileAppPage,
   NotFound,
   NotificationsPage,
-  ReportsGenerationPage,
-  ResolvedComplaintsPage,
-  ResolvedWithoutComplaintsPage,
-  SentComplaintsPage,
+  ReportsPage,
   SettingsPage,
   SignUpPage,
-  TrackComplaintsPage,
+  StatisticsPage,
   TutorialPage,
   TutorialsPage,
   UnauthorizedAccessPage,
-  AdminUsersPage,
-  AdminProfileDetailsPage,
-  ComplainantsPage,
-  MobileAppReleasePage,
-  ReferComplaintsPage
+  UsersPage
 } from "@/pages";
 
+import TermAndCondition from "@/components/layouts/TermsAndConditions/TermsAndCondition";
 import SocketLayout from "@/components/SocketLayout";
+import PrivacyPolicyPage from "@/pages/PrivacyPolicy/PrivacyPolicyPage";
+import ServicesPage from "@/pages/ServicesPage/ServicesPage";
 import AuthRoutesWrapper from "./AuthRoutesWrapper";
 import PermissionRoutesWrapper from "./PermissionRoutesWrapper";
 import ProtectedRoutesWrapper from "./ProtectedRoutesWrapper";
-import PrivacyPolicyPage from "@/pages/PrivacyPolicy/PrivacyPolicyPage";
-import TermAndCondition from "@/components/layouts/TermsAndConditions/TermsAndCondition";
-import ServicesPage from "@/pages/ServicesPage/ServicesPage";
-import StatisticsPage from "@/pages/StatisticsPage/StatisticsPage";
-import TrackOpenComplaintsPage from "@/pages/TrackOpenComplaints/TrackOpenComplaintsPage";
 
 export const routesConfig = [
   // Public Routes
@@ -63,7 +47,7 @@ export const routesConfig = [
   },
   {
     path: "/mobile-app-release",
-    element: <MobileAppReleasePage />,
+    element: <MobileAppPage />,
   },
   {
     path: "/terms-and-condition",
@@ -112,57 +96,20 @@ export const routesConfig = [
             wrapper: SocketLayout,
             children: [
               { path: "/dashboard", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_dashboard} Component={Dashboard} /> },
-              { path: "/lodge-complaint", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_lodged_complaints} Component={LodgeComplaintPage} /> },
-              { path: "/lodge-open-complaint", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_lodged_open_complaints} Component={LodgeOpenComplaintPage} /> },
-              { path: "/track-complaints", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_track_complaints} Component={TrackComplaintsPage} /> },
-              { path: "/track-open-complaints", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_lodged_open_complaints} Component={TrackOpenComplaintsPage} /> },
-              { path: "/complaint-details/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_complaint_details} Component={ComplaintDetailsPage} /> },
-              { path: "/charge-approval-requests", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_charge_approval_requets} Component={ChargeApprovalRequetsPage} /> },
+              { path: "/items", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_items} Component={ItemsPage} /> },
+              { path: "/users", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_users} Component={UsersPage} /> },
+              { path: "/admins", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminsPage} /> },
+              { path: "/admin-profile/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminProfilePage} /> },
               { path: "/settings", element: <SettingsPage /> },
-              { path: "/reports", element: <ReportsGenerationPage /> },
+              { path: "/reports", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_generate_reports} Component={ReportsPage} /> },
+              { path: "/statistics", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_statistics} Component={StatisticsPage} /> },
               { path: "/edit-profile", element: <EditProfilePage /> },
               {
                 path: "/change-password",
                 element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_change_password} Component={ChangePasswordPage} />
               },
               {
-                path: "/new-complaints", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_new_complaints} Component={NewComplaintsPage} />
-              },
-              {
-                path: "/inbox-complaints", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_inbox_complaints} Component={InboxComplaintsPage} />
-              },
-              {
-                path: "/sent-complaints", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_sent_complaints} Component={SentComplaintsPage} />
-              },
-              {
-                path: "/resolved-with-action-complaints", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_view_resolved_with_action_complaints, PermissionKeys.can_view_all_resolved_with_action_complaints]} mode={"ANY_ONE"} Component={ResolvedComplaintsPage} />
-              },
-              {
-                path: "/resolved-with-no-action-complaints", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_view_resolved_with_no_action_complaints, PermissionKeys.can_view_all_resolved_with_no_action_complaints]} mode={"ANY_ONE"} Component={ResolvedWithoutComplaintsPage} />
-              },
-              {
-                path: "/disposed-with-action-complaints", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_view_disposed_with_action_complaints, PermissionKeys.can_view_all_disposed_with_action_complaints]} mode={"ANY_ONE"} Component={DisposeWithActionComplaintsPage} />
-              },
-              {
-                path: "/disposed-without-action-complaints", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_view_disposed_without_action_complaints, PermissionKeys.can_view_all_disposed_without_action_complaints]} mode={"ANY_ONE"} Component={DisposeWithoutActionComplaintsPage} />
-              },
-              {
-                path: "/refer-complaints", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_referred_complaints]} Component={ReferComplaintsPage} />
-              },
-              {
-                path: "/all-complaints", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_all_complaints} Component={AllComplaintsPage} />
-              },
-              {
-                path: "/newly-assigned-complaints", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_newly_forwarded_complaints} Component={NewlyForwardedPage} />
-              },
-              {
                 path: "/notifications", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_notifications} Component={NotificationsPage} />
-              },
-              {
-                path: "/complainant-profile/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_complainant_profile} Component={ComplainerComplaintsPage} />
-              },
-              {
-                path: "/admin-profile/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminProfileDetailsPage} />
               },
               {
                 path: "/tutorials", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_tutorials} Component={TutorialsPage} />
@@ -172,12 +119,6 @@ export const routesConfig = [
               },
               {
                 path: "/manuals", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_manuals} Component={ManualPage} />
-              },
-              {
-                path: "/admins", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminUsersPage} />
-              },
-              {
-                path: "/complainants", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_complainants} Component={ComplainantsPage} />
               },
             ]
           }

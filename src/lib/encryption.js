@@ -1,5 +1,5 @@
+import { ENCRYPTION_SECRET } from "@/config/configManager";
 import CryptoJS from "crypto-js";
-const ENCRYPTION_SECRET = import.meta.env.VITE_ENCRYPTION_SECRET || "";
 
 // Ideally store this in .env and NEVER hardcode secrets for production
 

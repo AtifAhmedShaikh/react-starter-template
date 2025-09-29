@@ -4,23 +4,24 @@ import { DateRangePicker } from "@/components/ui/date-range-picker";
 import { Input } from "@/components/ui/input";
 import { PermissionKeys } from "@/constants/permissions";
 import { usePermissions } from "@/hooks/usePermissions";
-import {
-  fetchDepartmentsAsync,
-  fetchOffencesAsync,
-  fetchStatusAsync,
-  fetchTypeOfPersonsAsync,
-  fetchZonesAsync,
-  selectDepartments,
-  selectDepartmentsLoading,
-  selectOffences,
-  selectOffencesLoading,
-  selectStatus,
-  selectStatusLoading,
-  selectTypeOfPersons,
-  selectTypeOfPersonsLoading,
-  selectZones,
-  selectZonesLoading
-} from "@/stores/slices/metadataSlice";
+// Generic placeholders for future API integration
+// import {
+//   fetchDepartmentsAsync,
+//   fetchOffencesAsync,
+//   fetchStatusAsync,
+//   fetchTypeOfPersonsAsync,
+//   fetchZonesAsync,
+//   selectDepartments,
+//   selectDepartmentsLoading,
+//   selectOffences,
+//   selectOffencesLoading,
+//   selectStatus,
+//   selectStatusLoading,
+//   selectTypeOfPersons,
+//   selectTypeOfPersonsLoading,
+//   selectZones,
+//   selectZonesLoading
+// } from "@/stores/slices/metadataSlice";
 import { clearFilters, fetchReportsAsync, selectReports, setFilters } from "@/stores/slices/reportsSlice";
 import { PlusCircle, X as XCircle } from "lucide-react";
 import { useEffect } from "react";
@@ -35,25 +36,25 @@ export default function AdvancedFilters() {
   const { hasPermission } = usePermissions();
   const [_searchParams, setSearchParams] = useSearchParams();
 
-  const offences = useSelector(selectOffences);
-  const offenceLoading = useSelector(selectOffencesLoading);
-  const typeOfPersons = useSelector(selectTypeOfPersons);
-  const typeOfPersonsLoading = useSelector(selectTypeOfPersonsLoading);
-  const zones = useSelector(selectZones);
-  const zonesLoading = useSelector(selectZonesLoading);
-  const statuses = useSelector(selectStatus);
-  const statusesLoading = useSelector(selectStatusLoading);
-  const departments = useSelector(selectDepartments);
-  const departmentsLoading = useSelector(selectDepartmentsLoading);
+  // Generic placeholders for future API integration
+  const offences = []; // Will be fetched from API in future
+  const offenceLoading = false;
+  const typeOfPersons = []; // Will be fetched from API in future
+  const typeOfPersonsLoading = false;
+  const zones = []; // Will be fetched from API in future
+  const zonesLoading = false;
+  const statuses = []; // Will be fetched from API in future
+  const statusesLoading = false;
+  const departments = []; // Will be fetched from API in future
+  const departmentsLoading = false;
 
-  useEffect(() => {
-    dispatch(fetchZonesAsync());
-    dispatch(fetchOffencesAsync());
-    dispatch(fetchTypeOfPersonsAsync());
-    dispatch(fetchStatusAsync());
-    dispatch(fetchDepartmentsAsync())
-
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchZonesAsync());
+  //   dispatch(fetchOffencesAsync());
+  //   dispatch(fetchTypeOfPersonsAsync());
+  //   dispatch(fetchStatusAsync());
+  //   dispatch(fetchDepartmentsAsync())
+  // }, [dispatch]);
 
 
   const { filters, loading: generatingReports } = useSelector(selectReports);

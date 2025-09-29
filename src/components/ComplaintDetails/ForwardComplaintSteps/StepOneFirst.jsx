@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertCircle, Plus, X } from "lucide-react"
-import ComboboxField from "../../reuseable/ComboboxField"
+import ComboboxField from "../../reuseable/SearchableSelectField"
 
 
 export const StepOne = ({

@@ -2,29 +2,36 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
-import { OTP_TIMER } from "@/constants";
-import { resendOtpAsync, verifyAccountAsync } from "@/stores/slices/authSlice";
+import { HTTP_METHODS, OTP_TIMER } from "@/constants";
+import { AUTH_APIS } from "@/constants/APIs";
+import { apiHandler } from "@/lib/apiWrapper";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 
-export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp,showWelcome=false }) {
+export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp, showWelcome = false }) {
     const [otp, setOtp] = useState("");
-    const [submitStatus, setSubmitStatus] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isResending, setIsResending] = useState(false);
     const [timer, setTimer] = useState(OTP_TIMER);
-    const cnic = useSelector((state) => state.auth?.temporaryStorage?.cnic);
-    const dispatch = useDispatch()
 
+    const cnic = useSelector((state) => state.auth?.temporaryStorage?.cnic);
+
+    // Timer setup
     useEffect(() => {
+        let interval;
         if (showOtp) {
             setTimer(OTP_TIMER);
-            const interval = setInterval(() => {
-                setTimer((prev) => (prev > 0 ? prev - 1 : 0));
+            setOtp(""); // Clear OTP on modal open
+            interval = setInterval(() => {
+                setTimer((prev) => {
+                    if (prev <= 1) clearInterval(interval);
+                    return prev > 0 ? prev - 1 : 0;
+                });
             }, 1000);
-            return () => clearInterval(interval);
         }
+        return () => clearInterval(interval);
     }, [showOtp]);
 
     const formatTime = (seconds) => {
@@ -34,84 +41,87 @@ export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp,showWelcom
     };
 
     const handleOtp = async (cnic, userOTP) => {
-        if (!userOTP || userOTP.length !== 6) return;
+        if (!userOTP || userOTP.length !== 6 || isLoading) return;
 
         setIsLoading(true);
-        setSubmitStatus({});
-
-        const resultAction = await dispatch(verifyAccountAsync({ cnic, otp: userOTP }));
+        const response = await apiHandler(AUTH_APIS.VERIFY_ACCOUNT, {
+            method: HTTP_METHODS.POST,
+            data: { cnic, otp: userOTP },
+        });
         setIsLoading(false);
 
-        if (verifyAccountAsync.fulfilled.match(resultAction)) {
-            const response = resultAction.payload;
-            setShowOtp(false);
+        if (!response.success) {
+            toast.error(response.message || "Invalid OTP. Please try again.");
+            return;
+        }
 
-            toast.success(response?.message || "OTP verified successfully");
-            if(showWelcome){
-                Swal.fire({
-                    icon:"success",
-                    title:"Welcome back",
-                    text:"your account has been verified please login again to continue!"
-                })
-            }
-            // Optional: Trigger navigation or callback here
-            onConfirmOtp?.();
-        } else {
-            const errorMessage =
-                resultAction?.payload?.message || "Invalid OTP. Please try again.";
-            setSubmitStatus({ error: errorMessage });
-            setIsLoading(false);
-            toast.error(errorMessage);
+        toast.success(response.message || "OTP verified successfully");
+        setShowOtp(false); // Close modal
+
+        if (showWelcome) {
+            Swal.fire({
+                icon: "success",
+                title: "Welcome back",
+                text: "Your account has been verified. Please login again to continue!",
+            });
+        }
+
+        if (typeof onConfirmOtp === "function") {
+            onConfirmOtp();
         }
     };
-
 
     const handleResendButton = async () => {
-        try {
-            setIsLoading(true);
-            setSubmitStatus({});
-            setOtp("");
+        if (timer > 0 || isResending) return; // Prevent if still waiting or already resending
 
-            const resultAction = await dispatch(resendOtpAsync({ cnic }));
-            setIsLoading(false)
-            if (resendOtpAsync.fulfilled.match(resultAction)) {
-                const response = resultAction.payload;
-                const INTENT = response?.data?.intent;
+        setIsResending(true);
+        const response = await apiHandler(AUTH_APIS.RESEND_OTP, {
+            method: HTTP_METHODS.POST,
+            data: { cnic },
+        });
+        setIsResending(false);
 
-                if (INTENT === "OTP_RESENT") {
-                    setTimer(OTP_TIMER);
-                    toast.success(response?.message || "OTP resent successfully");
-                    return;
-                }
-
-                toast.success(response?.message || "OTP resent successfully");
-            } else {
-                const errorMessage =
-                    resultAction?.payload?.message || "Something went wrong during OTP resend.";
-                toast.error(errorMessage);
-                setSubmitStatus({ error: errorMessage });
-            }
-        } catch (err) {
-            console.log(err);
-            toast.error("Something went wrong during OTP resend.");
-            setIsLoading(false);
-            setSubmitStatus({ error: "Something went wrong during OTP resend." });
+        if (!response.success) {
+            return toast.error(response.message || "Failed to resend OTP.");
         }
 
+        toast.success(response.message || "OTP resent successfully.");
+        setTimer(OTP_TIMER); // Restart timer
+        setOtp(""); // Clear OTP input
     };
 
+    const handleChange = (value) => {
+        const sanitized = value.replace(/\D/g, "");
+        setOtp(sanitized);
+
+        if (sanitized.length === 6) {
+            handleOtp(cnic, sanitized);
+        }
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === "Enter" && otp.length === 6 && !isLoading) {
+            handleOtp(cnic, otp);
+        }
+    };
 
     return (
-        <Dialog open={showOtp}>
-            <DialogContent showCloseButton={true}>
+        <Dialog open={showOtp} onOpenChange={setShowOtp}>
+            <DialogContent showCloseButton={false}>
                 <DialogHeader className="space-y-6">
                     <DialogTitle className="text-center">Enter your OTP</DialogTitle>
 
-                    <div className="flex justify-between items-center text-lg">
-                        <div className="text-red-500 sm:text-sm text-xs mt-4">
+                    <div className="flex justify-between items-center text-sm sm:text-base">
+                        <span className="text-red-500">
                             {timer > 0 ? `Time remaining: ${formatTime(timer)}` : "OTP has expired."}
-                        </div>
-                        <Button disabled={timer > 0} onClick={handleResendButton}>
+                        </span>
+                        <Button
+                            size="sm"
+                            onClick={handleResendButton}
+                            disabled={timer > 0 || isResending}
+                            loading={isResending}
+                            loadingLabel="Resending..."
+                        >
                             Resend OTP
                         </Button>
                     </div>
@@ -120,13 +130,9 @@ export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp,showWelcom
                         <InputOTP
                             maxLength={6}
                             value={otp}
-                            onChange={(value) => {
-                                setOtp(value.replace(/\D/g, ""));
-                                if (value.length === 6) {
-                                    handleOtp(cnic, value);
-                                }
-                            }}
-                            onKeyDown={(e) => e.key === "Enter" && handleOtp(cnic, otp)}
+                            onChange={handleChange}
+                            onKeyDown={handleKeyDown}
+                            disabled={timer === 0}
                         >
                             <InputOTPGroup>
                                 {[...Array(6)].map((_, index) => (
@@ -135,18 +141,15 @@ export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp,showWelcom
                             </InputOTPGroup>
                         </InputOTP>
                     </div>
-                    <div className="min-h-4">
-                        {submitStatus.error && <p className="text-red-500">{submitStatus.error}</p>}
-                        {submitStatus.success && <p className="text-green-600">{submitStatus.success}</p>}
-                    </div>
 
                     <Button
                         className="w-full bg-gray-800 px-2 text-white rounded-md py-2 hover:bg-black"
                         disabled={isLoading || otp.length !== 6 || timer === 0}
                         onClick={() => handleOtp(cnic, otp)}
                         loading={isLoading}
+                        loadingLabel="Verifying..."
                     >
-                        Submit
+                        Submit OTP
                     </Button>
                 </DialogHeader>
             </DialogContent>

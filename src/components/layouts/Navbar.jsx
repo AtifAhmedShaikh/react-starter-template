@@ -1,70 +1,13 @@
-// import { Button } from "@/components/ui/button";
-// import { verifyJwtToken } from "@/utils/helper";
-// import { useNavigate } from "react-router-dom";
-// import { Link } from "react-router-dom";
-
-// const Navbar = () => {
-//   const navigate = useNavigate();
-//   const { success: isValidToken } = verifyJwtToken(
-//     localStorage.getItem("accessToken")
-//   );
-
-//   return (
-//     <header className="border-b bg-white shadow-sm sticky top-0 z-50">
-//       <div className="container mx-auto px-4 py-4">
-//         <div className="flex items-center justify-between">
-//           <Link to="/" className="flex items-center gap-2">
-//             <img src="/ace.png" alt="Logo" className="w-16 h-16 mr-2" />
-//             <div>
-//               <h1 className="text-2xl font-bold text-primary">ACE Sindh</h1>
-//               <p className="text-sm text-muted-foreground">Enquiries & Anti-Corruption Establishment</p>
-//             </div>
-//           </Link>
-//           <nav className="hidden md:flex items-center gap-6">
-//             <Link to="/about" className="text-foreground hover:text-primary transition-colors">
-//               About
-//             </Link>
-//             <Link to="/services" className="text-foreground hover:text-primary transition-colors">
-//               Services
-//             </Link>
-//             <Link to="/statistics" className="text-foreground hover:text-primary transition-colors">
-//               Statistics
-//             </Link>
-//             <Link to="/contact" className="text-foreground hover:text-primary transition-colors">
-//               Contact
-//             </Link>
-//             {isValidToken ? (
-//               <div className="flex gap-2 items-center">
-//                 <Button className="mx-auto" onClick={() => navigate("/edit-profile")}>
-//                   Profile
-//                 </Button>
-//                 <Button onClick={() => navigate("/logout")}>Logout</Button>
-//               </div>
-//             ) : (
-//               <div className="flex gap-2 items-center">
-//                 <Button onClick={() => navigate("/login")}>Login</Button>
-//                 <Button onClick={() => navigate("/register")}>Register</Button>
-//               </div>
-//             )}
-//           </nav>
-//         </div>
-//       </div>
-//     </header>
-//   )
-// }
-
-// export default Navbar
-
-
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { verifyJwtToken } from "@/utils/helper";
-import { useNavigate, Link, useLocation } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { LANDING_PAGE_URL } from "@/config/configManager";
 import { USER_ROLES } from "@/constants";
+import { verifyJwtToken } from "@/utils/helper";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const landingPageURL = import.meta.env.VITE_LANDING_PAGE_URL;
+  const landingPageURL = LANDING_PAGE_URL;
   const navigate = useNavigate();
   const { success: isValidToken, user = "" } = verifyJwtToken(
     localStorage.getItem("accessToken")
