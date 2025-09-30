@@ -17,6 +17,7 @@ import {
   MobileAppPage,
   NotFound,
   NotificationsPage,
+  PermissionsPage,
   ReportsPage,
   SettingsPage,
   SignUpPage,
@@ -118,7 +119,10 @@ export const routesConfig = [
                 path: "/tutorial/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_tutorials} Component={TutorialPage} />
               },
               {
-                path: "/manuals", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_manuals} Component={ManualPage} />
+                path: "/manuals", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_edit_profile]} Component={ManualPage} />
+              },
+              {
+                path: "/permissions", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_edit_profile} Component={PermissionsPage} />
               },
             ]
           }

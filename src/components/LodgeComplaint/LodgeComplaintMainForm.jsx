@@ -5,7 +5,9 @@ import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { lodgedComplaint } from "@/apis/complaintsApis";
+import { COMPLAINT_APIS } from "@/constants/APIs";
+import { HTTP_METHODS } from "@/constants";
+import { apiHandler } from "@/lib/apiWrapper";
 import { complaintSchema } from "@/schema/complaintSchema";
 import { selectUser, setActiveTabItem } from "@/stores/slices/authSlice";
 import { deformatMobileNumber } from "@/utils/formatters";
@@ -269,7 +271,10 @@ const LodgeComplaintMainForm = () => {
               if (!pendingPayload) return;
               setIsSubmitting(true);
               pendingPayload?.set("otp", otp);
-              const response = await lodgedComplaint(pendingPayload);
+              const response = await apiHandler(COMPLAINT_APIS.LODGED_COMPLAINT, {
+                method: HTTP_METHODS.POST,
+                data: pendingPayload,
+              });
               if (!response.success) {
                 toast.error(response?.message);
                 setIsSubmitting(false); // stop loading

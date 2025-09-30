@@ -16,6 +16,7 @@ import {
   Key,
   Loader,
   Settings,
+  Shield,
   ShieldAlert,
   User,
   Users,
@@ -205,6 +206,12 @@ export const useSidebarMenuLinks = () => {
       url: "/change-password",
       icon: Key,
       requiredPermissions: [PermissionKeys.can_change_password],
+    },
+    {
+      name: "Permissions",
+      url: "/permissions",
+      icon: Shield,
+      requiredPermissions: [],
     },
     {
       name: "Settings",

@@ -13,7 +13,6 @@ const ComplaintInformation = ({ complaint = {} }) => {
     const displayTypeOfPerson = complaint?.typeOfPerson?.key == "other" ?   complaint?.otherTypeOfPerson || "N/A" :  complaint?.typeOfPerson?.value
     const canViewOldRef = hasPermission(PermissionKeys.can_view_old_refno)
     
-    
     return (
         <section className="mb-8 border-b pb-6">
             <h2 className="text-2xl font-semibold text-gray-700 mb-4 flex items-center gap-2">

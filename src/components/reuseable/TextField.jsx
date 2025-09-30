@@ -21,6 +21,7 @@ export const TextField = forwardRef(
       disabled,
       variant = "outlined",
       optional=false,
+      labelDescription="",
       ...rest
     },
     ref
@@ -75,6 +76,9 @@ export const TextField = forwardRef(
           {label} {optional && <span className="ml-1 text-xs">(optional)</span>}
           {required && <span className="ml-1 text-red-500">*</span>}
         </label>
+        {labelDescription && <p className="text-xs text-gray-500 mb-1">
+          {labelDescription}
+        </p>}
 
         <div
           className={cn(

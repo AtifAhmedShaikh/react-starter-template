@@ -7,7 +7,7 @@ import { PermissionKeys } from "@/constants/permissions";
 import { usePermissions } from "@/hooks/usePermissions";
 import { encryptValue } from "@/lib/encryption";
 import { editProfileSchema } from "@/schema/userSchema";
-import { selectUser, updateUserAsync, updateUserSensitiveFeildsAsync } from "@/stores/slices/authSlice";
+import { selectUser, updateUserAsync, updateUserSensitiveFieldsAsync } from "@/stores/slices/authSlice";
 import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
 import { deformatCnic, formatCharacterOnlyInput, formatCnic, formatCNICInput, formatMobileNumber, formatPhoneNumberInput } from "@/utils/formatters";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -176,13 +176,13 @@ const EditProfilePage = () => {
             sensitivePayload.phoneNumber = getValues("phoneNumber").replace(/-/g, "");
         }
 
-        const resultAction = await dispatch(updateUserSensitiveFeildsAsync({
+        const resultAction = await dispatch(updateUserSensitiveFieldsAsync({
             ...sensitivePayload,
             otp
         }));
         
         setLoading((pre) => ({ ...pre, savingSensitiveFeilds: false }));
-        if (updateUserSensitiveFeildsAsync.fulfilled.match(resultAction)) {
+        if (updateUserSensitiveFieldsAsync.fulfilled.match(resultAction)) {
             const message = resultAction?.payload?.message || "Profile updated successfully!";
             setSuccess(message);
             setError("")

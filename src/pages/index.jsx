@@ -40,4 +40,7 @@ export { default as MobileAppPage } from './MobileApp'
 export { default as PrivacyPolicyPage } from './PrivacyPolicy'
 export { default as ServicesPage } from './Services'
 
+// Permission management
+export { default as PermissionsPage } from './Permissions/PermissionsPage'
+
 

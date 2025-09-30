@@ -1,12 +1,4 @@
-import {
-  checkAuth,
-  forgotPassword,
-  login,
-  logout,
-  resetPassword,
-  updateUser,
-  updateUserSensitiveFields,
-} from "@/apis/authApis";
+// Removed individual API function imports - using apiHandler directly
 import { HTTP_METHODS } from "@/constants";
 import { AUTH_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
@@ -27,86 +19,95 @@ const initialState = {
 export const loginAsync = createAsyncThunk(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
-    try {
-      return await login(credentials);
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(AUTH_APIS.LOGIN, {
+      method: HTTP_METHODS.POST,
+      data: credentials,
+    });
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
 
 export const updateUserAsync = createAsyncThunk(
   "auth/updateUser",
   async (userData, { rejectWithValue }) => {
-    try {
-      return await updateUser(userData);
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(AUTH_APIS.UPDATE_ACCOUNT, {
+      method: HTTP_METHODS.POST,
+      data: userData,
+    });
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
-export const updateUserSensitiveFeildsAsync = createAsyncThunk(
-  "auth/updateUserSensitiveFeilds",
+
+export const updateUserSensitiveFieldsAsync = createAsyncThunk(
+  "auth/updateUserSensitiveFields",
   async (userData, { rejectWithValue }) => {
-    try {
-      return await updateUserSensitiveFields(userData);
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(
+      AUTH_APIS.UPDATE_ACCOUNT_SENSITIVE_FIELDS,
+      {
+        method: HTTP_METHODS.POST,
+        data: userData,
+      },
+    );
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
 
 export const checkAuthAsync = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
-    try {
-      return await checkAuth();
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(AUTH_APIS.CHECK_AUTH, {
+      method: HTTP_METHODS.GET,
+    });
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
 
 export const forgotPasswordAsync = createAsyncThunk(
   "auth/forgotPassword",
   async (cnic, { rejectWithValue }) => {
-    try {
-      return await forgotPassword(cnic);
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(AUTH_APIS.FORGOT_PASSWORD, {
+      method: HTTP_METHODS.POST,
+      data: cnic,
+    });
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
 
 export const resetPasswordAsync = createAsyncThunk(
   "auth/resetPassword",
   async (resetData, { rejectWithValue }) => {
-    try {
-      return await resetPassword(resetData);
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(AUTH_APIS.RESET_PASSWORD, {
+      method: HTTP_METHODS.POST,
+      data: resetData,
+    });
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
 
 export const changeProfileImageAsync = createAsyncThunk(
   "auth/changeProfileImage",
   async (data, { rejectWithValue }) => {
-    try {
-      const response = await apiHandler(AUTH_APIS.CHANGE_PROFILE_IMAGE, {
-        method: HTTP_METHODS.POST,
-        data,
-      });
-      if (!response?.success) throw new Error(response?.message);
-      return response;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(AUTH_APIS.CHANGE_PROFILE_IMAGE, {
+      method: HTTP_METHODS.POST,
+      data,
+    });
+    if (!response?.success) return rejectWithValue(response?.message);
+    return response.data;
   },
 );
 
 export const logoutAsync = createAsyncThunk("auth/logout", async () => {
-  return await logout();
+  const response = await apiHandler(AUTH_APIS.LOGOUT, {
+    method: HTTP_METHODS.POST,
+  });
+  if (!response.success) return rejectWithValue(response.message);
+  return response.data;
 });
 
 // Slice
@@ -201,10 +202,10 @@ const authSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
-      .addCase(updateUserSensitiveFeildsAsync.pending, (state) => {
+      .addCase(updateUserSensitiveFieldsAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(updateUserSensitiveFeildsAsync.fulfilled, (state, action) => {
+      .addCase(updateUserSensitiveFieldsAsync.fulfilled, (state, action) => {
         const updatedUser = {
           fullName: action.payload?.user?.fullName,
           phoneNumber: action.payload?.user?.phoneNumber,
@@ -216,7 +217,7 @@ const authSlice = createSlice({
         state.status = "idle";
         state.user = { ...state.user, ...updatedUser };
       })
-      .addCase(updateUserSensitiveFeildsAsync.rejected, (state, action) => {
+      .addCase(updateUserSensitiveFieldsAsync.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

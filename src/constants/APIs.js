@@ -8,8 +8,6 @@ export const AUTH_APIS = {
   LOGIN: "/api/auth/login",
   LOGOUT: "/api/auth/logout",
   CHANGE_PASSWORD: "/api/users/change-password",
-  CURRENT_USER: "/api/users/me",
-  DELETE_ACCOUNT: "/api/users/delete-request",
   UPDATE_ACCOUNT: "/api/users/update-account",
   UPDATE_ACCOUNT_SENSITIVE_FIELDS: "/api/users/update-account-sensitive",
   REQUEST_OTP: "/api/auth/request-otp",
@@ -48,14 +46,6 @@ export const COMPLAINT_APIS = {
     "/api/forward/locationCorrespondingCharges",
   GET_GROUP_COMAPLAINTS: "/api/complaints/getComplaintsByGroupId",
   GET_SIMILAR_COMPLAINTS: "/api/complaints/getSimilarComplaint",
-  GET_REFER_COMPLAINTS: "/api/complaints/refer-complaints",
-  GET_TRACK_OPEN_COMPLAINTS: "/api/complaints/trackOpenComplaints",
-  UPDATE_COMPLAINANT_TAG_STATUS: "/api/complaints/updateComplainantTag",
-};
-
-export const CHARGES_APIS = {
-  GET_APPROVALS_REQUESTS: "/api/charges/getAllApprovalAuthorityRequests",
-  APPROVE_CHARGE: "/api/charges/approveAssignedCharge",
 };
 
 export const USER_SETTINGS_APIS = {
@@ -75,12 +65,15 @@ export const STATISTICS_APIS = {
   GET_DASHBOARD_STATISTICS: "/api/stats/dashboard-statistics",
 };
 
-export const ADMIN_APIS = {
-  GET_ADMINS: "/api/admins/getAllAdminsForPortal",
-  GET_ADMIN_PROFILE_DETAILS: "/api/admins/getAdminProfileDetails",
-  GET_COMPLAINANTS: "/api/admins/getAllComplainants",
-};
-
 export const METADATA_APIS = {
   GET_ALL_CITIES: "/api/metadata/cities",
+};
+
+export const PERMISSION_APIS = {
+  GET_ALL_PERMISSIONS: "/api/rolePermissions/getAllPermissions",
+  CREATE_PERMISSION: "/api/rolePermissions/createPermission",
+  UPDATE_PERMISSION: "/api/rolePermissions/updatePermission",
+  DELETE_PERMISSION: "/api/rolePermissions/deletePermission",
+  EXPORT_PERMISSIONS: "/api/exports/exportPermissions",
+  IMPORT_PERMISSIONS: "/api/imports/importPermissions",
 };

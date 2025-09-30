@@ -5,7 +5,7 @@ import { COMPLAINT_APIS } from "@/constants/APIs";
 import { PermissionKeys } from "@/constants/permissions";
 import { usePermissions } from "@/hooks/usePermissions";
 import { apiHandler } from "@/lib/apiWrapper";
-import { axiosInstance } from "@/lib/axiosInstance";
+import { HTTP_METHODS } from "@/constants";
 import { formatDate } from "@/utils/formatters";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -33,10 +33,11 @@ export default function ComplainerComplaintsPage() {
 
 
   const fetchComplaintsByComplainerId = async ({ keyword, page, limit, sortBy, order }) => {
-    const res = await axiosInstance.get(`${COMPLAINT_APIS.GET_COMPLAINTS_BY_COMPLAINANT_ID}/${id}`, {
+    const res = await apiHandler(`${COMPLAINT_APIS.GET_COMPLAINTS_BY_COMPLAINANT_ID}/${id}`, {
+      method: HTTP_METHODS.GET,
       params: { keyword, page, limit, sortBy, order },
     });
-    return res.data;
+    return res.success ? res.data : res;
   };
 
   const fetchComplainerDetails = async () => {
@@ -44,7 +45,7 @@ export default function ComplainerComplaintsPage() {
       setLoading(true);
       setError(null);
       const res = await apiHandler(`${COMPLAINT_APIS.GET_USER_BY_ID}/${id}`, {
-        method: "GET",
+        method: HTTP_METHODS.GET,
       });
       console.log("Response", res)
 

@@ -9,6 +9,7 @@ import pdfReducer from "./slices/pdfSlice";
 import reportsReducer from "./slices/reportsSlice";
 import dashboardReducer from "./slices/dashboardSlice";
 import modalReducer from "./slices/modalSlice";
+import permissionReducer from "./slices/permissionSlice";
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -20,6 +21,7 @@ const appReducer = combineReducers({
   reports: reportsReducer,
   dashboard: dashboardReducer,
   modal: modalReducer,
+  permissions: permissionReducer,
 });
 
 // Root reducer that resets all slices
