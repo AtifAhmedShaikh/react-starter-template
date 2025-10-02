@@ -6,12 +6,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
-  selectedCharge: null,
+  permissions: [],
   isAuthenticated: false,
   temporaryStorage: {},
   status: "idle",
   error: null,
-  permissions: [],
   activeTabItem: "",
 };
 
@@ -123,10 +122,6 @@ const authSlice = createSlice({
       console.log("Action payload from temp: ", action.payload);
       state.temporaryStorage[action.payload.key] = action.payload.value;
     },
-    setSelectedCharge: (state, action) => {
-      console.log("Action payload from temp: ", action.payload);
-      state.selectedCharge = action.payload;
-    },
     setActiveTabItem: (state, action) => {
       state.activeTabItem = action.payload || "";
     },
@@ -152,14 +147,13 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
       })
-
       .addCase(checkAuthAsync.pending, (state) => {
         state.status = "loading";
       })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.user = action.payload?.data?.user;
-        state.permissions = action.payload?.data?.permissions || [];
+        state.user = action.payload?.user;
+        state.permissions = action.payload?.user?.role?.permissions;
         state.isAuthenticated = true;
       })
       .addCase(checkAuthAsync.rejected, (state, action) => {
@@ -224,23 +218,24 @@ const authSlice = createSlice({
   },
 });
 
+const emptyPermissions = [];
+
 // Selectors
 export const selectAuth = (state) => state.auth || initialState;
 export const selectUser = (state) => state.auth?.user || initialState?.user;
 export const selectUserRole = (state) => state.auth.user?.role?.value;
-export const selectUserPermissions = (state) => state.auth.permissions || [];
+export const selectUserPermissions = (state) =>
+  state.auth.permissions || emptyPermissions;
 
 export const selectIsAuthenticated = (state) =>
   state.auth.isAuthenticated || false;
 
 export const selectActiveTab = (state) => state.auth?.activeTabItem || "";
 
+export const selectFetchingStatus = (state) => state.auth?.status || "";
+
 // Actions
-export const {
-  setUserToNull,
-  setTemporaryValue,
-  setSelectedCharge,
-  setActiveTabItem,
-} = authSlice.actions;
+export const { setUserToNull, setTemporaryValue, setActiveTabItem } =
+  authSlice.actions;
 
 export default authSlice.reducer;

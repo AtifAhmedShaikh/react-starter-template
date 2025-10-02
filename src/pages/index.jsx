@@ -43,4 +43,7 @@ export { default as ServicesPage } from './Services'
 // Permission management
 export { default as PermissionsPage } from './Permissions/PermissionsPage'
 
+// Role management
+export { default as RolesPage } from './Roles/RolesPage'
+
 

@@ -5,19 +5,18 @@ import { toast } from "sonner";
 
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
-import {
-  DialogFooter
-} from "@/components/ui/dialog";
-import { permissionSchema } from "@/schema/permissionSchema";
-import { closeModal, MODAL_TYPES, selectIsModalOpenByType } from "@/stores/slices/modalSlice";
-import { createPermissionAsync, selectPermissionsLoading } from "@/stores/slices/permissionSlice";
-import { sanitizeToLowerUnderscoreOnlyLetters } from "@/utils/inputSanitizers";
-import ModalWrapper from "../reuseable/ModalWrapper";
+import { DialogFooter } from "@/components/ui/dialog";
 
-const AddPermissionModal = () => {
+import { roleSchema } from "@/schema/roleSchema";
+import { closeModal, MODAL_TYPES, selectIsModalOpenByType } from "@/stores/slices/modalSlice";
+import { createRoleAsync, selectRolesLoading } from "@/stores/slices/roleSlice";
+import ModalWrapper from "../reuseable/ModalWrapper";
+import { sanitizeToLowerUnderscoreOnlyLetters } from "@/utils/inputSanitizers";
+
+const AddRoleModal = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector(selectIsModalOpenByType(MODAL_TYPES.ADD_PERMISSION));
-  const isCreating = useSelector((state) => selectPermissionsLoading(state).create);
+  const isOpen = useSelector(selectIsModalOpenByType(MODAL_TYPES.ADD_ROLE));
+  const isCreating = useSelector((state) => selectRolesLoading(state).create);
 
   const {
     register,
@@ -25,50 +24,67 @@ const AddPermissionModal = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(permissionSchema),
+    resolver: yupResolver(roleSchema),
+    defaultValues: {
+      key: "",
+      value: "",
+      description: "",
+    },
   });
 
   const handleAdd = (data) => {
-    dispatch(createPermissionAsync(data))
+    dispatch(createRoleAsync(data))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Permission created successfully");
+        toast.success(response.message || "Role created successfully");
         dispatch(closeModal());
         reset();
       })
       .catch((error) => {
-        toast.error(error|| "Failed to create permission");
+        toast.error(error || "Failed to create role");
       });
-  }
+  };
 
   return (
-    <ModalWrapper isOpen={isOpen} title="Add New Permission" >
+    <ModalWrapper isOpen={isOpen} title="Add New Role">
       <form onSubmit={handleSubmit(handleAdd)} className="space-y-4">
         <TextField
           label="Key"
           {...register("key")}
-          error={errors.key?.message}
-          placeholder="Enter permission key (e.g., user:create)"
-          labelDescription="⚠️ Only lowercase letters and underscores are allowed. No numbers or special characters."
           onInput={sanitizeToLowerUnderscoreOnlyLetters}
+          error={errors.key?.message}
+          placeholder="Enter role key (e.g., admin, manager)"
+          labelDescription="⚠️ Only lowercase letters and underscores are allowed. No numbers or special characters."
           required
         />
+
         <TextField
           label="Value"
           {...register("value")}
           error={errors.value?.message}
-          placeholder="Enter permission description (e.g., Create User)"
+          placeholder="Enter role value (e.g., Admin, Manager)"
           required
         />
+
+        <TextField
+          label="Description"
+          {...register("description")}
+          error={errors.description?.message}
+          placeholder="Enter role description"
+          required
+        />
+
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => dispatch(closeModal())}>
             Cancel
           </Button>
-          <Button type="submit" loading={isCreating} loadingLabel="Creating Permission..." >Add Permission</Button>
+          <Button type="submit" loading={isCreating} loadingLabel="Creating Role...">
+            Add Role
+          </Button>
         </DialogFooter>
       </form>
     </ModalWrapper>
   );
 };
 
-export default AddPermissionModal;
+export default AddRoleModal;

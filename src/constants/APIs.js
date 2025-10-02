@@ -77,3 +77,14 @@ export const PERMISSION_APIS = {
   EXPORT_PERMISSIONS: "/api/exports/exportPermissions",
   IMPORT_PERMISSIONS: "/api/imports/importPermissions",
 };
+
+export const ROLE_APIS = {
+  GET_ALL_ROLES: "/api/rolePermissions/getAllRoles",
+  GET_ROLE_WITH_PERMISSIONS: "/api/rolePermissions/getRoleWithPermissions",
+  ASSIGN_PERMISSIONS_TO_ROLE: "/api/rolePermissions/updateRolePermissions",
+  CREATE_ROLE: "/api/rolePermissions/createRole",
+  UPDATE_ROLE: "/api/rolePermissions/updateRoleById",
+  DELETE_ROLE: "/api/rolePermissions/deleteRole",
+  EXPORT_ROLES: "/api/exports/exportRoles",
+  IMPORT_ROLES: "/api/imports/importRoles",
+};

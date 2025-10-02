@@ -1,25 +1,31 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
-import {
-  DialogFooter
-} from "@/components/ui/dialog";
+import { DialogFooter } from "@/components/ui/dialog";
 
 import { permissionUpdateSchema } from "@/schema/permissionSchema";
-import { closeModal, MODAL_TYPES, selectIsModalOpenByType, selectModalData } from "@/stores/slices/modalSlice";
-import { updatePermissionAsync } from "@/stores/slices/permissionSlice";
-import { useSelector } from "react-redux";
+import {
+  closeModal,
+  MODAL_TYPES,
+  selectIsModalOpenByType,
+  selectModalData,
+} from "@/stores/slices/modalSlice";
+import {
+  updatePermissionAsync,
+  selectPermissionsLoading,
+} from "@/stores/slices/permissionSlice";
 import ModalWrapper from "../reuseable/ModalWrapper";
 
 const EditPermissionModal = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectIsModalOpenByType(MODAL_TYPES.EDIT_PERMISSION));
   const permission = useSelector(selectModalData);
+  const isUpdating = useSelector((state) => selectPermissionsLoading(state).update);
 
   const {
     register,
@@ -36,23 +42,24 @@ const EditPermissionModal = () => {
     }
   }, [permission, reset, isOpen]);
 
-  const handleUpdate = async (data) => {
+  const handleUpdate = (data) => {
+    const id = permission?.id;
     delete data.id;
-    try {
-      await dispatch(
-        updatePermissionAsync({ id: permission?.id, data })
-      ).unwrap();
-      toast.success("Permission updated successfully");
-      reset();
-      dispatch(closeModal());
-    } catch (error) {
-      toast.error(error || "Failed to update permission");
-    }
+
+    dispatch(updatePermissionAsync({ id, data }))
+      .unwrap()
+      .then((response) => {
+        toast.success(response.message || "Permission updated successfully");
+        dispatch(closeModal());
+        reset();
+      })
+      .catch((error) => {
+        toast.error(error|| "Failed to update permission");
+      });
   };
 
-
   return (
-    <ModalWrapper isOpen={isOpen} title="Edit Permission" >
+    <ModalWrapper isOpen={isOpen} title="Edit Permission">
       <form onSubmit={handleSubmit(handleUpdate)} className="space-y-4">
         <TextField
           label="Key"
@@ -70,10 +77,22 @@ const EditPermissionModal = () => {
           required
         />
         <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => dispatch(closeModal())}>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={isUpdating}
+            onClick={() => dispatch(closeModal())}
+          >
             Cancel
           </Button>
-          <Button type="submit">Update Permission</Button>
+          <Button
+            type="submit"
+            loading={isUpdating}
+            loadingLabel="Updating Permission..."
+            disabled={isUpdating}
+          >
+            Update Permission
+          </Button>
         </DialogFooter>
       </form>
     </ModalWrapper>

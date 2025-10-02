@@ -11,7 +11,7 @@ const DashboardPage = () => {
   const { data, loading, error } = useSelector(selectDashboard)
 
   useEffect(() => {
-    dispatch(fetchDashboardData())
+    // dispatch(fetchDashboardData())
   }, [dispatch])
 
   if (loading) {

@@ -52,7 +52,7 @@ const Login = () => {
 
       toast.success(response?.message);
       localStorage.setItem("accessToken", response?.token);
-      navigate(redirectTo || "/dashboard");
+      navigate(redirectTo || "/edit-profile");
     } else {
       const errorMessage = resultAction?.payload?.message || "Error while login, please try again.";
       toast.error(errorMessage);

@@ -19,6 +19,7 @@ import {
   NotificationsPage,
   PermissionsPage,
   ReportsPage,
+  RolesPage,
   SettingsPage,
   SignUpPage,
   StatisticsPage,
@@ -122,7 +123,10 @@ export const routesConfig = [
                 path: "/manuals", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_edit_profile]} Component={ManualPage} />
               },
               {
-                path: "/permissions", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_edit_profile} Component={PermissionsPage} />
+                path: "/permissions", element: <PermissionRoutesWrapper permissionKey={[]} Component={PermissionsPage} />
+              },
+              {
+                path: "/roles", element: <PermissionRoutesWrapper permissionKey={[]} Component={RolesPage} />
               },
             ]
           }

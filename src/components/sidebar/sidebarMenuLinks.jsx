@@ -33,7 +33,7 @@ export const useSidebarMenuLinks = () => {
   const unreadCount = useSelector(selectUnreadCount);
 
   useEffect(()=>{
-    dispatch(fetchDashboardData())
+    // dispatch(fetchDashboardData())
   },[])
 
   return [
@@ -210,6 +210,12 @@ export const useSidebarMenuLinks = () => {
     {
       name: "Permissions",
       url: "/permissions",
+      icon: Shield,
+      requiredPermissions: [],
+    },
+    {
+      name: "Roles",
+      url: "/roles",
       icon: Shield,
       requiredPermissions: [],
     },

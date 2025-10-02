@@ -1,13 +1,13 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { HTTP_METHODS } from "@/constants";
 import { PERMISSION_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+// Initial State
 const initialState = {
   permissions: [],
   status: "idle",
   error: null,
-  lastFetched: null,
   loading: {
     fetch: false,
     create: false,
@@ -16,91 +16,70 @@ const initialState = {
   },
 };
 
-// Async thunks
+// ===================
+// Async Thunks
+// ===================
+
 export const fetchPermissionsAsync = createAsyncThunk(
   "permissions/fetchPermissions",
   async (_, { rejectWithValue, getState }) => {
-    try {
-      const state = getState();
-      const { lastFetched, permissions } = state.permissions;
-
-      // Check if we have recent data (within 5 minutes)
-      const now = Date.now();
-      const fiveMinutes = 5 * 60 * 1000;
-
-      if (
-        lastFetched &&
-        now - lastFetched < fiveMinutes &&
-        permissions.length > 0
-      ) {
-        return permissions; // Return cached data
-      }
-
-      const response = await apiHandler(PERMISSION_APIS.GET_ALL_PERMISSIONS, {
-        method: HTTP_METHODS.GET,
-      });
-      if (!response.success) throw new Error(response.message);
-      return response.data || [];
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
+    const { permissions } = getState().permissions;
+    if (permissions.length > 0) {
+      return permissions;
     }
+    const response = await apiHandler(PERMISSION_APIS.GET_ALL_PERMISSIONS, {
+      method: HTTP_METHODS.GET,
+    });
+
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data || [];
   },
 );
 
 export const createPermissionAsync = createAsyncThunk(
   "permissions/createPermission",
   async (permissionData, { rejectWithValue }) => {
-    try {
-      const response = await apiHandler(PERMISSION_APIS.CREATE_PERMISSION, {
-        method: HTTP_METHODS.POST,
-        data: permissionData,
-      });
-      if (!response.success) throw new Error(response.message);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(PERMISSION_APIS.CREATE_PERMISSION, {
+      method: HTTP_METHODS.POST,
+      data: permissionData,
+    });
+
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
 
 export const updatePermissionAsync = createAsyncThunk(
   "permissions/updatePermission",
   async ({ id, data }, { rejectWithValue }) => {
-    try {
-      const response = await apiHandler(
-        `${PERMISSION_APIS.UPDATE_PERMISSION}/${id}`,
-        {
-          method: HTTP_METHODS.PUT,
-          data,
-        },
-      );
-      if (!response.success) throw new Error(response.message);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(
+      `${PERMISSION_APIS.UPDATE_PERMISSION}/${id}`,
+      {
+        method: HTTP_METHODS.PUT,
+        data,
+      },
+    );
+
+    if (!response.success) return rejectWithValue(response.message);
+    return response.data;
   },
 );
 
 export const deletePermissionAsync = createAsyncThunk(
   "permissions/deletePermission",
   async (id, { rejectWithValue }) => {
-    try {
-      const response = await apiHandler(
-        `${PERMISSION_APIS.DELETE_PERMISSION}/${id}`,
-        {
-          method: HTTP_METHODS.DELETE,
-        },
-      );
-      if (!response.success) throw new Error(response.message);
-      return id;
-    } catch (error) {
-      return rejectWithValue(error?.response?.data || error.message);
-    }
+    const response = await apiHandler(
+      `${PERMISSION_APIS.DELETE_PERMISSION}/${id}`,
+      {
+        method: HTTP_METHODS.DELETE,
+      },
+    );
+
+    if (!response.success) return rejectWithValue(response.message);
+    return id;
   },
 );
 
-// Slice
 const permissionSlice = createSlice({
   name: "permissions",
   initialState,
@@ -114,7 +93,7 @@ const permissionSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch permissions
+      // ===== Fetch Permissions =====
       .addCase(fetchPermissionsAsync.pending, (state) => {
         state.loading.fetch = true;
         state.status = "loading";
@@ -123,7 +102,6 @@ const permissionSlice = createSlice({
         state.loading.fetch = false;
         state.status = "succeeded";
         state.permissions = action.payload;
-        state.lastFetched = Date.now();
         state.error = null;
       })
       .addCase(fetchPermissionsAsync.rejected, (state, action) => {
@@ -131,7 +109,8 @@ const permissionSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
-      // Create permission
+
+      // ===== Create Permission =====
       .addCase(createPermissionAsync.pending, (state) => {
         state.loading.create = true;
       })
@@ -144,25 +123,25 @@ const permissionSlice = createSlice({
         state.loading.create = false;
         state.error = action.payload;
       })
-      // Update permission
+
+      // ===== Update Permission =====
       .addCase(updatePermissionAsync.pending, (state) => {
         state.loading.update = true;
       })
       .addCase(updatePermissionAsync.fulfilled, (state, action) => {
         state.loading.update = false;
         const index = state.permissions.findIndex(
-          (perm) => perm.id === action.payload.id,
+          (perm) => perm.id === action.payload?.permission.id,
         );
-        if (index !== -1) {
-          state.permissions[index] = action.payload;
-        }
+        if (index !== -1) state.permissions[index] = action.payload?.permission;
         state.error = null;
       })
       .addCase(updatePermissionAsync.rejected, (state, action) => {
         state.loading.update = false;
         state.error = action.payload;
       })
-      // Delete permission
+
+      // ===== Delete Permission =====
       .addCase(deletePermissionAsync.pending, (state) => {
         state.loading.delete = true;
       })
@@ -180,13 +159,23 @@ const permissionSlice = createSlice({
   },
 });
 
+// ===================
 // Selectors
+// ===================
+
 export const selectPermissions = (state) => state.permissions.permissions || [];
 export const selectPermissionsStatus = (state) => state.permissions.status;
 export const selectPermissionsError = (state) => state.permissions.error;
 export const selectPermissionsLoading = (state) => state.permissions.loading;
 
+// ===================
 // Actions
+// ===================
+
 export const { clearError, resetStatus } = permissionSlice.actions;
+
+// ===================
+// Reducer
+// ===================
 
 export default permissionSlice.reducer;
