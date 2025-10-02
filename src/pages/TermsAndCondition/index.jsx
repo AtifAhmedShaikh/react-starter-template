@@ -9,10 +9,10 @@ import {
   RefreshCw,
   Mail,
 } from "lucide-react";
-import Navbar from "../Navbar";
-import Footer from "../Footer";
+import Navbar from "@/components/layouts/Navbar";
+import Footer from "@/components/layouts/Footer";
 
-const TermAndCondition = () => {
+const TermsAndCondition = () => {
   return (
     <div className="bg-green-100 min-h-screen flex flex-col">
       <Navbar />
@@ -137,4 +137,4 @@ const TermAndCondition = () => {
   );
 };
 
-export default TermAndCondition;
+export default TermsAndCondition;

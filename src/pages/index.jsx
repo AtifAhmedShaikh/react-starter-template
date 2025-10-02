@@ -20,7 +20,6 @@ export { default as EditProfilePage } from './EditProfile'
 // Generic management pages
 export { default as ItemsPage } from './Items'
 export { default as UsersPage } from './Users'
-export { default as AdminsPage } from './Admins'
 export { default as AdminProfilePage } from './AdminProfile'
 
 // Reports and analytics
@@ -38,6 +37,7 @@ export { default as ManualPage } from './Manual'
 // Additional pages
 export { default as MobileAppPage } from './MobileApp'
 export { default as PrivacyPolicyPage } from './PrivacyPolicy'
+export { default as TermsAndConditionPage } from './TermsAndCondition'
 export { default as ServicesPage } from './Services'
 
 // Permission management

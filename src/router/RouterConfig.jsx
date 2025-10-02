@@ -3,7 +3,6 @@ import { PermissionKeys } from "@/constants/permissions";
 import {
   AboutPage,
   AdminProfilePage,
-  AdminsPage,
   ChangePasswordPage,
   ContactUsPage,
   Dashboard,
@@ -18,21 +17,22 @@ import {
   NotFound,
   NotificationsPage,
   PermissionsPage,
+  PrivacyPolicyPage,
   ReportsPage,
   RolesPage,
+  ServicesPage,
   SettingsPage,
   SignUpPage,
   StatisticsPage,
+  TermsAndConditionPage,
   TutorialPage,
   TutorialsPage,
   UnauthorizedAccessPage,
   UsersPage
 } from "@/pages";
 
-import TermAndCondition from "@/components/layouts/TermsAndConditions/TermsAndCondition";
+
 import SocketLayout from "@/components/SocketLayout";
-import PrivacyPolicyPage from "@/pages/PrivacyPolicy/PrivacyPolicyPage";
-import ServicesPage from "@/pages/ServicesPage/ServicesPage";
 import AuthRoutesWrapper from "./AuthRoutesWrapper";
 import PermissionRoutesWrapper from "./PermissionRoutesWrapper";
 import ProtectedRoutesWrapper from "./ProtectedRoutesWrapper";
@@ -53,7 +53,7 @@ export const routesConfig = [
   },
   {
     path: "/terms-and-condition",
-    element: <TermAndCondition />,
+    element: <TermsAndConditionPage />,
   },
   {
     path: "/about",
@@ -100,7 +100,7 @@ export const routesConfig = [
               { path: "/dashboard", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_dashboard} Component={Dashboard} /> },
               { path: "/items", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_items} Component={ItemsPage} /> },
               { path: "/users", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_users} Component={UsersPage} /> },
-              { path: "/admins", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminsPage} /> },
+
               { path: "/admin-profile/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminProfilePage} /> },
               { path: "/settings", element: <SettingsPage /> },
               { path: "/reports", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_generate_reports} Component={ReportsPage} /> },
