@@ -91,12 +91,12 @@ export const ROLE_APIS = {
 
 export const ADMIN_APIS = {
   GET_ALL_ADMINS: "/api/admins/getAllAdmins",
-  GET_ADMIN_DETAILS: "/api/admins/getAdminDetails",
+  GET_ADMIN_DETAILS: "/api/admins/updateAdminProfile",
   CREATE_ADMIN: "/api/admins/addAdminUser",
-  UPDATE_ADMIN: "/api/admins/updateAdmin",
+  UPDATE_ADMIN: "/api/admins/updateAdminDetails",
   DELETE_ADMIN: "/api/admins/deleteAdmin",
   CHANGE_PASSWORD: "/api/admins/changePassword",
-  CHANGE_ROLE: "/api/admins/changeRole",
+  CHANGE_ROLE: "/api/admins/updateAdminRole",
   CHANGE_PROFILE_IMAGE: "/api/admins/changeProfileImage",
   EXPORT_ADMINS: "/api/exports/exportAdmins",
   IMPORT_ADMINS: "/api/imports/importAdmins",

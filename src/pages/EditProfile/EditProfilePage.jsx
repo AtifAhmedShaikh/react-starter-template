@@ -9,7 +9,7 @@ import { encryptValue } from "@/lib/encryption";
 import { editProfileSchema } from "@/schema/userSchema";
 import { selectUser, updateUserAsync, updateUserSensitiveFieldsAsync } from "@/stores/slices/authSlice";
 import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
-import { deformatCnic, formatCharacterOnlyInput, formatCnic, formatCNICInput, formatMobileNumber, formatPhoneNumberInput } from "@/utils/formatters";
+import { deFormatCnic, formatCharacterOnlyInput, formatCnic, formatCNICInput, formatMobileNumber, formatPhoneNumberInput } from "@/utils/formatters";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CheckCheck, CheckCircle, Info, Lock, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -113,7 +113,7 @@ const EditProfilePage = () => {
 
         const payload = {
             ...data,
-            cnic: deformatCnic(data.cnic),
+            cnic: deFormatCnic(data.cnic),
             phoneNumber: data.phoneNumber.replace(/-/g, ""),
             cityId: data.city,
         };

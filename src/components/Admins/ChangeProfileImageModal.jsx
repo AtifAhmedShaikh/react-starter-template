@@ -44,7 +44,7 @@ const ChangeProfileImageModal = () => {
       }
 
       setSelectedFile(file);
-      
+
       // Create preview
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -67,10 +67,9 @@ const ChangeProfileImageModal = () => {
 
     const formData = new FormData();
     formData.append('profileImage', selectedFile);
+    formData.append('id', admin?.id);
 
-    const id = admin?.id;
-    
-    dispatch(changeProfileImageAsync({ id, data: formData }))
+    dispatch(changeProfileImageAsync({ data: formData }))
       .unwrap()
       .then((response) => {
         toast.success(response.message || "Profile image updated successfully");
@@ -118,7 +117,7 @@ const ChangeProfileImageModal = () => {
         </div>
 
         {/* File Upload */}
-        <div className="space-y-2">
+        <div className="">
           <label className="block text-sm font-medium text-gray-700">
             Select New Profile Image
           </label>
@@ -126,7 +125,6 @@ const ChangeProfileImageModal = () => {
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
           />
           <p className="text-xs text-gray-500">
             Supported formats: JPG, PNG, GIF. Max size: 5MB
@@ -166,9 +164,9 @@ const ChangeProfileImageModal = () => {
           <Button type="button" variant="outline" onClick={handleClose}>
             Cancel
           </Button>
-          <Button 
-            onClick={handleSubmit} 
-            loading={isChanging} 
+          <Button
+            onClick={handleSubmit}
+            loading={isChanging}
             loadingLabel="Updating Image..."
             disabled={!selectedFile}
           >

@@ -9,15 +9,15 @@ import { DialogFooter } from "@/components/ui/dialog";
 
 import { changePasswordSchema } from "@/schema/adminSchema";
 import {
+  changePasswordAsync,
+  selectAdminsLoading,
+} from "@/stores/slices/adminSlice";
+import {
   closeModal,
   MODAL_TYPES,
   selectIsModalOpenByType,
   selectModalData,
 } from "@/stores/slices/modalSlice";
-import {
-  changePasswordAsync,
-  selectAdminsLoading,
-} from "@/stores/slices/adminSlice";
 
 import ModalWrapper from "../reuseable/ModalWrapper";
 
@@ -42,10 +42,7 @@ const ChangePasswordModal = () => {
   });
 
   const handleChangePassword = (data) => {
-    const id = admin?.id;
-    const { confirmPassword, ...passwordData } = data;
-    
-    dispatch(changePasswordAsync({ id, data: passwordData }))
+    dispatch(changePasswordAsync({ data: { adminId: admin?.id, password: data?.newPassword } }))
       .unwrap()
       .then((response) => {
         toast.success(response.message || "Password changed successfully");

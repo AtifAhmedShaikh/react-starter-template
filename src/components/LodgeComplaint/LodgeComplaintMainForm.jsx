@@ -10,7 +10,7 @@ import { HTTP_METHODS } from "@/constants";
 import { apiHandler } from "@/lib/apiWrapper";
 import { complaintSchema } from "@/schema/complaintSchema";
 import { selectUser, setActiveTabItem } from "@/stores/slices/authSlice";
-import { deformatMobileNumber } from "@/utils/formatters";
+import { deFormatMobileNumber } from "@/utils/formatters";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
@@ -61,7 +61,7 @@ const LodgeComplaintMainForm = () => {
       fullName: user?.fullName || "",
       cnic: user?.cnic || "",
       email: user?.email || "",
-      phoneNumber: deformatMobileNumber(user?.phoneNumber) || "",
+      phoneNumber: deFormatMobileNumber(user?.phoneNumber) || "",
       address: user?.address || "",
       cityId: user?.cityId || "",
       offenceId: "",

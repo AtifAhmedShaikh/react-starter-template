@@ -46,7 +46,7 @@ export const formatCnic = (cnic = "") => {
     : digits;
 };
 
-export const deformatCnic = (cnic = "") => cnic.replace(/[^0-9]/g, "");
+export const deFormatCnic = (cnic = "") => cnic.replace(/[^0-9]/g, "");
 
 // Format role names (e.g., "deputy_director" => "Deputy Director")
 export function formatRoleName(role) {
@@ -147,7 +147,7 @@ export const formatMobileNumber = (number = "") => {
 };
 
 // Deformat Mobile Number: 0300-1234567 or 923001234567 → 03001234567
-export const deformatMobileNumber = (number = "") => {
+export const deFormatMobileNumber = (number = "") => {
   let digits = number.replace(/[^0-9]/g, "");
   if (digits.startsWith("92") && digits.length === 12) {
     digits = "0" + digits.slice(2);

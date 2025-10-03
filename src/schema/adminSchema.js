@@ -91,9 +91,7 @@ export const adminUpdateSchema = yup.object().shape({
   gender: yup
     .string()
     .required("Gender is required")
-    .oneOf(["male", "female", "other"], "Please select a valid gender"),
-
-  roleId: yup.string().required("Role is required"),
+    .oneOf(["MALE", "FEMALE", "OTHER"], "Please select a valid gender"),
 
   cityId: yup.string().required("City is required"),
 

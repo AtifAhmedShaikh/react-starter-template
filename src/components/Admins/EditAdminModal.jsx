@@ -1,44 +1,39 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
-import { TextField } from "@/components/reuseable/TextField";
 import SelectField from "@/components/reuseable/SelectField";
+import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 
 import { adminUpdateSchema } from "@/schema/adminSchema";
+import {
+  selectAdminsLoading,
+  updateAdminAsync,
+} from "@/stores/slices/adminSlice";
+import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
 import {
   closeModal,
   MODAL_TYPES,
   selectIsModalOpenByType,
   selectModalData,
 } from "@/stores/slices/modalSlice";
-import {
-  updateAdminAsync,
-  selectAdminsLoading,
-} from "@/stores/slices/adminSlice";
-import { fetchRolesAsync, selectRoles } from "@/stores/slices/roleSlice";
-import { fetchCitiesAsync, selectCities } from "@/stores/slices/metadataSlice";
 
 import ModalWrapper from "../reuseable/ModalWrapper";
+import SearchableSelectField from "../reuseable/SearchableSelectField";
+import { deFormatCnic, deFormatMobileNumber, formatCnic, formatCNICInput, formatPhoneNumberInput } from "@/utils/formatters";
 
 const EditAdminModal = () => {
   const dispatch = useDispatch();
   const isOpen = useSelector(selectIsModalOpenByType(MODAL_TYPES.EDIT_ADMIN));
   const admin = useSelector(selectModalData);
   const isUpdating = useSelector((state) => selectAdminsLoading(state).update);
-  const roles = useSelector(selectRoles);
   const cities = useSelector(selectCities);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const methods = useForm({
     resolver: yupResolver(adminUpdateSchema),
     defaultValues: {
       fullName: "",
@@ -46,15 +41,20 @@ const EditAdminModal = () => {
       phoneNumber: "",
       cnic: "",
       gender: "",
-      roleId: "",
       cityId: "",
       address: "",
     },
   });
 
+  const {
+    register,
+    reset,
+    setValue,
+    formState: { errors },
+  } = methods;
+
   useEffect(() => {
     if (isOpen) {
-      dispatch(fetchRolesAsync());
       dispatch(fetchCitiesAsync());
     }
   }, [isOpen, dispatch]);
@@ -64,10 +64,9 @@ const EditAdminModal = () => {
       reset({
         fullName: admin.fullName || "",
         email: admin.email || "",
-        phoneNumber: admin.phoneNumber || "",
-        cnic: admin.cnic || "",
+        phoneNumber: deFormatMobileNumber(admin.phoneNumber) || "",
+        cnic: formatCnic(admin.cnic) || "",
         gender: admin.gender || "",
-        roleId: admin.role?.id || "",
         cityId: admin.city?.id || "",
         address: admin.address || "",
       });
@@ -76,7 +75,7 @@ const EditAdminModal = () => {
 
   const handleUpdate = (data) => {
     const id = admin?.id;
-    dispatch(updateAdminAsync({ id, data }))
+    dispatch(updateAdminAsync({ data: { ...data, adminId: id } }))
       .unwrap()
       .then((response) => {
         toast.success(response.message || "Admin updated successfully");
@@ -88,15 +87,9 @@ const EditAdminModal = () => {
       });
   };
 
-  const genderOptions = [
-    { value: "male", label: "Male" },
-    { value: "female", label: "Female" },
-    { value: "other", label: "Other" },
-  ];
-
   return (
     <ModalWrapper isOpen={isOpen} title="Edit Admin">
-      <form onSubmit={handleSubmit(handleUpdate)} className="space-y-4">
+      <FormProvider {...methods} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField
             label="Full Name"
@@ -114,12 +107,14 @@ const EditAdminModal = () => {
             placeholder="Enter email address"
             required
           />
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <TextField
             label="Phone Number"
-            {...register("phoneNumber")}
+            {...register("phoneNumber", {
+              onChange: (e) => {
+                setValue("phoneNumber", formatPhoneNumberInput(e.target.value), { shouldValidate: true });
+              },
+            })}
             error={errors.phoneNumber?.message}
             placeholder="Enter phone number"
             required
@@ -127,60 +122,56 @@ const EditAdminModal = () => {
 
           <TextField
             label="CNIC"
-            {...register("cnic")}
+            {...register("cnic", {
+              onChange: (e) => {
+                setValue("cnic", formatCNICInput(e.target.value), { shouldValidate: true });
+              },
+            })}
             error={errors.cnic?.message}
             placeholder="12345-1234567-1"
             required
           />
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <SelectField
             label="Gender"
             {...register("gender")}
             error={errors.gender?.message}
-            options={genderOptions}
+            options={[
+              { value: "male", id: "MALE" },
+              { value: "female", id: "FEMALE" },
+            ]}
             placeholder="Select gender"
             required
           />
-
-          <SelectField
-            label="Role"
-            {...register("roleId")}
-            error={errors.roleId?.message}
-            options={roles || []}
-            placeholder="Select role"
+          <SearchableSelectField
+            label="City"
+            name="cityId"
+            error={errors.cityId?.message}
+            options={cities?.data || []}
+            placeholder="Select city"
+            labelKey="value"
+            valueKey="id"
+            isLoading={cities?.loading}
             required
           />
+          <TextField
+            label="Address"
+            {...register("address")}
+            error={errors.address?.message}
+            placeholder="Enter complete address"
+            required
+            rows={3}
+          />
         </div>
-
-        <SelectField
-          label="City"
-          {...register("cityId")}
-          error={errors.cityId?.message}
-          options={cities || []}
-          placeholder="Select city"
-          required
-        />
-
-        <TextField
-          label="Address"
-          {...register("address")}
-          error={errors.address?.message}
-          placeholder="Enter complete address"
-          required
-          rows={3}
-        />
-
         <DialogFooter>
           <Button type="button" variant="outline" onClick={() => dispatch(closeModal())}>
             Cancel
           </Button>
-          <Button type="submit" loading={isUpdating} loadingLabel="Updating Admin...">
+          <Button type="submit" onClick={methods.handleSubmit(handleUpdate)} loading={isUpdating} loadingLabel="Updating Admin...">
             Update Admin
           </Button>
         </DialogFooter>
-      </form>
+      </FormProvider>
     </ModalWrapper>
   );
 };

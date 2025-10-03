@@ -71,7 +71,7 @@ const AddAdminModal = () => {
         toast.error(error || "Failed to create admin");
       });
   };
-  console.log(errors);
+
   return (
     <ModalWrapper isOpen={isOpen} title="Add New Admin">
       <FormProvider {...methods} className="space-y-4">

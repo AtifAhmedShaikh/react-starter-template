@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { HTTP_METHODS } from "@/constants";
 import { ADMIN_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Initial State
 const initialState = {
@@ -74,7 +74,7 @@ export const createAdminAsync = createAsyncThunk(
 export const updateAdminAsync = createAsyncThunk(
   "admins/updateAdmin",
   async ({ id, data }, { rejectWithValue }) => {
-    const response = await apiHandler(`${ADMIN_APIS.UPDATE_ADMIN}/${id}`, {
+    const response = await apiHandler(ADMIN_APIS.UPDATE_ADMIN, {
       method: HTTP_METHODS.PUT,
       data,
     });
@@ -98,8 +98,8 @@ export const deleteAdminAsync = createAsyncThunk(
 
 export const changePasswordAsync = createAsyncThunk(
   "admins/changePassword",
-  async ({ id, data }, { rejectWithValue }) => {
-    const response = await apiHandler(`${ADMIN_APIS.CHANGE_PASSWORD}/${id}`, {
+  async ({ data }, { rejectWithValue }) => {
+    const response = await apiHandler(ADMIN_APIS.CHANGE_PASSWORD, {
       method: HTTP_METHODS.PUT,
       data,
     });
@@ -111,8 +111,8 @@ export const changePasswordAsync = createAsyncThunk(
 
 export const changeRoleAsync = createAsyncThunk(
   "admins/changeRole",
-  async ({ id, data }, { rejectWithValue }) => {
-    const response = await apiHandler(`${ADMIN_APIS.CHANGE_ROLE}/${id}`, {
+  async ({ data }, { rejectWithValue }) => {
+    const response = await apiHandler(ADMIN_APIS.CHANGE_ROLE, {
       method: HTTP_METHODS.PUT,
       data,
     });
@@ -279,7 +279,7 @@ const adminSlice = createSlice({
       .addCase(changeRoleAsync.fulfilled, (state, action) => {
         state.loading.changeRole = false;
         const index = state.admins.findIndex(
-          (admin) => admin.id === action.payload.id,
+          (admin) => admin.id === action.payload.adminId,
         );
         if (index !== -1) {
           state.admins[index].role = action.payload.role;

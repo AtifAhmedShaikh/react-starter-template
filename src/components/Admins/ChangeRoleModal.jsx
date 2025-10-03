@@ -1,14 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
+import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-import { useEffect } from "react";
 
-import SelectField from "@/components/reuseable/SelectField";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 
 import { changeRoleSchema } from "@/schema/adminSchema";
+import {
+  changeRoleAsync,
+  selectAdminsLoading,
+} from "@/stores/slices/adminSlice";
 import {
   closeModal,
   MODAL_TYPES,
@@ -16,12 +19,13 @@ import {
   selectModalData,
 } from "@/stores/slices/modalSlice";
 import {
-  changeRoleAsync,
-  selectAdminsLoading,
-} from "@/stores/slices/adminSlice";
-import { fetchRolesAsync, selectRoles } from "@/stores/slices/roleSlice";
+  fetchRolesAsync,
+  selectRoles,
+  selectRolesLoading,
+} from "@/stores/slices/roleSlice";
 
 import ModalWrapper from "../reuseable/ModalWrapper";
+import SearchableSelectField from "../reuseable/SearchableSelectField";
 
 const ChangeRoleModal = () => {
   const dispatch = useDispatch();
@@ -29,18 +33,19 @@ const ChangeRoleModal = () => {
   const admin = useSelector(selectModalData);
   const isChanging = useSelector((state) => selectAdminsLoading(state).changeRole);
   const roles = useSelector(selectRoles);
+  const rolesLoading = useSelector(selectRolesLoading);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const methods = useForm({
     resolver: yupResolver(changeRoleSchema),
     defaultValues: {
       roleId: "",
     },
   });
+
+  const {
+    reset,
+    formState: { errors },
+  } = methods;
 
   useEffect(() => {
     if (isOpen) {
@@ -57,9 +62,7 @@ const ChangeRoleModal = () => {
   }, [admin, reset, isOpen]);
 
   const handleChangeRole = (data) => {
-    const id = admin?.id;
-    
-    dispatch(changeRoleAsync({ id, data }))
+    dispatch(changeRoleAsync({ data: { adminId: admin?.id, roleId: data?.roleId } }))
       .unwrap()
       .then((response) => {
         toast.success(response.message || "Role changed successfully");
@@ -71,47 +74,51 @@ const ChangeRoleModal = () => {
       });
   };
 
-  const roleOptions = (roles || []).map(role => ({
-    value: role.id,
-    label: role.value,
-  }));
-
   return (
     <ModalWrapper isOpen={isOpen} title={`Change Role - ${admin?.fullName || "Admin"}`}>
-      <form onSubmit={handleSubmit(handleChangeRole)} className="space-y-4">
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <p className="text-sm text-blue-800">
-            <strong>Current Role:</strong> {admin?.role?.value || "No role assigned"}
-          </p>
-          <p className="text-sm text-blue-800 mt-1">
-            <strong>Admin:</strong> {admin?.fullName} ({admin?.email})
-          </p>
-        </div>
+      <FormProvider {...methods}>
+        <form onSubmit={methods.handleSubmit(handleChangeRole)} className="space-y-4">
+          <div className="bg-blue-50 p-4 rounded-lg">
+            <p className="text-sm text-blue-800">
+              <strong>Current Role:</strong> {admin?.role?.value || "No role assigned"}
+            </p>
+            <p className="text-sm text-blue-800 mt-1">
+              <strong>Admin:</strong> {admin?.fullName} ({admin?.email})
+            </p>
+          </div>
 
-        <SelectField
-          label="New Role"
-          {...register("roleId")}
-          error={errors.roleId?.message}
-          options={roleOptions}
-          placeholder="Select new role"
-          required
-        />
+          <SearchableSelectField
+            name={"roleId"}
+            label="New Role"
+            error={errors.roleId?.message}
+            options={roles}
+            labelKey="value"
+            valueKey="id"
+            isLoading={rolesLoading?.fetch}
+            placeholder="Select new role"
+            required
+          />
 
-        <div className="bg-yellow-50 p-4 rounded-lg">
-          <p className="text-sm text-yellow-800">
-            <strong>Warning:</strong> Changing the admin's role will affect their permissions and access to different parts of the system. Please ensure this change is intentional.
-          </p>
-        </div>
+          <div className="bg-yellow-50 p-4 rounded-lg">
+            <p className="text-sm text-yellow-800">
+              <strong>Warning:</strong> Changing the admin's role will affect their permissions and access to different parts of the system. Please ensure this change is intentional.
+            </p>
+          </div>
 
-        <DialogFooter>
-          <Button type="button" variant="outline" onClick={() => dispatch(closeModal())}>
-            Cancel
-          </Button>
-          <Button type="submit" loading={isChanging} loadingLabel="Changing Role...">
-            Change Role
-          </Button>
-        </DialogFooter>
-      </form>
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={() => dispatch(closeModal())}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              loading={isChanging}
+              loadingLabel="Changing Role..."
+            >
+              Change Role
+            </Button>
+          </DialogFooter>
+        </form>
+      </FormProvider>
     </ModalWrapper>
   );
 };
