@@ -36,7 +36,9 @@ const metadataSlice = createSlice({
       })
       .addCase(fetchCitiesAsync.fulfilled, (state, action) => {
         state.cities.loading = false;
-        state.cities.data = action.payload.cities || [];
+        if (Array.isArray(action.payload.cities)) {
+          state.cities.data = action.payload.cities || [];
+        }
       })
       .addCase(fetchCitiesAsync.rejected, (state, action) => {
         state.cities.loading = false;

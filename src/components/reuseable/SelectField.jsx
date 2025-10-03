@@ -17,6 +17,7 @@ const SelectField = ({
   placeholder,
   error = "",
   className,
+  wrapperClass = "",
   variant = "outlined",
   isLoading = false,
   disabled = false,
@@ -36,7 +37,7 @@ const SelectField = ({
   };
 
   return (
-    <div className="flex flex-col  w-full">
+    <div className={`flex flex-col  w-full ${wrapperClass}`}>
       <label className="font-medium sm:text-sm text-xs">{label}</label>
 
       <Controller

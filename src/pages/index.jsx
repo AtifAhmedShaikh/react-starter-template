@@ -21,6 +21,7 @@ export { default as EditProfilePage } from './EditProfile'
 export { default as ItemsPage } from './Items'
 export { default as UsersPage } from './Users'
 export { default as AdminProfilePage } from './AdminProfile'
+export { default as AdminsPage } from './Admins/AdminsPage'
 
 // Reports and analytics
 export { default as ReportsPage } from './Reports'

@@ -28,7 +28,8 @@ import {
   TutorialPage,
   TutorialsPage,
   UnauthorizedAccessPage,
-  UsersPage
+  UsersPage,
+  AdminsPage
 } from "@/pages";
 
 
@@ -102,6 +103,7 @@ export const routesConfig = [
               { path: "/users", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_users} Component={UsersPage} /> },
 
               { path: "/admin-profile/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminProfilePage} /> },
+              { path: "/admins", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins} Component={AdminsPage} /> },
               { path: "/settings", element: <SettingsPage /> },
               { path: "/reports", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_generate_reports} Component={ReportsPage} /> },
               { path: "/statistics", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_statistics} Component={StatisticsPage} /> },

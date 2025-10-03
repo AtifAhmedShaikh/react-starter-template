@@ -12,6 +12,16 @@ export const PermissionKeys = {
   can_change_password: "can_change_password",
   can_change_profile_image: "can_change_profile_image",
 
+  // Admin management permissions
+  can_view_admins: "can_view_admins",
+  can_create_admins: "can_create_admins",
+  can_edit_admins: "can_edit_admins",
+  can_delete_admins: "can_delete_admins",
+  can_view_admin_details: "can_view_admin_details",
+  can_change_admin_password: "can_change_admin_password",
+  can_change_admin_role: "can_change_admin_role",
+  can_change_admin_profile_image: "can_change_admin_profile_image",
+
   // Role and permission management
   can_view_roles: "can_view_roles",
   can_create_roles: "can_create_roles",
@@ -117,7 +127,7 @@ export const PermissionKeys = {
   can_create_refNo_group: "can_create_refNo_group",
   can_group_complaints: "can_group_complaints",
   can_view_held_charge: "can_view_held_charge",
-  can_view_admins_users: "can_view_admins_users",
+  can_view_admins_users: "can_view_admins",
   can_view_old_refno: "can_view_old_refno",
   can_view_similar_complaints: "can_view_similar_complaints",
   can_referred_complaints: "can_referred_complaints",

@@ -164,13 +164,7 @@ export const useSidebarMenuLinks = () => {
       icon: ClipboardList,
       requiredPermissions: [PermissionKeys.can_view_all_complaints],
     },
-    {
-      name: "All Officers",
-      url: "/admins",
-      icon: Users ,
-      requiredPermissions: [PermissionKeys.can_view_admins_users],
-    },
-    {
+     {
       name: "All Complainants",
       url: "/complainants",
       icon: Users ,
@@ -216,6 +210,12 @@ export const useSidebarMenuLinks = () => {
     {
       name: "Roles",
       url: "/roles",
+      icon: Shield,
+      requiredPermissions: [],
+    },
+    {
+      name: "Admins",
+      url: "/admins",
       icon: Shield,
       requiredPermissions: [],
     },
