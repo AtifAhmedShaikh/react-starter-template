@@ -3,6 +3,7 @@ import { PermissionKeys } from "@/constants/permissions";
 import {
   AboutPage,
   AdminProfilePage,
+  AdminsPage,
   ChangePasswordPage,
   ContactUsPage,
   Dashboard,
@@ -28,8 +29,7 @@ import {
   TutorialPage,
   TutorialsPage,
   UnauthorizedAccessPage,
-  UsersPage,
-  AdminsPage
+  UsersPage
 } from "@/pages";
 
 

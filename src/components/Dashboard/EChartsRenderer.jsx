@@ -1,10 +1,19 @@
 import React from 'react';
 import ReactECharts from 'echarts-for-react';
+import { useIsMobile } from '@/hooks/useMobile';
 
 // Color palette for consistent theming
 const COLORS = [
   '#4f46e5', '#10b981', '#f59e0b', '#ef4444', 
   '#8b5cf6', '#06b6d4', '#84cc16', '#f97316'
+];
+
+// Extended color palette for more chart types
+const EXTENDED_COLORS = [
+  ...COLORS,
+  '#ec4899', '#14b8a6', '#f59e0b', '#8b5cf6',
+  '#06b6d4', '#84cc16', '#f97316', '#ef4444',
+  '#6366f1', '#10b981', '#f59e0b', '#ef4444'
 ];
 
 // Common chart options
@@ -39,6 +48,61 @@ const getResponsiveConfig = (isMobile) => ({
   },
 });
 
+// Common responsive configuration for different chart types
+const getChartResponsiveConfig = (isMobile, chartType = 'default') => {
+  const baseConfig = {
+    textStyle: {
+      fontSize: isMobile ? 10 : 12,
+    },
+    legend: {
+      textStyle: {
+        fontSize: isMobile ? 10 : 12,
+      },
+      itemWidth: isMobile ? 12 : 16,
+      itemHeight: isMobile ? 8 : 12,
+    },
+  };
+
+  switch (chartType) {
+    case 'radar':
+      return {
+        ...baseConfig,
+        radar: {
+          radius: isMobile ? '60%' : '70%',
+          nameGap: isMobile ? 5 : 8,
+        },
+      };
+    case 'gauge':
+      return {
+        ...baseConfig,
+        series: [{
+          radius: isMobile ? '80%' : '90%',
+          center: ['50%', '60%'],
+        }],
+      };
+    case 'funnel':
+      return {
+        ...baseConfig,
+        series: [{
+          width: isMobile ? '60%' : '70%',
+          height: isMobile ? '60%' : '70%',
+        }],
+      };
+    case 'heatmap':
+      return {
+        ...baseConfig,
+        grid: {
+          left: isMobile ? '10%' : '15%',
+          right: isMobile ? '10%' : '15%',
+          top: isMobile ? '15%' : '20%',
+          bottom: isMobile ? '15%' : '20%',
+        },
+      };
+    default:
+      return baseConfig;
+  }
+};
+
 // Bar Chart Component
 export const EChartsBar = ({ 
   data, 
@@ -48,7 +112,7 @@ export const EChartsBar = ({
   isHorizontal = false,
   height = 300 
 }) => {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
   const responsiveConfig = getResponsiveConfig(isMobile);
 
   const option = {
@@ -126,7 +190,7 @@ export const EChartsPie = ({
   isDonut = false,
   height = 300 
 }) => {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
   const responsiveConfig = getResponsiveConfig(isMobile);
 
   // Process data to show top 5 and group others
@@ -215,7 +279,7 @@ export const EChartsLine = ({
   height = 300,
   smooth = true 
 }) => {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
   const responsiveConfig = getResponsiveConfig(isMobile);
 
   const option = {
@@ -291,7 +355,7 @@ export const EChartsStackedBar = ({
   isHorizontal = false,
   height = 300 
 }) => {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
   const responsiveConfig = getResponsiveConfig(isMobile);
 
   const option = {
@@ -358,7 +422,7 @@ export const EChartsArea = ({
   title, 
   height = 300 
 }) => {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
   const responsiveConfig = getResponsiveConfig(isMobile);
 
   const option = {
@@ -421,7 +485,7 @@ export const EChartsScatter = ({
   title, 
   height = 300 
 }) => {
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const isMobile = useIsMobile();
   const responsiveConfig = getResponsiveConfig(isMobile);
 
   const option = {
