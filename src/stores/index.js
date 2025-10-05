@@ -12,6 +12,7 @@ import modalReducer from "./slices/modalSlice";
 import permissionReducer from "./slices/permissionSlice";
 import roleReducer from "./slices/roleSlice";
 import adminReducer from "./slices/adminSlice";
+import userReducer from "./slices/userSlice";
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
   permissions: permissionReducer,
   roles: roleReducer,
   admins: adminReducer,
+  users: userReducer,
 });
 
 // Root reducer that resets all slices

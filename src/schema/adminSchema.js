@@ -103,9 +103,7 @@ export const adminUpdateSchema = yup.object().shape({
 });
 
 // Change password schema
-export const changePasswordSchema = yup.object().shape({
-  currentPassword: yup.string().required("Current password is required"),
-
+export const changePasswordSchemaForAdmin = yup.object().shape({
   newPassword: yup
     .string()
     .required("New password is required")

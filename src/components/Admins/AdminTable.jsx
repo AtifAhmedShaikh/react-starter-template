@@ -1,5 +1,4 @@
 import { Download, Edit, Eye, Key, Plus, Search, Settings, Trash, User } from "lucide-react";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -44,11 +43,10 @@ import {
   selectAdmins,
   selectAdminsLoading,
   selectAdminsQueries,
-  setSort,
-  updateQuery,
+  updateQuery
 } from "@/stores/slices/adminSlice";
 import { MODAL_TYPES, openModal } from "@/stores/slices/modalSlice";
-import { formatDate } from "@/utils/formatters";
+import { toast } from "sonner";
 import { LoadingScreen } from "../reuseable/Loading";
 
 const AdminTable = () => {
@@ -84,17 +82,15 @@ const AdminTable = () => {
   const handleDelete = (adminId) => {
     dispatch(deleteAdminAsync(adminId))
       .unwrap()
-      .then(() => {
-        // Success handled by the slice
+      .then((response) => {
+        toast.success(response.message || "Admin deleted successfully");
       })
       .catch((error) => {
-        console.error("Delete failed:", error);
+        toast.error(error || "Failed to delete admin");
       });
   };
 
-  const handleSort = (field) => {
-    dispatch(setSort(field));
-  };
+
 
   if (loading.fetch) {
     return <LoadingScreen fullScreen text="Loading Admins..." />;
@@ -162,17 +158,7 @@ const AdminTable = () => {
               <TableHead>Gender</TableHead>
               <TableHead>Role</TableHead>
               <TableHead>City</TableHead>
-              <TableHead
-                className="cursor-pointer select-none"
-                onClick={() => handleSort("createdAt")}
-              >
-                <div className="flex items-center gap-1">
-                  Created At
-                  {queries.sortBy === "createdAt" && (
-                    queries.sortOrder === "asc" ? "↑" : "↓"
-                  )}
-                </div>
-              </TableHead>
+
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -199,9 +185,6 @@ const AdminTable = () => {
                     <Badge variant="outline">{admin.role?.value || "N/A"}</Badge>
                   </TableCell>
                   <TableCell>{admin.city?.value || "N/A"}</TableCell>
-                  <TableCell className="text-gray-500">
-                    {formatDate(admin.createdAt)}
-                  </TableCell>
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -212,7 +195,6 @@ const AdminTable = () => {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        
                         <DropdownMenuItem
                           onClick={() =>
                             dispatch(

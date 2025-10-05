@@ -66,8 +66,8 @@ const ChangeProfileImageModal = () => {
     }
 
     const formData = new FormData();
-    formData.append('profileImage', selectedFile);
-    formData.append('id', admin?.id);
+    formData.append('file', selectedFile);
+    formData.append('userId', admin?.id);
 
     dispatch(changeProfileImageAsync({ data: formData }))
       .unwrap()
@@ -105,6 +105,10 @@ const ChangeProfileImageModal = () => {
                 src={admin.profileImage}
                 alt="Current profile"
                 className="w-full h-full object-cover"
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src = "/profile.jpg";
+                }}
               />
             ) : (
               <User className="w-8 h-8 text-gray-400" />

@@ -126,12 +126,12 @@ const roleSlice = createSlice({
       .addCase(updateRoleAsync.fulfilled, (state, action) => {
         state.loading.update = false;
         const index = state.roles.findIndex(
-          (role) => role.id === action.payload?.role.id,
+          (role) => role.id === action.payload?.id,
         );
         const updatedInfo = {
-          key: action.payload?.role.key,
-          value: action.payload?.role.value,
-          description: action.payload?.role.description,
+          key: action.payload?.key,
+          value: action.payload?.value,
+          description: action.payload?.description,
         };
         if (index !== -1)
           state.roles[index] = { ...state.roles[index], ...updatedInfo };

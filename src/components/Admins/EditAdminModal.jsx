@@ -24,7 +24,7 @@ import {
 
 import ModalWrapper from "../reuseable/ModalWrapper";
 import SearchableSelectField from "../reuseable/SearchableSelectField";
-import { deFormatCnic, deFormatMobileNumber, formatCnic, formatCNICInput, formatPhoneNumberInput } from "@/utils/formatters";
+import { deFormatCnic, deFormatMobileNumber, formatCnic, formatCNICInput, formatMobileNumber, formatPhoneNumberInput } from "@/utils/formatters";
 
 const EditAdminModal = () => {
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ const EditAdminModal = () => {
       reset({
         fullName: admin.fullName || "",
         email: admin.email || "",
-        phoneNumber: deFormatMobileNumber(admin.phoneNumber) || "",
+        phoneNumber: formatMobileNumber(admin.phoneNumber) || "",
         cnic: formatCnic(admin.cnic) || "",
         gender: admin.gender || "",
         cityId: admin.city?.id || "",

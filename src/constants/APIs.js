@@ -94,10 +94,23 @@ export const ADMIN_APIS = {
   GET_ADMIN_DETAILS: "/api/admins/updateAdminProfile",
   CREATE_ADMIN: "/api/admins/addAdminUser",
   UPDATE_ADMIN: "/api/admins/updateAdminDetails",
-  DELETE_ADMIN: "/api/admins/deleteAdmin",
+  DELETE_ADMIN: "/api/admins/deleteAdminAccount",
   CHANGE_PASSWORD: "/api/admins/changePassword",
   CHANGE_ROLE: "/api/admins/updateAdminRole",
   CHANGE_PROFILE_IMAGE: "/api/admins/changeProfileImage",
   EXPORT_ADMINS: "/api/exports/exportAdmins",
   IMPORT_ADMINS: "/api/imports/importAdmins",
+};
+
+export const USER_APIS = {
+  GET_ALL_USERS: "/api/users/getAllUsers",
+  GET_USER_DETAILS: "/api/users/getUserDetails",
+  CREATE_USER: "/api/users/createUser",
+  UPDATE_USER: "/api/users/updateUser",
+  DELETE_USER: "/api/users/deleteUser",
+  CHANGE_PASSWORD: "/api/users/changePassword",
+  CHANGE_ROLE: "/api/users/changeRole",
+  CHANGE_PROFILE_IMAGE: "/api/users/changeProfileImage",
+  EXPORT_USERS: "/api/exports/exportUsers",
+  IMPORT_USERS: "/api/imports/importUsers",
 };

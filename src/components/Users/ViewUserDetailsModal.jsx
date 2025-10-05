@@ -16,22 +16,22 @@ import {
 import { formatDate } from "@/utils/formatters";
 import ModalWrapper from "../reuseable/ModalWrapper";
 
-const ViewAdminDetailsModal = () => {
+const ViewUserDetailsModal = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector(selectIsModalOpenByType(MODAL_TYPES.VIEW_ADMIN_DETAILS));
-  const admin = useSelector(selectModalData);
+  const isOpen = useSelector(selectIsModalOpenByType(MODAL_TYPES.VIEW_USER_DETAILS));
+  const user = useSelector(selectModalData);
 
-  if (!admin) return null;
+  if (!user) return null;
 
   return (
-    <ModalWrapper isOpen={isOpen} title={`Admin Details - ${admin.fullName}`}>
+    <ModalWrapper isOpen={isOpen} title={`User Details - ${user.fullName}`}>
       <div className="space-y-6">
         {/* Profile Header */}
         <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
           <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
-            {admin.profileImage ? (
+            {user.profileImage ? (
               <img
-                src={admin.profileImage}
+                src={user.profileImage}
                 alt="Profile"
                 className="w-full h-full object-cover"
                 onError={({ currentTarget }) => {
@@ -44,10 +44,10 @@ const ViewAdminDetailsModal = () => {
             )}
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">{admin.fullName}</h3>
-            <p className="text-sm text-gray-600">{admin.email}</p>
-            <Badge variant="outline"  className="mt-1">
-              {admin.gender || 'N/A'}
+            <h3 className="text-lg font-semibold text-gray-900">{user.fullName}</h3>
+            <p className="text-sm text-gray-600">{user.email}</p>
+            <Badge variant="outline" className="mt-1">
+              {user.gender || 'N/A'}
             </Badge>
           </div>
         </div>
@@ -66,7 +66,7 @@ const ViewAdminDetailsModal = () => {
                 <Mail className="w-4 h-4 text-gray-400" />
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">Email</p>
-                  <p className="text-sm text-gray-600">{admin.email}</p>
+                  <p className="text-sm text-gray-600">{user.email}</p>
                 </div>
               </div>
 
@@ -74,7 +74,7 @@ const ViewAdminDetailsModal = () => {
                 <Phone className="w-4 h-4 text-gray-400" />
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">Phone</p>
-                  <p className="text-sm text-gray-600">{admin.phoneNumber || 'N/A'}</p>
+                  <p className="text-sm text-gray-600">{user.phoneNumber || 'N/A'}</p>
                 </div>
               </div>
 
@@ -82,7 +82,7 @@ const ViewAdminDetailsModal = () => {
                 <CreditCard className="w-4 h-4 text-gray-400" />
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">CNIC</p>
-                  <p className="text-sm text-gray-600">{admin.cnic || 'N/A'}</p>
+                  <p className="text-sm text-gray-600">{user.cnic || 'N/A'}</p>
                 </div>
               </div>
 
@@ -90,7 +90,7 @@ const ViewAdminDetailsModal = () => {
                 <Calendar className="w-4 h-4 text-gray-400" />
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">Created At</p>
-                  <p className="text-sm text-gray-600">{formatDate(admin.createdAt)}</p>
+                  <p className="text-sm text-gray-600">{formatDate(user.createdAt)}</p>
                 </div>
               </div>
 
@@ -99,7 +99,7 @@ const ViewAdminDetailsModal = () => {
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">Role</p>
                   <Badge variant="outline" className="mt-1">
-                    {admin.role?.value || 'No role assigned'}
+                    {user.role?.value || 'No role assigned'}
                   </Badge>
                 </div>
               </div>
@@ -108,7 +108,7 @@ const ViewAdminDetailsModal = () => {
                 <Building className="w-4 h-4 text-gray-400" />
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-700">City</p>
-                  <p className="text-sm text-gray-600">{admin.city?.value || 'N/A'}</p>
+                  <p className="text-sm text-gray-600">{user.city?.value || 'N/A'}</p>
                 </div>
               </div>
             </div>
@@ -125,4 +125,4 @@ const ViewAdminDetailsModal = () => {
   );
 };
 
-export default ViewAdminDetailsModal;
+export default ViewUserDetailsModal;

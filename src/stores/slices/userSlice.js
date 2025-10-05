@@ -1,11 +1,11 @@
 import { HTTP_METHODS } from "@/constants";
-import { ADMIN_APIS } from "@/constants/APIs";
+import { USER_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 // Initial State
 const initialState = {
-  admins: [],
+  users: [],
   status: "idle",
   error: null,
   loading: {
@@ -26,8 +26,8 @@ const initialState = {
   queries: {
     keyword: "",
     page: 1,
-    sortBy: "createdAt",
-    sortBy: "dsc",
+    sortAt: "createdAt",
+    sortBy: "desc",
   },
 };
 
@@ -35,19 +35,19 @@ const initialState = {
 // Async Thunks
 // ===================
 
-export const fetchAdminsAsync = createAsyncThunk(
-  "admins/fetchAdmins",
+export const fetchUsersAsync = createAsyncThunk(
+  "users/fetchUsers",
   async (_, { rejectWithValue, getState }) => {
-    const { queries, admins, loading } = getState().admins;
+    const { queries, users, loading } = getState().users;
     const queryParams = new URLSearchParams({
       page: queries.page.toString(),
-      sortBy: queries.sortBy,
+      sortAt: queries.sortAt,
       ...(queries.keyword && { keyword: queries.keyword }),
     });
-    if (admins.length > 0) return admins;
+    if (users.length > 0) return users;
 
     const response = await apiHandler(
-      `${ADMIN_APIS.GET_ALL_ADMINS}?${queryParams}`,
+      `${USER_APIS.GET_ALL_USERS}?${queryParams}`,
       {
         method: HTTP_METHODS.GET,
       },
@@ -58,12 +58,12 @@ export const fetchAdminsAsync = createAsyncThunk(
   },
 );
 
-export const createAdminAsync = createAsyncThunk(
-  "admins/createAdmin",
-  async (adminData, { rejectWithValue }) => {
-    const response = await apiHandler(ADMIN_APIS.CREATE_ADMIN, {
+export const createUserAsync = createAsyncThunk(
+  "users/createUser",
+  async (userData, { rejectWithValue }) => {
+    const response = await apiHandler(USER_APIS.CREATE_USER, {
       method: HTTP_METHODS.POST,
-      data: adminData,
+      data: userData,
     });
 
     if (!response.success) return rejectWithValue(response.message);
@@ -71,10 +71,10 @@ export const createAdminAsync = createAsyncThunk(
   },
 );
 
-export const updateAdminAsync = createAsyncThunk(
-  "admins/updateAdmin",
+export const updateUserAsync = createAsyncThunk(
+  "users/updateUser",
   async ({ id, data }, { rejectWithValue }) => {
-    const response = await apiHandler(ADMIN_APIS.UPDATE_ADMIN, {
+    const response = await apiHandler(USER_APIS.UPDATE_USER, {
       method: HTTP_METHODS.PUT,
       data,
     });
@@ -84,10 +84,10 @@ export const updateAdminAsync = createAsyncThunk(
   },
 );
 
-export const deleteAdminAsync = createAsyncThunk(
-  "admins/deleteAdmin",
+export const deleteUserAsync = createAsyncThunk(
+  "users/deleteUser",
   async (id, { rejectWithValue }) => {
-    const response = await apiHandler(`${ADMIN_APIS.DELETE_ADMIN}/${id}`, {
+    const response = await apiHandler(`${USER_APIS.DELETE_USER}/${id}`, {
       method: HTTP_METHODS.DELETE,
     });
 
@@ -97,9 +97,9 @@ export const deleteAdminAsync = createAsyncThunk(
 );
 
 export const changePasswordAsync = createAsyncThunk(
-  "admins/changePassword",
+  "users/changePassword",
   async ({ data }, { rejectWithValue }) => {
-    const response = await apiHandler(ADMIN_APIS.CHANGE_PASSWORD, {
+    const response = await apiHandler(USER_APIS.CHANGE_PASSWORD, {
       method: HTTP_METHODS.PUT,
       data,
     });
@@ -110,9 +110,9 @@ export const changePasswordAsync = createAsyncThunk(
 );
 
 export const changeRoleAsync = createAsyncThunk(
-  "admins/changeRole",
+  "users/changeRole",
   async ({ data }, { rejectWithValue }) => {
-    const response = await apiHandler(ADMIN_APIS.CHANGE_ROLE, {
+    const response = await apiHandler(USER_APIS.CHANGE_ROLE, {
       method: HTTP_METHODS.PUT,
       data,
     });
@@ -123,9 +123,9 @@ export const changeRoleAsync = createAsyncThunk(
 );
 
 export const changeProfileImageAsync = createAsyncThunk(
-  "admins/changeProfileImage",
+  "users/changeProfileImage",
   async ({ data }, { rejectWithValue }) => {
-    const response = await apiHandler(ADMIN_APIS.CHANGE_PROFILE_IMAGE, {
+    const response = await apiHandler(USER_APIS.CHANGE_PROFILE_IMAGE, {
       method: HTTP_METHODS.POST,
       data,
     });
@@ -135,10 +135,10 @@ export const changeProfileImageAsync = createAsyncThunk(
   },
 );
 
-export const getAdminDetailsAsync = createAsyncThunk(
-  "admins/getAdminDetails",
+export const getUserDetailsAsync = createAsyncThunk(
+  "users/getUserDetails",
   async (id, { rejectWithValue }) => {
-    const response = await apiHandler(`${ADMIN_APIS.GET_ADMIN_DETAILS}/${id}`, {
+    const response = await apiHandler(`${USER_APIS.GET_USER_DETAILS}/${id}`, {
       method: HTTP_METHODS.GET,
     });
 
@@ -147,8 +147,8 @@ export const getAdminDetailsAsync = createAsyncThunk(
   },
 );
 
-const adminSlice = createSlice({
-  name: "admins",
+const userSlice = createSlice({
+  name: "users",
   initialState,
   reducers: {
     clearError: (state) => {
@@ -166,10 +166,10 @@ const adminSlice = createSlice({
     },
     setSort: (state, action) => {
       const field = action.payload;
-      if (state.queries.sortBy === field) {
+      if (state.queries.sortAt === field) {
         state.queries.sortBy = state.queries.sortBy === "asc" ? "dsc" : "asc";
       } else {
-        state.queries.sortBy = field;
+        state.queries.sortAt = field;
         state.queries.sortBy = "dsc";
       }
     },
@@ -177,81 +177,77 @@ const adminSlice = createSlice({
       state.queries = {
         keyword: "",
         page: 1,
-        sortBy: "createdAt",
+        sortAt: "createdAt",
         sortBy: "dsc",
       };
     },
-    removeAdminFromStore: (state, action) => {
-      state.admins = state.admins.filter(
-        (admin) => admin.id !== action.payload,
-      );
+    removeUserFromStore: (state, action) => {
+      state.users = state.users.filter((user) => user.id !== action.payload);
     },
   },
   extraReducers: (builder) => {
     builder
-      // ===== Fetch Admins =====
-      .addCase(fetchAdminsAsync.pending, (state) => {
+      // ===== Fetch Users =====
+      .addCase(fetchUsersAsync.pending, (state) => {
         state.loading.fetch = true;
         state.status = "loading";
       })
-      .addCase(fetchAdminsAsync.fulfilled, (state, action) => {
+      .addCase(fetchUsersAsync.fulfilled, (state, action) => {
         state.loading.fetch = false;
         state.status = "succeeded";
-        state.admins = action.payload || [];
+        state.users = action.payload || [];
         state.pagination = action.payload.pagination || state.pagination;
         state.error = null;
       })
-      .addCase(fetchAdminsAsync.rejected, (state, action) => {
+      .addCase(fetchUsersAsync.rejected, (state, action) => {
         state.loading.fetch = false;
         state.status = "failed";
         state.error = action.payload;
       })
 
-      // ===== Create Admin =====
-      .addCase(createAdminAsync.pending, (state) => {
+      // ===== Create User =====
+      .addCase(createUserAsync.pending, (state) => {
         state.loading.create = true;
       })
-      .addCase(createAdminAsync.fulfilled, (state, action) => {
+      .addCase(createUserAsync.fulfilled, (state, action) => {
         state.loading.create = false;
-        state.admins.unshift(action.payload);
+        state.users.unshift(action.payload);
         state.error = null;
       })
-      .addCase(createAdminAsync.rejected, (state, action) => {
+      .addCase(createUserAsync.rejected, (state, action) => {
         state.loading.create = false;
         state.error = action.payload;
       })
 
-      // ===== Update Admin =====
-      .addCase(updateAdminAsync.pending, (state) => {
+      // ===== Update User =====
+      .addCase(updateUserAsync.pending, (state) => {
         state.loading.update = true;
       })
-      .addCase(updateAdminAsync.fulfilled, (state, action) => {
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
         state.loading.update = false;
-        const index = state.admins.findIndex(
-          (admin) => admin.id === action.payload.id,
+        const index = state.users.findIndex(
+          (user) => user.id === action.payload.id,
         );
         if (index !== -1) {
-          state.admins[index] = { ...state.admins[index], ...action.payload };
+          state.users[index] = { ...state.users[index], ...action.payload };
         }
         state.error = null;
       })
-      .addCase(updateAdminAsync.rejected, (state, action) => {
+      .addCase(updateUserAsync.rejected, (state, action) => {
         state.loading.update = false;
         state.error = action.payload;
       })
 
-      // ===== Delete Admin =====
-      .addCase(deleteAdminAsync.pending, (state) => {
+      // ===== Delete User =====
+      .addCase(deleteUserAsync.pending, (state) => {
         state.loading.delete = true;
       })
-      .addCase(deleteAdminAsync.fulfilled, (state, action) => {
+      .addCase(deleteUserAsync.fulfilled, (state, action) => {
         state.loading.delete = false;
-        state.admins = state.admins.filter(
-          (admin) => admin.id !== action.payload,
-        );
+        state.users = state.users.filter((user) => user.id !== action.payload);
         state.error = null;
       })
-      .addCase(deleteAdminAsync.rejected, (state, action) => {
+      .addCase(deleteUserAsync.rejected, (state, action) => {
         state.loading.delete = false;
         state.error = action.payload;
       })
@@ -275,11 +271,11 @@ const adminSlice = createSlice({
       })
       .addCase(changeRoleAsync.fulfilled, (state, action) => {
         state.loading.changeRole = false;
-        const index = state.admins.findIndex(
-          (admin) => admin.id === action.payload.adminId,
+        const index = state.users.findIndex(
+          (user) => user.id === action.payload.userId,
         );
         if (index !== -1) {
-          state.admins[index].role = action.payload.role;
+          state.users[index].role = action.payload.role;
         }
         state.error = null;
       })
@@ -294,11 +290,11 @@ const adminSlice = createSlice({
       })
       .addCase(changeProfileImageAsync.fulfilled, (state, action) => {
         state.loading.changeProfileImage = false;
-        const index = state.admins.findIndex(
-          (admin) => admin.id === action.payload.id,
+        const index = state.users.findIndex(
+          (user) => user.id === action.payload.id,
         );
         if (index !== -1) {
-          state.admins[index].profileImage = action.payload.profileImage;
+          state.users[index].profileImage = action.payload.profileImage;
         }
         state.error = null;
       })
@@ -313,12 +309,12 @@ const adminSlice = createSlice({
 // Selectors
 // ===================
 
-export const selectAdmins = (state) => state.admins.admins || [];
-export const selectAdminsStatus = (state) => state.admins.status;
-export const selectAdminsError = (state) => state.admins.error;
-export const selectAdminsLoading = (state) => state.admins.loading;
-export const selectAdminsPagination = (state) => state.admins.pagination;
-export const selectAdminsQueries = (state) => state.admins.queries;
+export const selectUsers = (state) => state.users.users || [];
+export const selectUsersStatus = (state) => state.users.status;
+export const selectUsersError = (state) => state.users.error;
+export const selectUsersLoading = (state) => state.users.loading;
+export const selectUsersPagination = (state) => state.users.pagination;
+export const selectUsersQueries = (state) => state.users.queries;
 
 // ===================
 // Actions
@@ -330,11 +326,11 @@ export const {
   updateQuery,
   setSort,
   clearFilters,
-  removeAdminFromStore,
-} = adminSlice.actions;
+  removeUserFromStore,
+} = userSlice.actions;
 
 // ===================
 // Reducer
 // ===================
 
-export default adminSlice.reducer;
+export default userSlice.reducer;

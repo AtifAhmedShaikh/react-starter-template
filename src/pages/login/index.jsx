@@ -54,7 +54,7 @@ const Login = () => {
       localStorage.setItem("accessToken", response?.token);
       navigate(redirectTo || "/edit-profile");
     } else {
-      const errorMessage = resultAction?.payload?.message || "Error while login, please try again.";
+      const errorMessage = resultAction?.payload || "Error while login, please try again.";
       toast.error(errorMessage);
       setValue("password", "");
     }

@@ -7,7 +7,7 @@ import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 
-import { changePasswordSchema } from "@/schema/adminSchema";
+import { changePasswordSchemaForAdmin } from "@/schema/adminSchema";
 import {
   changePasswordAsync,
   selectAdminsLoading,
@@ -33,9 +33,8 @@ const ChangePasswordModal = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(changePasswordSchema),
+    resolver: yupResolver(changePasswordSchemaForAdmin),
     defaultValues: {
-      currentPassword: "",
       newPassword: "",
       confirmPassword: "",
     },
@@ -62,15 +61,6 @@ const ChangePasswordModal = () => {
             <strong>Note:</strong> You are changing the password for <strong>{admin?.fullName}</strong> ({admin?.email}).
           </p>
         </div>
-
-        <TextField
-          label="Current Password"
-          type="password"
-          {...register("currentPassword")}
-          error={errors.currentPassword?.message}
-          placeholder="Enter current password"
-          required
-        />
 
         <TextField
           label="New Password"

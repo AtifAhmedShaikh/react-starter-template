@@ -220,6 +220,12 @@ export const useSidebarMenuLinks = () => {
       requiredPermissions: [],
     },
     {
+      name: "Users",
+      url: "/users",
+      icon: Users,
+      requiredPermissions: [],
+    },
+    {
       name: "Settings",
       url: "/settings",
       icon: Settings,
