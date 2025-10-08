@@ -2,7 +2,6 @@ import SidebarLayout from "@/components/sidebar/SidebarLayout";
 import { PermissionKeys } from "@/constants/permissions";
 import {
   AboutPage,
-  AdminProfilePage,
   AdminsPage,
   ChangePasswordPage,
   ContactUsPage,
@@ -10,7 +9,7 @@ import {
   EditProfilePage,
   ForgotPasswordPage,
   HomePage,
-  ItemsPage,
+  LodgeComplaintPage,
   LoginPage,
   LogoutPage,
   ManualPage,
@@ -26,7 +25,6 @@ import {
   SignUpPage,
   StatisticsPage,
   TermsAndConditionPage,
-  TutorialPage,
   TutorialsPage,
   UnauthorizedAccessPage,
   UsersPage
@@ -99,10 +97,8 @@ export const routesConfig = [
             wrapper: SocketLayout,
             children: [
               { path: "/dashboard", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_dashboard} Component={Dashboard} /> },
-              { path: "/items", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_items} Component={ItemsPage} /> },
               { path: "/users", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_users} Component={UsersPage} /> },
-
-              { path: "/admin-profile/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins_users} Component={AdminProfilePage} /> },
+              { path: "/lodge-complaint", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_lodge_complaint} Component={LodgeComplaintPage} /> },
               { path: "/admins", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_admins} Component={AdminsPage} /> },
               { path: "/settings", element: <SettingsPage /> },
               { path: "/reports", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_generate_reports} Component={ReportsPage} /> },
@@ -117,9 +113,6 @@ export const routesConfig = [
               },
               {
                 path: "/tutorials", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_tutorials} Component={TutorialsPage} />
-              },
-              {
-                path: "/tutorial/:id", element: <PermissionRoutesWrapper permissionKey={PermissionKeys.can_view_tutorials} Component={TutorialPage} />
               },
               {
                 path: "/manuals", element: <PermissionRoutesWrapper permissionKey={[PermissionKeys.can_edit_profile]} Component={ManualPage} />
