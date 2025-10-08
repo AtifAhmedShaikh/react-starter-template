@@ -31,7 +31,7 @@ import {
 } from "@/pages";
 
 
-import SocketLayout from "@/components/SocketLayout";
+import SocketLayout from "@/components/layouts/SocketLayout";
 import AuthRoutesWrapper from "./AuthRoutesWrapper";
 import PermissionRoutesWrapper from "./PermissionRoutesWrapper";
 import ProtectedRoutesWrapper from "./ProtectedRoutesWrapper";
