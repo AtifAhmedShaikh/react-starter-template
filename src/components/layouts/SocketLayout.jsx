@@ -1,6 +1,7 @@
 "use client";
 
 import ModalManager from "@/components/reuseable/ModalManager";
+import { setupAdminProfileListenersRedux } from "@/socket/listener/adminProfileListener";
 import { setupNotificationListenersRedux } from "@/socket/listener/notificationListener";
 import { connectSocket, disconnectSocket, selectIsConnected, selectSocketInstance } from "@/stores/slices/socketSlice";
 import { useEffect } from "react";
@@ -24,6 +25,7 @@ export default function SocketLayout() {
   useEffect(() => {
     if (isSocketConnected) {
       setupNotificationListenersRedux(socket, dispatch);
+      setupAdminProfileListenersRedux(socket, dispatch);
     }
   }, [isSocketConnected, dispatch, socket]);
 
