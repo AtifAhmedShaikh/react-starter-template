@@ -41,6 +41,25 @@ export const setupNotificationListenersRedux = async (socket, dispatch) => {
     });
     playNotificationSound();
   });
+  socket.on(SOCKET_EVENTS.EMITTERS.ADMIN_PROFILE_UPDATE, (notification) => {
+    console.log("📩 New notification received:", notification);
+
+    dispatch(prependNotification(notification));
+
+    console.log("📩 New notification received:", notification);
+    toast.success(notification.title, {
+      description: notification.message,
+      duration: 4000,
+      action: {
+        label: "View",
+        onClick: () => {
+          window.location.href =
+            notification.metadata?.link || "/notifications";
+        },
+      },
+    });
+    playNotificationSound();
+  });
 
   socket.on(SOCKET_EVENTS.EMITTERS.NOTIFICATION_ERROR, (error) => {
     console.error("Notification Error:", error);

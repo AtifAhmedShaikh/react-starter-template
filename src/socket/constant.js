@@ -24,5 +24,8 @@ export const SOCKET_EVENTS = {
 
     REPORT_PDF_SUCCESS: "report-pdf-success",
     REPORT_PDF_ERROR: "report-pdf-error",
+
+    // Admin Profile Update
+    ADMIN_PROFILE_UPDATE: "admin-profile-update",
   },
 };
