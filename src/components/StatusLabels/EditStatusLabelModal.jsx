@@ -55,17 +55,15 @@ const EditStatusLabelModal = () => {
     delete payload.borderColor;
     delete payload.id;
 
-    try {
-      const result = await dispatch(updateStatusLabelAsync({ id: statusLabel.id, payload }));
-      if (result.type.endsWith('/fulfilled')) {
-        toast.success("Status Label updated");
+    dispatch(updateStatusLabelAsync({ id: statusLabel.id, payload }))
+      .unwrap()
+      .then((response) => {
+        toast.success(response.message || "Status label updated successfully");
         dispatch(closeModal());
-      } else {
-        toast.error(result.payload || "Failed to update status label");
-      }
-    } catch (error) {
-      toast.error("Failed to update status label");
-    }
+      })
+      .catch((error) => {
+        toast.error(error || "Failed to update status label");
+      });
   };
 
   if (!statusLabel) return null;
