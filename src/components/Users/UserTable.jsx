@@ -152,9 +152,7 @@ const UserTable = () => {
                   </TableCell>
                   <TableCell>{user.city?.value || "N/A"}</TableCell>
                   <TableCell className="text-right">
-                    <TableCell className="text-gray-500">
-                      <Info className="h-4 w-4 hover:text-primary" onClick={() => dispatch(openModal({ modalType: MODAL_TYPES.VIEW_USER_DETAILS, data: user }))} />
-                    </TableCell>
+                      <Info className="h-4 w-4 hover:text-primary mx-auto" onClick={() => dispatch(openModal({ modalType: MODAL_TYPES.VIEW_USER_DETAILS, data: user }))} />
                   </TableCell>
                 </TableRow>
               ))

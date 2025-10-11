@@ -209,8 +209,8 @@ export const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
 // Fields we want to encrypt
 export const SENSITIVE_FIELDS = [
-  "password",
   "otp",
+  "password",
   "confirmPassword",
   "currentPassword",
   "newPassword",
@@ -228,21 +228,6 @@ export const HTTP_METHODS = {
   PUT: "PUT",
   DELETE: "DELETE",
   PATCH: "PATCH",
-};
-
-export const CHARGES_METADATA = {
-  DEPUTY_DIRECTOR: {
-    label: "Deputy Director",
-    color: "bg-blue-100 text-blue-800 border-blue-200",
-    icon: "UserCheck",
-    canForwardKey: "can_forward_to_zone",
-  },
-  CIRCLE_OFFICER: {
-    label: "Circle Officer",
-    color: "bg-green-100 text-green-800 border-green-200",
-    icon: "User",
-    canForwardKey: "can_forward_to_circle",
-  },
 };
 
 export const FLOW_CHART_IMAGE =
@@ -327,3 +312,6 @@ export const HABITUAL_COMPLAINANT_TAGS = {
   SUSPECTED_HABITUAL_COMPLAINANT: "SUSPECTED_HABITUAL_COMPLAINANT",
   HABITUAL_COMPLAINANT: "HABITUAL_COMPLAINANT",
 };
+
+// For hashing
+export const SALT_ROUNDS = 10;

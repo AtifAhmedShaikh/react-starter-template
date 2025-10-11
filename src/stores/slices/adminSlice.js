@@ -27,7 +27,7 @@ const initialState = {
     keyword: "",
     page: 1,
     sortBy: "createdAt",
-    sortBy: "dsc",
+    sortBy: "desc",
   },
 };
 
@@ -167,10 +167,10 @@ const adminSlice = createSlice({
     setSort: (state, action) => {
       const field = action.payload;
       if (state.queries.sortBy === field) {
-        state.queries.sortBy = state.queries.sortBy === "asc" ? "dsc" : "asc";
+        state.queries.sortBy = state.queries.sortBy === "asc" ? "desc" : "asc";
       } else {
         state.queries.sortBy = field;
-        state.queries.sortBy = "dsc";
+        state.queries.sortBy = "desc";
       }
     },
     clearFilters: (state) => {

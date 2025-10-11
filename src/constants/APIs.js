@@ -98,7 +98,7 @@ export const ADMIN_APIS = {
   CHANGE_PASSWORD: "/api/admins/changePassword",
   CHANGE_ROLE: "/api/admins/updateAdminRole",
   CHANGE_PROFILE_IMAGE: "/api/admins/changeProfileImage",
-  EXPORT_ADMINS: "/api/exports/exportAdmins",
+  EXPORT_ADMINS: "/api/exports/users",
   IMPORT_ADMINS: "/api/imports/importAdmins",
 };
 

@@ -1,4 +1,6 @@
 import { ENCRYPTION_SECRET } from "@/config/configManager";
+import { SALT_ROUNDS, SENSITIVE_FIELDS } from "@/constants";
+import bcrypt from "bcryptjs";
 import CryptoJS from "crypto-js";
 
 // Ideally store this in .env and NEVER hardcode secrets for production
@@ -22,22 +24,24 @@ export const decryptValue = (encryptedValue) => {
   return bytes.toString(CryptoJS.enc.Utf8);
 };
 
-/**
- * Encrypt selected fields of an object
- * @param {Object} data - object to process
- * @param {string[]} fieldsToEncrypt - list of fields to encrypt
- * @returns {Object} new object with encrypted fields
- */
-export const encryptSensitiveFields = (data, fieldsToEncrypt) => {
-  const encryptedData = { ...data };
+export const generateHashedValue = async (value) => {
+  return bcrypt.hash(value, SALT_ROUNDS);
+};
 
-  fieldsToEncrypt.forEach((field) => {
-    if (encryptedData[field]) {
-      encryptedData[field] = encryptValue(String(encryptedData[field]));
+/**
+ * Encrypt and hash selected fields of an object
+ * @param {Object} data - object to process
+ * @returns {Promise<Object>} new object with encrypted fields
+ */
+export const encryptSensitiveFields = (data) => {
+  const result = { ...data };
+
+  SENSITIVE_FIELDS.forEach((field) => {
+    if (result[field]) {
+      result[field] = encryptValue(String(result[field]));
     }
   });
-
-  return encryptedData;
+  return result;
 };
 
 /**
@@ -46,6 +50,7 @@ export const encryptSensitiveFields = (data, fieldsToEncrypt) => {
  * @param {string[]} fieldsToDecrypt - list of fields to decrypt
  * @returns {Object} new object with decrypted fields
  */
+
 export const decryptSensitiveFields = (data, fieldsToDecrypt) => {
   const decryptedData = { ...data };
 

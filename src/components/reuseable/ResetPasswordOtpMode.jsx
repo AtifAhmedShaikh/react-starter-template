@@ -1,22 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { AUTH_APIS } from "@/constants/APIs";
 import { OTP_TIMER } from "@/constants";
+import { apiHandler } from "@/lib/apiWrapper";
 import { resetPasswordSchema } from "@/schema/userSchema";
-import { resetPasswordAsync } from "@/stores/slices/authSlice";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { TextField } from "./TextField";
 
 
-export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP,  }) {
-    const cnic = useSelector((state) => state.auth?.temporaryStorage?.cnic);
-    const [submitStatus, setSubmitStatus] = useState({});
-    const dispatch = useDispatch();
-
+export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP, cnic }) {
     const [timer, setTimer] = useState(OTP_TIMER);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -60,30 +56,24 @@ export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP,  }) {
     };
 
     const onSubmit = async (data) => {
-        try {
-            setIsLoading(true);
-            setSubmitStatus({});
+        setIsLoading(true);
 
-            delete data?.confirmPassword;
-            const resultAction = await dispatch(resetPasswordAsync({ cnic,  password: data.newPassword, otp: data.otp }));
-            setIsLoading(false);
-            if (resetPasswordAsync.fulfilled.match(resultAction)) {
-                const response = resultAction.payload;
-                setShowOtp(false);
-                toast.success(response?.message || "OTP verified successfully");
-                onConfirmOTP?.();
-                setSubmitStatus({ success: response?.message || "OTP verified successfully" });
-            } else {
-                const errorMessage =
-                    resultAction?.payload?.message || "Invalid OTP. Please try again.";
-                setSubmitStatus({ error: errorMessage });
-                toast.error(errorMessage);
-            }
-        } catch (err) {
-            toast.error(err.message || "Something went wrong during password reset.");
-            setSubmitStatus({ error: err.message || "Something went wrong during password reset" });
+        delete data?.confirmPassword;
+        
+        const response = await apiHandler(AUTH_APIS.RESET_PASSWORD, {
+            method: "POST",
+            data: { cnic, password: data.newPassword, otp: data.otp },
+        });
+
+        setIsLoading(false);
+
+        if (response.success) {
+            setShowOtp(false);
+            toast.success(response.message || "OTP verified successfully");
+            onConfirmOTP?.();
+        } else {
+            toast.error(response.message || "Invalid OTP. Please try again.");
         }
-
     };
 
     return (
@@ -157,11 +147,9 @@ export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP,  }) {
                             className="w-full"
                             placeholder="Enter confirm password"
                         />
-                        {submitStatus.error && <p className="text-red-500">{submitStatus.error}</p>}
-                        {submitStatus.success && <p className="text-green-600">{submitStatus.success}</p>}
 
-                        <Button className="w-full bg-gray-800 text-white py-2" disabled={isLoading}>
-                            {isLoading ? "Resetting..." : "Reset Password"}
+                        <Button className="w-full bg-gray-800 text-white py-2" loading={isLoading} loadingLabel="Resetting...">
+                            Reset Password
                         </Button>
                     </form>
                 </DialogHeader>

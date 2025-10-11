@@ -14,14 +14,11 @@ export function useImportExport() {
     setLoading((prev) => ({ ...prev, export: true }));
 
     try {
-      const response = await apiHandler(exportUrl, {
+      //! use fetch
+      const response = await fetch(exportUrl, {
         method: HTTP_METHODS.GET,
         responseType: "blob",
       });
-
-      if (!response.success) {
-        throw new Error(response.message || "Export failed");
-      }
 
       let filename = defaultFilename;
       const contentDisposition = response.headers?.["content-disposition"];
@@ -42,8 +39,8 @@ export function useImportExport() {
 
       toast.success("Export completed", { id: toastId });
     } catch (error) {
-      console.error("Export failed:", error);
-      toast.error(`Export failed: ${error.message || error}`, { id: toastId });
+      console.log({ error });
+      toast.error(error, { id: toastId });
     } finally {
       setLoading((prev) => ({ ...prev, export: false }));
     }

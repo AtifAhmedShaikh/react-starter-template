@@ -170,7 +170,7 @@ const userSlice = createSlice({
         state.queries.sortBy = state.queries.sortBy === "asc" ? "dsc" : "asc";
       } else {
         state.queries.sortAt = field;
-        state.queries.sortBy = "dsc";
+        state.queries.sortBy = "desc";
       }
     },
     clearFilters: (state) => {
@@ -178,7 +178,7 @@ const userSlice = createSlice({
         keyword: "",
         page: 1,
         sortAt: "createdAt",
-        sortBy: "dsc",
+        sortBy: "desc",
       };
     },
     removeUserFromStore: (state, action) => {

@@ -2,25 +2,22 @@ import Footer from "@/components/layouts/Footer";
 import Navbar from "@/components/layouts/Navbar";
 import { ResetPasswordOtpModal } from "@/components/reuseable/ResetPasswordOtpMode";
 import { TextField } from "@/components/reuseable/TextField";
-import { forgotPasswordAsync, setTemporaryValue } from "@/stores/slices/authSlice";
+import { RESPONSE_INTENTS } from "@/constants";
+import { AUTH_APIS } from "@/constants/APIs";
+import { apiHandler } from "@/lib/apiWrapper";
 import { formatCNICInput } from "@/utils/formatters";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { CheckCircle, XCircle } from "lucide-react";
 import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { forgotPasswordSchema } from "../../schema/userSchema";
 
 const ForgotPasswordPage = () => {
-    const [success, setSuccess] = useState("");
-    const [error, setError] = useState("");
     const [showOTPModal, setShowOTPModal] = useState(false);
+    const [cnic, setCnic] = useState("");
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-
 
     const {
         register,
@@ -33,33 +30,18 @@ const ForgotPasswordPage = () => {
     });
 
     const onSubmit = async (data) => {
-        setSuccess("");
-        setError("");
+        const response = await apiHandler(AUTH_APIS.FORGOT_PASSWORD, {
+            method: "POST",
+            data,
+        });
 
-        const resultAction = await dispatch(forgotPasswordAsync(data));
-
-        if (forgotPasswordAsync.fulfilled.match(resultAction)) {
-            const response = resultAction.payload;
-            console.log("Response", response)
-            const INTENT = response?.data?.intent;
-
-            console.log("INTENT", INTENT)
-
-            if (INTENT === "OTP_SENT") {
-                setSuccess(response?.message);
-                toast.success(response?.message);
-                setShowOTPModal(true)
-                dispatch(setTemporaryValue({ key: "cnic", value: data?.cnic }));
-                return;
-            }
-
-            toast.success(response?.message || "OTP sent successfully");
-            setSuccess(response?.message || "OTP sent successfully");
+        if (response.success && response.data?.intent === RESPONSE_INTENTS.OTP_SENT) {
+            toast.success(response.message);
+            setShowOTPModal(true);
+            setCnic(data?.cnic);
+            return;
         } else {
-            const errorMessage =
-                resultAction?.payload?.message || "Something went wrong during OTP request.";
-            toast.error(errorMessage);
-            setError(errorMessage);
+            toast.error(response.message || "Something went wrong during OTP request.");
         }
     };
 
@@ -88,7 +70,7 @@ const ForgotPasswordPage = () => {
 
                     <div className="text-center mt-16">
                         <h2 className="text-2xl font-semibold">Forgot Password</h2>
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="txt-sm text-gray-500 mt-1">
                             Enter Your CNIC to Reset Your Password
                         </p>
                     </div>
@@ -119,17 +101,6 @@ const ForgotPasswordPage = () => {
                             </Link>
                         </div>
 
-                        {error && (
-                            <div className="text-red-600 flex gap-2 items-center text-sm">
-                                <XCircle size={18} /> {error}
-                            </div>
-                        )}
-                        {success && (
-                            <div className="text-green-600 flex gap-2 items-center text-sm">
-                                <CheckCircle size={18} /> {success}
-                            </div>
-                        )}
-
                         <button
                             type="submit"
                             className="bg-black text-white w-full py-2 rounded-lg hover:bg-gray-800 transition"
@@ -139,7 +110,7 @@ const ForgotPasswordPage = () => {
                     </form>
                 </div>
             </div>
-            <ResetPasswordOtpModal showOtp={showOTPModal} setShowOtp={setShowOTPModal} onConfirmOTP={onConfirmOTP} />
+            <ResetPasswordOtpModal showOtp={showOTPModal} setShowOtp={setShowOTPModal} onConfirmOTP={onConfirmOTP} cnic={cnic} />
             <Footer />
         </>
     );

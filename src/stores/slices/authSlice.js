@@ -65,30 +65,6 @@ export const checkAuthAsync = createAsyncThunk(
   },
 );
 
-export const forgotPasswordAsync = createAsyncThunk(
-  "auth/forgotPassword",
-  async (cnic, { rejectWithValue }) => {
-    const response = await apiHandler(AUTH_APIS.FORGOT_PASSWORD, {
-      method: HTTP_METHODS.POST,
-      data: cnic,
-    });
-    if (!response.success) return rejectWithValue(response.message);
-    return response.data;
-  },
-);
-
-export const resetPasswordAsync = createAsyncThunk(
-  "auth/resetPassword",
-  async (resetData, { rejectWithValue }) => {
-    const response = await apiHandler(AUTH_APIS.RESET_PASSWORD, {
-      method: HTTP_METHODS.POST,
-      data: resetData,
-    });
-    if (!response.success) return rejectWithValue(response.message);
-    return response.data;
-  },
-);
-
 export const changeProfileImageAsync = createAsyncThunk(
   "auth/changeProfileImage",
   async (data, { rejectWithValue }) => {
