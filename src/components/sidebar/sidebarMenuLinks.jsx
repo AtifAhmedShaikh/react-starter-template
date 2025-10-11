@@ -7,6 +7,7 @@ import {
   Key,
   Settings,
   Shield,
+  Tag,
   TrendingUp,
   User,
   Users,
@@ -60,6 +61,12 @@ export const useSidebarMenuLinks = () => {
       name: "Permissions",
       url: "/permissions",
       icon: Shield,
+      requiredPermissions: [],
+    },
+    {
+      name: "Status Labels",
+      url: "/status-labels",
+      icon: Tag,
       requiredPermissions: [],
     },
     {

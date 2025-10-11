@@ -24,6 +24,7 @@ import {
   SettingsPage,
   SignUpPage,
   StatisticsPage,
+  StatusLabelsPage,
   TermsAndConditionPage,
   TutorialsPage,
   UnauthorizedAccessPage,
@@ -122,6 +123,9 @@ export const routesConfig = [
               },
               {
                 path: "/roles", element: <PermissionRoutesWrapper permissionKey={[]} Component={RolesPage} />
+              },
+              {
+                path: "/status-labels", element: <PermissionRoutesWrapper permissionKey={[]} Component={StatusLabelsPage} />
               },
             ]
           }

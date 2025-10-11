@@ -45,6 +45,9 @@ export { default as PermissionsPage } from './Permissions'
 // Role management
 export { default as RolesPage } from './Roles'
 
+// Status Labels management
+export { default as StatusLabelsPage } from './StatusLabels'
+
 // Lodge Complaint
 export { default as LodgeComplaintPage } from './LodgeComplaint'
 

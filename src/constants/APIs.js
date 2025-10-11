@@ -114,3 +114,13 @@ export const USER_APIS = {
   EXPORT_USERS: "/api/exports/exportUsers",
   IMPORT_USERS: "/api/imports/importUsers",
 };
+
+export const STATUS_LABEL_APIS = {
+  GET_ALL_STATUS_LABELS: "/api/statusLabels/getAllStatusLabels",
+  GET_STATUS_LABEL_BY_ID: "/api/statusLabels/getStatusLabelById",
+  CREATE_STATUS_LABEL: "/api/statusLabels/createStatusLabel",
+  UPDATE_STATUS_LABEL: "/api/statusLabels/updateStatusLabelById",
+  DELETE_STATUS_LABEL: "/api/statusLabels/deleteStatusLabel",
+  EXPORT_STATUS_LABELS: "/api/exports/exportStatusLabels",
+  IMPORT_STATUS_LABELS: "/api/imports/importStatusLabels",
+};

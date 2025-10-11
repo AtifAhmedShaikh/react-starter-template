@@ -84,3 +84,40 @@ export function isUrdu(text = "") {
   // Urdu Unicode range: 0600–06FF
   return /[\u0600-\u06FF]/.test(text);
 }
+
+// Extract color values from colorStyles string
+export const extractColorValues = (colorStyles = "") => {
+  const defaultColors = {
+    bgColor: "#3b82f6",
+    textColor: "#ffffff",
+    borderColor: "#1d4ed8",
+  };
+
+  if (!colorStyles) return defaultColors;
+
+  const colors = {};
+
+  // Extract background color
+  const bgMatch = colorStyles.match(/!bg-\[([^\]]+)\]/);
+  if (bgMatch) {
+    colors.bgColor = bgMatch[1];
+  }
+
+  // Extract text color
+  const textMatch = colorStyles.match(/!text-\[([^\]]+)\]/);
+  if (textMatch) {
+    colors.textColor = textMatch[1];
+  }
+
+  // Extract border color
+  const borderMatch = colorStyles.match(/!border-\[([^\]]+)\]/);
+  if (borderMatch) {
+    colors.borderColor = borderMatch[1];
+  }
+
+  return {
+    bgColor: colors.bgColor || defaultColors.bgColor,
+    textColor: colors.textColor || defaultColors.textColor,
+    borderColor: colors.borderColor || defaultColors.borderColor,
+  };
+};

@@ -13,6 +13,7 @@ import permissionReducer from "./slices/permissionSlice";
 import roleReducer from "./slices/roleSlice";
 import adminReducer from "./slices/adminSlice";
 import userReducer from "./slices/userSlice";
+import statusLabelReducer from "./slices/statusLabelSlice";
 
 const appReducer = combineReducers({
   auth: authReducer,
@@ -28,6 +29,7 @@ const appReducer = combineReducers({
   roles: roleReducer,
   admins: adminReducer,
   users: userReducer,
+  statusLabels: statusLabelReducer,
 });
 
 // Root reducer that resets all slices
