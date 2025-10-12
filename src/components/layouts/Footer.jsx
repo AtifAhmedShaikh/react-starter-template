@@ -5,6 +5,7 @@ import {
     Shield
 } from "lucide-react"
 import { Link } from 'react-router-dom'
+import { LogoImage } from "@/components/ui/image-variants";
 
 const Footer = () => {
     return (
@@ -14,7 +15,7 @@ const Footer = () => {
                     <div>
                         <div className="flex items-center gap-3 mb-6">
                             <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                                <img src="/ace.png" alt="eace logo" className="w1-2 h-12" />
+                                <LogoImage src="/ace.png" alt="eace logo" className="w-12 h-12" />
                                 {/* <Shield className="w-5 h-5 text-white" /> */}
                             </div>
                             <div>

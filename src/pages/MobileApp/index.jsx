@@ -1,5 +1,6 @@
 import Footer from "@/components/layouts/Footer";
 import Navbar from "@/components/layouts/Navbar";
+import { LogoImage, CardImage } from "@/components/ui/image-variants";
 import Swal from "sweetalert2";
 
 export default function MobileAppReleasePage() {
@@ -55,10 +56,10 @@ export default function MobileAppReleasePage() {
 
           {/* Logo */}
           <div className="mb-6">
-            <img
+            <LogoImage
               src="ace.png"
               alt="App Logo"
-              className="mx-auto h-28 w-28 "
+              className="mx-auto h-28 w-28"
             />
           </div>
 
@@ -74,7 +75,7 @@ export default function MobileAppReleasePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Android Card */}
             <div className="border rounded-xl p-6 shadow-sm hover:shadow-md transition bg-green-50">
-              <img
+              <LogoImage
                 src="https://simpleicons.org/icons/android.svg"
                 alt="Android Logo"
                 className="h-12 mx-auto mb-4"
@@ -96,7 +97,7 @@ export default function MobileAppReleasePage() {
 
             {/* iOS Card */}
             <div className="border rounded-xl p-6 shadow-sm hover:shadow-md transition bg-amber-50">
-              <img
+              <LogoImage
                 src="https://simpleicons.org/icons/apple.svg"
                 alt="Apple Logo"
                 className="h-12 mx-auto mb-4"
@@ -125,10 +126,10 @@ export default function MobileAppReleasePage() {
                   key={idx}
                   className="overflow-hidden rounded-xl shadow-md hover:shadow-xl transition"
                 >
-                  <img
+                  <CardImage
                     src={src}
                     alt={`Screenshot ${idx + 1}`}
-                    className="w-full h-auto hover:scale-105 transition-transform duration-300"
+                    className="hover:scale-105 transition-transform duration-300"
                   />
                 </div>
               ))}

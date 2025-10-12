@@ -3,6 +3,7 @@
 import { Download, FileText } from "lucide-react";
 import { useState } from "react";
 import GlobalFileViewer from "../reuseable/GlobalFileViewer";
+import Image from "@/components/ui/image";
 
 const ComplaintAttachments = ({ attachments = [] }) => {
   const [previewFile, setPreviewFile] = useState(null);
@@ -39,10 +40,11 @@ const ComplaintAttachments = ({ attachments = [] }) => {
                 onClick={() => handlePreview(file)}
               >
                 {fileIsImage ? (
-                  <img
+                  <Image
                     src={fileUrl}
                     alt={fileName}
                     className="object-cover w-full h-full"
+                    showSkeleton={false}
                   />
                 ) : fileIsPDF ? (
                   <div className="h-full flex flex-col items-center justify-center p-4">

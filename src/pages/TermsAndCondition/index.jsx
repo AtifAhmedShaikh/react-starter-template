@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/layouts/Navbar";
 import Footer from "@/components/layouts/Footer";
+import { LogoImage } from "@/components/ui/image-variants";
 
 const TermsAndCondition = () => {
   return (
@@ -19,7 +20,7 @@ const TermsAndCondition = () => {
 
       {/* Hero Section */}
       <div className="text-center mb-6 w-10/12 lg:w-8/12 mx-auto mt-12">
-        <img
+        <LogoImage
           src="https://res.cloudinary.com/dsdtmsuyq/image/upload/v1735481499/spbscc70frfadbd7oxcx.png"
           alt="logo"
           className="w-32 h-32 mx-auto mb-4 drop-shadow-lg"

@@ -1,3 +1,5 @@
+import Image from "@/components/ui/image";
+
 const FilePreviewOnly = ({ files = [] }) => {
   if (!files.length) return <p className="text-sm text-gray-500">No files attached.</p>;
 
@@ -20,10 +22,11 @@ const FilePreviewOnly = ({ files = [] }) => {
         return (
           <div key={index} className="relative w-24 h-24 rounded overflow-hidden border bg-gray-50">
             {isImage && src ? (
-              <img
+              <Image
                 src={src}
                 alt="preview"
                 className="object-cover w-full h-full"
+                showSkeleton={false}
               />
             ) : (
               <div className="flex items-center justify-center w-full h-full text-xs text-gray-500 p-2 text-center">

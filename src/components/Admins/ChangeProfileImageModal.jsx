@@ -6,6 +6,7 @@ import { Upload, X, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { ProfileImage } from "@/components/ui/image-variants";
 
 import {
   closeModal,
@@ -101,14 +102,11 @@ const ChangeProfileImageModal = () => {
         <div className="flex items-center space-x-4">
           <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
             {admin?.profileImage ? (
-              <img
+              <ProfileImage
                 src={admin.profileImage}
                 alt="Current profile"
-                className="w-full h-full object-cover"
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null; // prevents looping
-                  currentTarget.src = "/profile.jpg";
-                }}
+                size="lg"
+                className="w-full h-full"
               />
             ) : (
               <User className="w-8 h-8 text-gray-400" />
@@ -142,10 +140,11 @@ const ChangeProfileImageModal = () => {
               Preview
             </label>
             <div className="relative inline-block">
-              <img
+              <ProfileImage
                 src={preview}
                 alt="Preview"
-                className="w-32 h-32 rounded-full object-cover border-2 border-gray-200"
+                size="2xl"
+                className="border-2 border-gray-200"
               />
               <button
                 type="button"

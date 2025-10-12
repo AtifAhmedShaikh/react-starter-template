@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { LogoImage } from "@/components/ui/image-variants";
 import { LANDING_PAGE_URL } from "@/config/configManager";
 import { USER_ROLES } from "@/constants";
 import { verifyJwtToken } from "@/utils/helper";
@@ -26,7 +27,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to={landingPageURL || "/"} className="flex items-center gap-2">
-            <img src="/ace.png" alt="Logo" className="w-16 h-16 mr-2" />
+            <LogoImage src="/ace.png" alt="Logo" className="mr-2" />
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-primary">ACE Sindh</h1>
               <p className="text-xs sm:text-sm text-muted-foreground">

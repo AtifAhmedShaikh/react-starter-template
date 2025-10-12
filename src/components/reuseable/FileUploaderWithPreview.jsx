@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { ACCEPT_FILES, MAX_FILE_LIMIT, MAX_FILE_SIZE } from "@/constants/index";
+import Image from "@/components/ui/image";
 
 const FileUploaderWithPreview = ({ 
   files, 
@@ -122,10 +123,11 @@ const FileUploaderWithPreview = ({
         {previews.map((file, index) => (
           <div key={index} className={`relative w-32 h-32 rounded overflow-hidden border bg-gray-50 ${wrapperWidth}`}>  
             {file.type.startsWith("image/") ? (
-              <img
+              <Image
                 src={file.url}
                 alt="preview"
                 className="object-cover w-full h-full"
+                showSkeleton={false}
               />
             ) : file.type === "application/pdf" ? (
               <iframe

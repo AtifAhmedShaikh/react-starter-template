@@ -10,13 +10,14 @@ import {
   RefreshCw,
   ShieldCheck,
 } from "lucide-react";
+import { LogoImage } from "@/components/ui/image-variants";
 
 const PrivacyPolicyPage = () => {
   return (
     <div className="bg-green-100 min-h-screen flex flex-col">
       <Navbar  />
       <div className="text-center mb-6 w-10/12 lg:w-8/12 mx-auto mt-12">
-        <img
+        <LogoImage
           src="https://res.cloudinary.com/dsdtmsuyq/image/upload/v1735481499/spbscc70frfadbd7oxcx.png"
           alt="logo"
           className="w-32 h-32 mx-auto mb-4 drop-shadow-lg"

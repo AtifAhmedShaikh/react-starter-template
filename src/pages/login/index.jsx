@@ -3,6 +3,7 @@ import Navbar from "@/components/layouts/Navbar";
 import { OtpModalWithTimer } from "@/components/reuseable/OtpModel";
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
+import { LogoImage } from "@/components/ui/image-variants";
 import { RESPONSE_INTENTS } from "@/constants";
 import { loginAsync, setTemporaryValue } from "@/stores/slices/authSlice";
 import { formatCNICInput } from "@/utils/formatters";
@@ -72,8 +73,8 @@ const Login = () => {
           {/* Logo */}
           <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
             <Link to="/">
-              <img
-                src={"/ace.png"}
+              <LogoImage
+                src="/ace.png"
                 alt="App Logo"
                 className="w-28 h-28 rounded-full border-2 border-gray-700 shadow-lg bg-white p-0.5"
               />

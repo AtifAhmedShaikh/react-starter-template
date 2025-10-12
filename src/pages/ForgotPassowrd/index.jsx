@@ -2,6 +2,7 @@ import Footer from "@/components/layouts/Footer";
 import Navbar from "@/components/layouts/Navbar";
 import { ResetPasswordOtpModal } from "@/components/reuseable/ResetPasswordOtpMode";
 import { TextField } from "@/components/reuseable/TextField";
+import { LogoImage } from "@/components/ui/image-variants";
 import { RESPONSE_INTENTS } from "@/constants";
 import { AUTH_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
@@ -60,8 +61,8 @@ const ForgotPasswordPage = () => {
                 <div className="bg-white rounded-2xl shadow-xl max-w-xl w-full p-6 relative border-t-primary border-t-5" >
                     <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                         <Link to="/">
-                            <img
-                                src={"/ace.png"}
+                            <LogoImage
+                                src="/ace.png"
                                 alt="ACE Logo"
                                 className="w-28 h-28 rounded-full border-1 border-gray-700 shadow-lg bg-white p-0.5"
                             />

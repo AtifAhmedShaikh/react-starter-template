@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Upload, FileText, ImageIcon, X } from "lucide-react";
 import { MAX_FILE_LIMIT, ACCEPT_FILES, MAX_FILE_SIZE } from "@/constants";
+import Image from "@/components/ui/image";
 
 export const FileUploadArea = ({ 
   field, 
@@ -206,10 +207,11 @@ export const FileUploadArea = ({
                     <p className="text-sm text-muted-foreground">PDF Preview</p>
                   </div>
                 ) : file.type.startsWith("image/") ? (
-                  <img
+                  <Image
                     src={URL.createObjectURL(file)}
                     alt="Preview"
                     className="w-full h-48 object-cover rounded-lg border mt-4"
+                    showSkeleton={false}
                   />
                 ) : (
                   <div className="bg-muted rounded-lg p-4 text-center mt-4">

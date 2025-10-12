@@ -16,6 +16,7 @@ import { useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { Button } from "../ui/button"
 import { ScrollArea } from "../ui/scroll-area"
+import { LogoImage, ProfileImage } from "../ui/image-variants"
 import { useSidebarMenuLinks } from "./sidebarMenuLinks"
 
 import { usePermissions } from "@/hooks/usePermissions"
@@ -48,10 +49,10 @@ export function AppSidebar() {
           className="flex items-center gap-2 hover:no-underline !p-0"
         >
           <div className="flex justify-center items-center gap-2 px-4">
-            <img
+            <LogoImage
               src="/ace.png"
               alt="Sindh Logo"
-              className="rounded-full h-16 object-contain"
+              className="rounded-full h-16"
             />
             <h3 className="text-sm ">
               Complaint Center
@@ -62,13 +63,11 @@ export function AppSidebar() {
       {/* User Profile Info */}
       <div className="flex flex-col items-center justify-center mt-2 px-4">
         <Link to={"/edit-profile"} onClick={() => dispatch(setActiveTabItem(""))}>
-          <img
-            className={"  h-12 aspect-square object-cover rounded-full overflow-hidden"}
+          <ProfileImage
             src={user?.profileImage}
-            onError={({ currentTarget }) => {
-              currentTarget.onerror = null; // prevents looping
-              currentTarget.src = "/profile.jpg";
-            }}
+            alt="Profile"
+            size="lg"
+            className="overflow-hidden"
           />
         </Link>
 

@@ -9,7 +9,7 @@ const initialState = {
   permissions: [],
   isAuthenticated: false,
   temporaryStorage: {},
-  status: "idle",
+  status: "idle", // this loading status is only used for check auth api
   error: null,
   activeTabItem: "",
 };
@@ -104,9 +104,6 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loginAsync.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.status = "idle";
         const hasIntent = action.payload?.intent;
@@ -115,8 +112,6 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
       })
       .addCase(loginAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
         state.isAuthenticated = false;
       })
       .addCase(logoutAsync.fulfilled, (state) => {
@@ -138,9 +133,6 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
       })
-      .addCase(updateUserAsync.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(updateUserAsync.fulfilled, (state, action) => {
         const updatedUser = {
           fullName: action.payload?.user?.fullName,
@@ -149,31 +141,15 @@ const authSlice = createSlice({
           cityId: action.payload?.user?.cityId,
           address: action.payload?.user?.address,
         };
-        console.log("Update user response: ", action.payload?.user);
         state.status = "idle";
         state.user = { ...state.user, ...updatedUser };
-      })
-      .addCase(updateUserAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      .addCase(changeProfileImageAsync.pending, (state) => {
-        state.status = "loading";
       })
       .addCase(changeProfileImageAsync.fulfilled, (state, action) => {
         const updatedUser = {
-          profileImage: action.payload?.data?.profileImage,
+          profileImage: action.payload?.profileImage,
         };
-        console.log("Update user response: ", action.payload);
         state.status = "idle";
         state.user = { ...state.user, ...updatedUser };
-      })
-      .addCase(changeProfileImageAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      .addCase(updateUserSensitiveFieldsAsync.pending, (state) => {
-        state.status = "loading";
       })
       .addCase(updateUserSensitiveFieldsAsync.fulfilled, (state, action) => {
         const updatedUser = {
@@ -183,13 +159,8 @@ const authSlice = createSlice({
           cityId: action.payload?.user?.cityId,
           address: action.payload?.user?.address,
         };
-        console.log("Update user response: ", action.payload?.user);
         state.status = "idle";
         state.user = { ...state.user, ...updatedUser };
-      })
-      .addCase(updateUserSensitiveFieldsAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
       });
   },
 });

@@ -4,6 +4,7 @@ import SearchableSelectField from "@/components/reuseable/SearchableSelectField"
 import SelectField from "@/components/reuseable/SelectField";
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
+import { LogoImage } from "@/components/ui/image-variants";
 import { HTTP_METHODS, RESPONSE_INTENTS } from "@/constants";
 import { AUTH_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
@@ -79,8 +80,8 @@ const SignUp = () => {
                 <div className="bg-white rounded-2xl shadow-lg max-w-lg w-full p-6 relative border-t-primary border-t-5 sm:mt-5 mt-14">
                     <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                         <Link to="/">
-                            <img
-                                src={"/ace.png"}
+                            <LogoImage
+                                src="/ace.png"
                                 alt="App Logo"
                                 className="w-28 h-28 rounded-full border-2 border-gray-700 shadow-lg bg-white p-0.5"
                             />

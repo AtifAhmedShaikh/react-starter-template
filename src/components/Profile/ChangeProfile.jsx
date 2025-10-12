@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ProfileImage } from "@/components/ui/image-variants";
 import { Input } from "@/components/ui/input";
 import { changeProfileImageAsync, selectUser } from "@/stores/slices/authSlice";
 import { Edit } from "lucide-react";
@@ -20,29 +21,27 @@ export default function ChangeProfileImage() {
     setImage(file);
     setPreview(file ? URL.createObjectURL(file) : null);
   };
-  const handleUpload = async () => {
-    try {
-  
-      setLoading(true);
-  
-      const formData = new FormData();
-      formData.append("file", image);
-  
-      const result = await dispatch(changeProfileImageAsync(formData));
-  
-      if (result?.payload?.success) {
-        toast.success(result.payload.message || "Profile image updated successfully");
+
+  const handleUpload = () => {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("file", image);
+
+    dispatch(changeProfileImageAsync(formData))
+      .unwrap()
+      .then((response) => {
+        toast.success(response.message || "Profile image updated successfully");
         setImage(null);
         setPreview(null);
         setOpen(false);
-      } else {
-        toast.error(result?.payload?.message || "Failed to update profile image");
-      }
-    } catch (error) {
-      toast.error(error?.message || "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
+      })
+      .catch((error) => {
+        toast.error(error || "Failed to update profile image");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   
 
@@ -59,13 +58,11 @@ export default function ChangeProfileImage() {
 
         <div className="flex flex-col items-center gap-4 py-4">
           <div className="relative">
-            <img
+            <ProfileImage
               src={preview || user?.profileImage || "/profile.jpg"}
               alt="Profile"
-              className="w-42 h-42 rounded-full border object-cover"
-              onError={(e) => {
-                e.currentTarget.src = "/profile.jpg"; // fallback if broken
-              }}
+              size="2xl"
+              className="border"
             />
             <label
               htmlFor="profileInput"

@@ -1,9 +1,10 @@
+import { ThumbnailImage } from "@/components/ui/image-variants";
+
 const Thumbnail = ({ title }) => {
   return (
     <div className="relative bg-foreground w-full justify-center h-full flex flex-col items-center">
       <div className="pt-2 !mx-auto relative">
-        <img src="/ace.png" alt="thumbnail" className="w-20 aspect-square relative " />
-
+        <ThumbnailImage src="/ace.png" alt="thumbnail" className="relative" />
       </div>
       <h1 className="font-bold text-center text-white mt-2">Enquiries & Anti-Corruption Establishment Sindh</h1>
       <h3 className="font-medium text-sm mt-4 text-white text-center">{title}</h3>

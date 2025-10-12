@@ -4,6 +4,7 @@ import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "@
 import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { FileText } from "lucide-react";
+import Image from "@/components/ui/image";
 
 const GlobalFileViewer = ({ file, onClose }) => {
   const isOpen = Boolean(file);
@@ -42,12 +43,13 @@ const GlobalFileViewer = ({ file, onClose }) => {
           )}
 
           {isImage && (
-            <img
+            <Image
               src={url}
               alt={file?.name || "preview"}
-              className={`max-w-full  object-contain rounded-lg ${isLoading ? 'opacity-0' : 'opacity-100'}`}
+              className={`max-w-full object-contain rounded-lg ${isLoading ? 'opacity-0' : 'opacity-100'}`}
               onLoad={handleLoad}
               onError={handleLoad}
+              showSkeleton={false}
             />
           )}
 

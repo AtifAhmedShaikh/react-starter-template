@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DialogFooter } from "@/components/ui/dialog";
+import { ProfileImage } from "@/components/ui/image-variants";
 
 import {
   closeModal,
@@ -30,14 +31,11 @@ const ViewUserDetailsModal = () => {
         <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
           <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
             {user.profileImage ? (
-              <img
+              <ProfileImage
                 src={user.profileImage}
                 alt="Profile"
-                className="w-full h-full object-cover"
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null;
-                  currentTarget.src = "/profile.jpg";
-                }}
+                size="lg"
+                className="w-full h-full"
               />
             ) : (
               <User className="w-8 h-8 text-blue-600" />
