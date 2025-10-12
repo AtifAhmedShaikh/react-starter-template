@@ -121,3 +121,38 @@ export const extractColorValues = (colorStyles = "") => {
     borderColor: colors.borderColor || defaultColors.borderColor,
   };
 };
+
+/**
+ * Checks if a URL is a full public URL (contains http/https)
+ * @param {string} url - The URL to check
+ * @returns {boolean} - True if it's a full public URL
+ */
+export const isFullPublicUrl = (url) => {
+  if (typeof url !== "string") return false;
+  return url.startsWith("http://") || url.startsWith("https://");
+};
+
+/**
+ * Validates S3 object key for security
+ * @param {string} key - The S3 object key to validate
+ * @returns {boolean} - True if key is valid and secure
+ */
+export const validateS3Key = (key) => {
+  try {
+    if (!key || typeof key !== "string") return false;
+    const decodedKey = decodeURIComponent(key);
+    // Prevent path traversal attacks
+    const isValidKey =
+      !decodedKey.includes("..") && !decodedKey.startsWith("/");
+    return isValidKey;
+  } catch (error) {
+    console.error("Error validating S3 key:", error);
+    return false;
+  }
+};
+
+// check if the url is a blob url for file upload
+export const isBlobUrl = (url) => {
+  if (typeof url !== "string") return false;
+  return url.startsWith("blob:");
+};

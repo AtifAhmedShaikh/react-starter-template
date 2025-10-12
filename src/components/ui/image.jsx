@@ -1,5 +1,7 @@
-import { forwardRef } from "react";
+import { BACKEND_URL } from "@/config/configManager";
 import { cn } from "@/lib/utils";
+import { isBlobUrl, isFullPublicUrl, validateS3Key } from "@/utils/helper";
+import { forwardRef } from "react";
 
 /**
  * Simple Reusable Image Component
@@ -44,10 +46,24 @@ const Image = forwardRef(({
     onError?.(e);
   };
 
+  // Get proxy url for secure S3 bucket access
+  const getProxyUrl = (url) => {
+    console.log("{url}", url);
+    if (isFullPublicUrl(url)) {
+      console.log("isFullPublicUrl", url);
+      return url;
+    }
+    if (isBlobUrl(url)) {
+      console.log("isBlobUrl", url);
+      return url;
+    }
+    return `${BACKEND_URL}/api/secure-bucket/proxy?key=${url}`;
+  }
+
   return (
     <img
       ref={ref}
-      src={src}
+      src={getProxyUrl(src)}
       alt={alt}
       className={cn("transition-all duration-300", className)}
       style={{
