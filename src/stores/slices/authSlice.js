@@ -101,6 +101,9 @@ const authSlice = createSlice({
     setActiveTabItem: (state, action) => {
       state.activeTabItem = action.payload || "";
     },
+    updateProfile: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -182,7 +185,11 @@ export const selectActiveTab = (state) => state.auth?.activeTabItem || "";
 export const selectFetchingStatus = (state) => state.auth?.status || "";
 
 // Actions
-export const { setUserToNull, setTemporaryValue, setActiveTabItem } =
-  authSlice.actions;
+export const {
+  setUserToNull,
+  setTemporaryValue,
+  setActiveTabItem,
+  updateProfile,
+} = authSlice.actions;
 
 export default authSlice.reducer;
