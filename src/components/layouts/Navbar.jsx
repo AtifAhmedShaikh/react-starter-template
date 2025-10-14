@@ -27,14 +27,14 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to={landingPageURL || "/"} className="flex items-center gap-2">
-            <LogoImage src="/ace.png" alt="Logo" className="mr-2" />
+            <LogoImage src="logo.png" alt="Logo" className="mr-2" />
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-primary">ACE Sindh</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-primary">Starter Template</h1>
               <p className="text-xs sm:text-sm text-muted-foreground">
-                Enquiries & Anti-Corruption Establishment
+                Starter Template
               </p>
               {/* <hr className="text-muted-foreground" /> */}
-              <p className="text-xs text-primary">Government Of Sindh</p>
+              <p className="text-xs text-primary">Hash devs</p>
             </div>
           </Link>
 

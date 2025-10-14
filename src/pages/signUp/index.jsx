@@ -81,7 +81,7 @@ const SignUp = () => {
                     <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                         <Link to="/">
                             <LogoImage
-                                src="/ace.png"
+                                src="logo.png"
                                 alt="App Logo"
                                 className="w-28 h-28 rounded-full border-2 border-gray-700 shadow-lg bg-white p-0.5"
                             />

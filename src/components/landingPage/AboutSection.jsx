@@ -38,7 +38,7 @@ const AboutUsSection = () => {
           <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-1 w-20 bg-gradient-to-r from-transparent via-green-500 to-green-600 rounded-full animate-pulse"></div>
             <h2 className="bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border-green-200 px-8 py-4 text-lg font-bold shadow-lg animate-fade-in">
-              🏛️ About E&ACE Sindh 
+              🏛️ About
             </h2>
             <div className="h-1 w-20 bg-gradient-to-r from-green-600 via-green-500 to-transparent rounded-full animate-pulse"></div>
           </div>

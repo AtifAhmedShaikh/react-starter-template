@@ -4,7 +4,7 @@ import Image from "./image";
  * Logo Image Component - Specialized for logos
  */
 export const LogoImage = ({ 
-  src = "/ace.png", 
+  src = "logo.png", 
   alt = "Logo", 
   size = "md",
   className = "",
@@ -23,7 +23,7 @@ export const LogoImage = ({
       alt={alt}
       className={`${sizeClasses[size]} ${className}`}
       objectFit="contain"
-      fallbackSrc="/ace.png"
+      fallbackSrc="logo.png"
       {...props}
     />
   );

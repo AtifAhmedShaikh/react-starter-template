@@ -50,7 +50,7 @@ export function AppSidebar() {
         >
           <div className="flex justify-center items-center gap-2 px-4">
             <LogoImage
-              src="/ace.png"
+              src="logo.png"
               alt="Sindh Logo"
               className="rounded-full h-16"
             />
