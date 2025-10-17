@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
@@ -65,12 +65,12 @@ const ChangeRoleModal = () => {
     dispatch(changeRoleAsync({ data: { adminId: admin?.id, roleId: data?.roleId } }))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Role changed successfully");
+        showToast.success(response.message || "Role changed successfully");
         dispatch(closeModal());
         reset();
       })
       .catch((error) => {
-        toast.error(error || "Failed to change role");
+        showToast.error(error || "Failed to change role");
       });
   };
 

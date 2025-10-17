@@ -14,7 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import { Loader2 } from "lucide-react";
 import { useEffect, useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { apiHandler } from "@/lib/apiWrapper";
 import { Helmet } from "react-helmet";
 import { useFetchQuery } from "@/hooks/useFetchQuery";
@@ -35,7 +35,7 @@ export default function SettingsPage() {
     key: "userSettings",
     apiFn: () => apiHandler(USER_SETTINGS_APIS.UPDATE_USER_SETTINGS, { method: API_METHODS.GET }),
     onError: (error) => {
-      toast.error(error || "Failed to fetch settings");
+      showToast.error(error || "Failed to fetch settings");
     }
   });
 

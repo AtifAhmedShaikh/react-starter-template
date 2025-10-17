@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { apiHandler } from "@/lib/apiWrapper";
 import { HTTP_METHODS } from "@/constants";
 
@@ -10,7 +10,7 @@ export function useImportExport() {
     exportUrl,
     defaultFilename = "exported_file.xlsx",
   ) => {
-    const toastId = toast.loading("Exporting...");
+    const toastId = showToast.loading("Exporting...");
     setLoading((prev) => ({ ...prev, export: true }));
 
     try {
@@ -37,10 +37,10 @@ export function useImportExport() {
       link.remove();
       window.URL.revokeObjectURL(url);
 
-      toast.success("Export completed", { id: toastId });
+      showToast.successAfterLoading(toastId, "Export completed");
     } catch (error) {
       console.log({ error });
-      toast.error(error, { id: toastId });
+      showToast.errorAfterLoading(toastId, error);
     } finally {
       setLoading((prev) => ({ ...prev, export: false }));
     }
@@ -58,7 +58,7 @@ export function useImportExport() {
       const formData = new FormData();
       formData.append("file", file);
 
-      const toastId = toast.loading("Importing...");
+      const toastId = showToast.loading("Importing...");
       setLoading((prev) => ({ ...prev, import: true }));
 
       try {
@@ -71,11 +71,11 @@ export function useImportExport() {
           throw new Error(response.message || "Import failed");
         }
 
-        toast.success("Import successful", { id: toastId });
+        showToast.successAfterLoading(toastId, "Import successful");
         if (onSuccessCallback) onSuccessCallback();
       } catch (error) {
         console.error("Import failed:", error);
-        toast.error(error?.message || "Import failed", { id: toastId });
+        showToast.errorAfterLoading(toastId, error?.message || "Import failed");
       } finally {
         setLoading((prev) => ({ ...prev, import: false }));
       }

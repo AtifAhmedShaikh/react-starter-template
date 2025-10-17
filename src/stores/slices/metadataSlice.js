@@ -1,7 +1,7 @@
 import { METADATA_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 export const fetchCitiesAsync = createAsyncThunk(
   "metadata/cities",
@@ -14,7 +14,7 @@ export const fetchCitiesAsync = createAsyncThunk(
     // if cities are not fetched, fetch them
     const res = await apiHandler(METADATA_APIS.GET_ALL_CITIES);
     if (res.success) return { cities: res.data };
-    toast.error(res.message);
+    showToast.error(res.message);
     return rejectWithValue(res.message);
   },
 );

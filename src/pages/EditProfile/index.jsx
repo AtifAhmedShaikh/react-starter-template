@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 const EditProfilePage = () => {
     const user = useSelector(selectUser);
@@ -102,7 +102,7 @@ const EditProfilePage = () => {
     const onSubmit = async (data) => {
         // Check if there are any changes before making API call
         if (!hasFormChanges(data)) {
-            toast.info("No changes to save. Your profile is already up to date.");
+            showToast.info("No changes to save. Your profile is already up to date.");
             setIsEditing(false);
             return;
         }
@@ -123,12 +123,12 @@ const EditProfilePage = () => {
         if (updateUserAsync.fulfilled.match(resultAction)) {
             const message = resultAction?.payload?.message || "Profile updated successfully!";
             setSuccess(message);
-            toast.success(message);
+            showToast.success(message);
             setIsEditing(false);
         } else {
             const errorMessage = resultAction?.payload?.message || "Failed to update profile.";
             setError(errorMessage);
-            toast.error(errorMessage);
+            showToast.error(errorMessage);
         }
         setSensitiveEdit({ email: false, phoneNumber: false });
         setLoading((pre) => ({ ...pre, savingProfileDetails: false }));
@@ -142,12 +142,12 @@ const EditProfilePage = () => {
         // Validate email if it's being edited
         if (sensitiveEdit.email) {
             if (!currentEmail || currentEmail.trim() === "") {
-                toast.error("Please enter an email address");
+                showToast.error("Please enter an email address");
                 return false;
             }
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(currentEmail)) {
-                toast.error("Please enter a valid email address");
+                showToast.error("Please enter a valid email address");
                 return false;
             }
         }
@@ -155,12 +155,12 @@ const EditProfilePage = () => {
         // Validate phone number if it's being edited
         if (sensitiveEdit.phoneNumber) {
             if (!currentPhone || currentPhone.trim() === "") {
-                toast.error("Please enter a phone number");
+                showToast.error("Please enter a phone number");
                 return false;
             }
             const phoneRegex = /^(\d{4})-(\d{7})$/;
             if (!phoneRegex.test(currentPhone)) {
-                toast.error("Phone number must follow format 03xx-xxxxxxx");
+                showToast.error("Phone number must follow format 03xx-xxxxxxx");
                 return false;
             }
         }
@@ -186,12 +186,12 @@ const EditProfilePage = () => {
             const message = resultAction?.payload?.message || "Profile updated successfully!";
             setSuccess(message);
             setError("")
-            toast.success(message);
+            showToast.success(message);
             setSensitiveEdit({ email: false, phoneNumber: false, isOpenOtpModal: false });
         } else {
             const errorMessage = resultAction?.payload?.message || "Failed to update profile.";
             setError(errorMessage);
-            toast.error(errorMessage);
+            showToast.error(errorMessage);
         }
 
     };
@@ -278,7 +278,7 @@ const EditProfilePage = () => {
                                         const originalEmail = user?.email || "";
                                         
                                         if (currentEmail === originalEmail) {
-                                            toast.info("Email is the same as before. No changes to save.");
+                                            showToast.info("Email is the same as before. No changes to save.");
                                             setSensitiveEdit(prev => ({ ...prev, email: false }));
                                             return;
                                         }
@@ -324,7 +324,7 @@ const EditProfilePage = () => {
                                         const originalPhone = formatMobileNumber(user?.phoneNumber || "");
                                         
                                         if (currentPhone === originalPhone) {
-                                            toast.info("Phone number is the same as before. No changes to save.");
+                                            showToast.info("Phone number is the same as before. No changes to save.");
                                             setSensitiveEdit(prev => ({ ...prev, phoneNumber: false }));
                                             return;
                                         }

@@ -1,5 +1,5 @@
 import { getSocket } from "@/lib/socketInstance";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { SOCKET_EVENTS } from "../constant";
 import {
   generatePdfReportHandler,
@@ -28,7 +28,7 @@ export const emitSocketEvent = (
         if (typeof onSuccess === "function") {
           onSuccess(response); // ✅ custom handler
         } else {
-          toast.success(response?.message || "Action completed");
+          showToast.success(response?.message || "Action completed");
         }
 
         resolve(response);
@@ -36,11 +36,11 @@ export const emitSocketEvent = (
 
       socket.once(errorEvent, (errorResponse) => {
         toast.dismiss(toastId);
-        toast.error(errorResponse?.message || "Something went wrong");
+        showToast.error(errorResponse?.message || "Something went wrong");
         reject(errorResponse?.message || "Something went wrong");
       });
     } catch (error) {
-      toast.error(error.message || "Socket emit failed");
+      showToast.error(error.message || "Socket emit failed");
       reject(error.message || "Socket emit failed");
     }
   });

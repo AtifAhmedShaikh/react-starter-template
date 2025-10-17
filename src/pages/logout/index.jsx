@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import JsCookies from "js-cookie"
 
 const LogoutPage = () => {
@@ -17,7 +17,7 @@ const LogoutPage = () => {
 
         const timer = setTimeout(() => {
             setLoading(false);
-            toast.success("Logout successful");
+            showToast.success("Logout successful");
         }, 2000);
         localStorage.clear(); // clear storage after logout
         JsCookies.remove("selectedChargeId");

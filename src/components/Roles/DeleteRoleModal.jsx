@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,10 +16,10 @@ const DeleteRoleModal = () => {
   const handleDelete = async () => {
     try {
       await dispatch(deleteRoleAsync(role.id)).unwrap();
-      toast.success("Role deleted successfully");
+      showToast.success("Role deleted successfully");
       dispatch(closeModal());
     } catch (error) {
-      toast.error(error || "Failed to delete role");
+      showToast.error(error || "Failed to delete role");
     }
   };
 

@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
@@ -44,12 +44,12 @@ const ChangePasswordModal = () => {
     dispatch(changePasswordAsync({ data: { adminId: admin?.id, password: data?.newPassword } }))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Password changed successfully");
+        showToast.success(response.message || "Password changed successfully");
         dispatch(closeModal());
         reset();
       })
       .catch((error) => {
-        toast.error(error || "Failed to change password");
+        showToast.error(error || "Failed to change password");
       });
   };
 

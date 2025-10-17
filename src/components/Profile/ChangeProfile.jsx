@@ -6,7 +6,7 @@ import { changeProfileImageAsync, selectUser } from "@/stores/slices/authSlice";
 import { Edit } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 export default function ChangeProfileImage() {
   const user = useSelector(selectUser);
@@ -31,13 +31,13 @@ export default function ChangeProfileImage() {
     dispatch(changeProfileImageAsync(formData))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Profile image updated successfully");
+        showToast.success(response.message || "Profile image updated successfully");
         setImage(null);
         setPreview(null);
         setOpen(false);
       })
       .catch((error) => {
-        toast.error(error || "Failed to update profile image");
+        showToast.error(error || "Failed to update profile image");
       })
       .finally(() => {
         setLoading(false);

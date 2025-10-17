@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { LoadingScreen } from "../reuseable/Loading";
 import { apiHandler } from '@/lib/apiWrapper';
 import { ROLE_APIS } from "@/constants/APIs";
@@ -30,7 +30,7 @@ export const AssignPermissionsDialog = ({ open, onClose, role, onPermissionsUpda
             // Fetch full role details including permissions
             const res = await apiHandler(`${ROLE_APIS.GET_ROLE_WITH_PERMISSIONS}/${role?.id}`);
             if (!res?.success) {
-                toast.error(res.message || "Failed to fetch role details");
+                showToast.error(res.message || "Failed to fetch role details");
                 setRoleLoading(false);
                 return;
             }
@@ -71,15 +71,15 @@ export const AssignPermissionsDialog = ({ open, onClose, role, onPermissionsUpda
             });
 
             if (!response.success) {
-                toast.error(response.message || "Failed to update role permissions");
+                showToast.error(response.message || "Failed to update role permissions");
                 return;
             }
 
-            toast.success("Role permissions updated successfully");
+            showToast.success("Role permissions updated successfully");
             onPermissionsUpdated?.(response.data);
             onClose();
         } catch (error) {
-            toast.error(error.message || "Failed to update role permissions");
+            showToast.error(error.message || "Failed to update role permissions");
         } finally {
             setLoading(false);
         }

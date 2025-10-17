@@ -8,7 +8,7 @@ import { changePasswordSchema } from "@/schema/userSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { TextField } from "./reuseable/TextField";
 
 export default function ChangePasswordForm() {
@@ -30,11 +30,11 @@ export default function ChangePasswordForm() {
         });
         setLoading(false);
         if (!response.success) {
-            toast.error(response.message);
+            showToast.error(response.message);
             return;
         }
 
-        toast.success(response.message);
+        showToast.success(response.message);
         reset();
     };
 

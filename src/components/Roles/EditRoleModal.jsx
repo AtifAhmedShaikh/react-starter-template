@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 import { TextField } from "@/components/reuseable/TextField";
 import { Button } from "@/components/ui/button";
@@ -58,12 +58,12 @@ const EditRoleModal = () => {
     dispatch(updateRoleAsync({ id, data }))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Role updated successfully");
+        showToast.success(response.message || "Role updated successfully");
         dispatch(closeModal());
         reset();
       })
       .catch((error) => {
-        toast.error(error || "Failed to update role");
+        showToast.error(error || "Failed to update role");
       });
   };
 

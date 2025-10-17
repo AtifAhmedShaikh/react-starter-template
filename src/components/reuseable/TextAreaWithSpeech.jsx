@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, useId, useRef, useEffect } from "react";
 import { AlertCircle, Info, Mic, MicOff } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { useFormContext } from "react-hook-form";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
@@ -82,7 +82,7 @@ const TextAreaWithSpeech = forwardRef(
       const SpeechRecognition =
         window.SpeechRecognition || window.webkitSpeechRecognition;
       if (!SpeechRecognition) {
-        toast.error(
+        showToast.error(
           "❌ Speech Recognition is not supported in your browser."
         );
         return;
@@ -122,13 +122,13 @@ const TextAreaWithSpeech = forwardRef(
         recognition.onerror = (event) => {
           stopListening();
           if (event.error === "not-allowed") {
-            toast.error("🎤 Microphone access denied.");
+            showToast.error("🎤 Microphone access denied.");
           } else if (event.error === "network") {
-            toast.error("🌐 Network issue detected.");
+            showToast.error("🌐 Network issue detected.");
           } else if (event.error === "no-speech") {
             toast.warning("⚠️ No speech detected.");
           } else {
-            toast.error(`❌ Error: ${event.error}`);
+            showToast.error(`❌ Error: ${event.error}`);
           }
         };
 
@@ -140,7 +140,7 @@ const TextAreaWithSpeech = forwardRef(
         recognition.start();
       } catch (error) {
         console.error(error);
-        toast.error("❌ Unable to start speech recognition.");
+        showToast.error("❌ Unable to start speech recognition.");
       }
     };
 
