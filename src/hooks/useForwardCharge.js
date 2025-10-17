@@ -20,7 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 export const useForwardCharges = ({ complaint, handleForwardSubmit }) => {
   const [locationHierarchy, setLocationHierarchy] = useState([
@@ -270,18 +270,18 @@ export const useForwardCharges = ({ complaint, handleForwardSubmit }) => {
       });
 
       if (!response.success) {
-        toast.error(response.message);
+        showToast.error(response.message);
         return false;
       }
 
-      toast.success("Remarks sent successfully");
+      showToast.success("Remarks sent successfully");
       form.reset();
       setCurrentStep(0);
       handleForwardSubmit();
       return true;
     } catch (error) {
       console.error("Submission error:", error);
-      toast.error("Something went wrong while submitting the complaint");
+      showToast.error("Something went wrong while submitting the complaint");
       return false;
     } finally {
       setIsSubmitting(false);

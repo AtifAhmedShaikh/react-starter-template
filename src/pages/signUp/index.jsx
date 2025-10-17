@@ -16,7 +16,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { userRegisterSchema } from "../../schema/userSchema";
 import { OtpModalWithTimer } from "@/components/reuseable/OtpModel";
 import { setTemporaryValue } from "@/stores/slices/authSlice";
@@ -55,10 +55,10 @@ const SignUp = () => {
         setLoading(false);
 
         if (!response.success) {
-            toast.error(response.message);
+            showToast.error(response.message);
             return;
         }
-       toast.success(response.message);
+       showToast.success(response.message);
        reset();
         if(response.data?.intent === RESPONSE_INTENTS.OTP_SENT){
             setShowOTPModal(true);

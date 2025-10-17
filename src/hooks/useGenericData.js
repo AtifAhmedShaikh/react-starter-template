@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'sonner';
+import { useState, useEffect, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { showToast } from "@/utils/toastUtils";
 
 export const useGenericData = ({
   service,
@@ -16,181 +16,204 @@ export const useGenericData = ({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const fetchData = useCallback(async (params = {}) => {
-    if (!service) return;
+  const fetchData = useCallback(
+    async (params = {}) => {
+      if (!service) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await service.getAll(params);
-      
-      if (response.success) {
-        if (action) {
-          dispatch(action(response.data));
+      try {
+        const response = await service.getAll(params);
+
+        if (response.success) {
+          if (action) {
+            dispatch(action(response.data));
+          }
+          if (onSuccess) {
+            onSuccess(response.data);
+          }
+          return response.data;
+        } else {
+          throw new Error(response.message || "Failed to fetch data");
         }
-        if (onSuccess) {
-          onSuccess(response.data);
+      } catch (err) {
+        const errorMessage =
+          err.message || "An error occurred while fetching data";
+        setError(errorMessage);
+        if (onError) {
+          onError(err);
+        } else {
+          showToast.error(errorMessage);
         }
-        return response.data;
-      } else {
-        throw new Error(response.message || 'Failed to fetch data');
+        throw err;
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err.message || 'An error occurred while fetching data';
-      setError(errorMessage);
-      if (onError) {
-        onError(err);
-      } else {
-        toast.error(errorMessage);
-      }
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [service, action, dispatch, onSuccess, onError]);
+    },
+    [service, action, dispatch, onSuccess, onError],
+  );
 
-  const createItem = useCallback(async (itemData) => {
-    if (!service) return;
+  const createItem = useCallback(
+    async (itemData) => {
+      if (!service) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await service.create(itemData);
-      
-      if (response.success) {
-        toast.success('Item created successfully');
-        if (autoFetch) {
-          await fetchData();
+      try {
+        const response = await service.create(itemData);
+
+        if (response.success) {
+          showToast.success("Item created successfully");
+          if (autoFetch) {
+            await fetchData();
+          }
+          return response.data;
+        } else {
+          throw new Error(response.message || "Failed to create item");
         }
-        return response.data;
-      } else {
-        throw new Error(response.message || 'Failed to create item');
+      } catch (err) {
+        const errorMessage =
+          err.message || "An error occurred while creating item";
+        setError(errorMessage);
+        showToast.error(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err.message || 'An error occurred while creating item';
-      setError(errorMessage);
-      toast.error(errorMessage);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [service, autoFetch, fetchData]);
+    },
+    [service, autoFetch, fetchData],
+  );
 
-  const updateItem = useCallback(async (id, itemData) => {
-    if (!service) return;
+  const updateItem = useCallback(
+    async (id, itemData) => {
+      if (!service) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await service.update(id, itemData);
-      
-      if (response.success) {
-        toast.success('Item updated successfully');
-        if (autoFetch) {
-          await fetchData();
+      try {
+        const response = await service.update(id, itemData);
+
+        if (response.success) {
+          showToast.success("Item updated successfully");
+          if (autoFetch) {
+            await fetchData();
+          }
+          return response.data;
+        } else {
+          throw new Error(response.message || "Failed to update item");
         }
-        return response.data;
-      } else {
-        throw new Error(response.message || 'Failed to update item');
+      } catch (err) {
+        const errorMessage =
+          err.message || "An error occurred while updating item";
+        setError(errorMessage);
+        showToast.error(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err.message || 'An error occurred while updating item';
-      setError(errorMessage);
-      toast.error(errorMessage);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [service, autoFetch, fetchData]);
+    },
+    [service, autoFetch, fetchData],
+  );
 
-  const deleteItem = useCallback(async (id) => {
-    if (!service) return;
+  const deleteItem = useCallback(
+    async (id) => {
+      if (!service) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await service.delete(id);
-      
-      if (response.success) {
-        toast.success('Item deleted successfully');
-        if (autoFetch) {
-          await fetchData();
+      try {
+        const response = await service.delete(id);
+
+        if (response.success) {
+          showToast.success("Item deleted successfully");
+          if (autoFetch) {
+            await fetchData();
+          }
+          return response.data;
+        } else {
+          throw new Error(response.message || "Failed to delete item");
         }
-        return response.data;
-      } else {
-        throw new Error(response.message || 'Failed to delete item');
+      } catch (err) {
+        const errorMessage =
+          err.message || "An error occurred while deleting item";
+        setError(errorMessage);
+        showToast.error(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err.message || 'An error occurred while deleting item';
-      setError(errorMessage);
-      toast.error(errorMessage);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [service, autoFetch, fetchData]);
+    },
+    [service, autoFetch, fetchData],
+  );
 
-  const searchItems = useCallback(async (query, params = {}) => {
-    if (!service) return;
+  const searchItems = useCallback(
+    async (query, params = {}) => {
+      if (!service) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await service.search(query, params);
-      
-      if (response.success) {
-        return response.data;
-      } else {
-        throw new Error(response.message || 'Failed to search items');
+      try {
+        const response = await service.search(query, params);
+
+        if (response.success) {
+          return response.data;
+        } else {
+          throw new Error(response.message || "Failed to search items");
+        }
+      } catch (err) {
+        const errorMessage = err.message || "An error occurred while searching";
+        setError(errorMessage);
+        showToast.error(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err.message || 'An error occurred while searching';
-      setError(errorMessage);
-      toast.error(errorMessage);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [service]);
+    },
+    [service],
+  );
 
-  const exportData = useCallback(async (format = 'csv', params = {}) => {
-    if (!service) return;
+  const exportData = useCallback(
+    async (format = "csv", params = {}) => {
+      if (!service) return;
 
-    setLoading(true);
-    setError(null);
+      setLoading(true);
+      setError(null);
 
-    try {
-      const response = await service.export(format, params);
-      
-      if (response.success) {
-        // Handle file download
-        const blob = new Blob([response.data], { type: 'text/csv' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `export.${format}`;
-        link.click();
-        window.URL.revokeObjectURL(url);
-        
-        toast.success('Data exported successfully');
-        return response.data;
-      } else {
-        throw new Error(response.message || 'Failed to export data');
+      try {
+        const response = await service.export(format, params);
+
+        if (response.success) {
+          // Handle file download
+          const blob = new Blob([response.data], { type: "text/csv" });
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `export.${format}`;
+          link.click();
+          window.URL.revokeObjectURL(url);
+
+          showToast.success("Data exported successfully");
+          return response.data;
+        } else {
+          throw new Error(response.message || "Failed to export data");
+        }
+      } catch (err) {
+        const errorMessage =
+          err.message || "An error occurred while exporting data";
+        setError(errorMessage);
+        showToast.error(errorMessage);
+        throw err;
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      const errorMessage = err.message || 'An error occurred while exporting data';
-      setError(errorMessage);
-      toast.error(errorMessage);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, [service]);
+    },
+    [service],
+  );
 
   // Auto-fetch on mount and when dependencies change
   useEffect(() => {

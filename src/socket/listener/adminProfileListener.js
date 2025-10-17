@@ -1,5 +1,5 @@
 import { prependNotification } from "@/stores/slices/notificationSlice";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { SOCKET_EVENTS } from "../constant";
 import { updateProfile } from "@/stores/slices/authSlice";
 
@@ -26,7 +26,7 @@ export const setupAdminProfileListenersRedux = async (socket, dispatch) => {
     dispatch(updateProfile(updatedInfo?.user));
 
     console.log("📩 New admin profile update received:", updatedInfo);
-    toast.success(updatedInfo.title, {
+    showToast.success(updatedInfo.title, {
       description: updatedInfo.message,
       duration: 4000,
       action: {

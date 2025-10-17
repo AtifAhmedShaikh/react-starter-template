@@ -7,7 +7,7 @@ import { AUTH_APIS } from "@/constants/APIs";
 import { apiHandler } from "@/lib/apiWrapper";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import Swal from "sweetalert2";
 
 export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp, showWelcome = false }) {
@@ -51,11 +51,11 @@ export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp, showWelco
         setIsLoading(false);
 
         if (!response.success) {
-            toast.error(response.message || "Invalid OTP. Please try again.");
+            showToast.error(response.message || "Invalid OTP. Please try again.");
             return;
         }
 
-        toast.success(response.message || "OTP verified successfully");
+        showToast.success(response.message || "OTP verified successfully");
         setShowOtp(false); // Close modal
 
         if (showWelcome) {
@@ -82,10 +82,10 @@ export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp, showWelco
         setIsResending(false);
 
         if (!response.success) {
-            return toast.error(response.message || "Failed to resend OTP.");
+            return showToast.error(response.message || "Failed to resend OTP.");
         }
 
-        toast.success(response.message || "OTP resent successfully.");
+        showToast.success(response.message || "OTP resent successfully.");
         setTimer(OTP_TIMER); // Restart timer
         setOtp(""); // Clear OTP input
     };

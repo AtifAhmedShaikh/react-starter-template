@@ -46,7 +46,7 @@ import {
   updateQuery
 } from "@/stores/slices/adminSlice";
 import { MODAL_TYPES, openModal } from "@/stores/slices/modalSlice";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { LoadingScreen } from "../reuseable/Loading";
 
 const AdminTable = () => {
@@ -83,10 +83,10 @@ const AdminTable = () => {
     dispatch(deleteAdminAsync(adminId))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Admin deleted successfully");
+        showToast.success(response.message || "Admin deleted successfully");
       })
       .catch((error) => {
-        toast.error(error || "Failed to delete admin");
+        showToast.error(error || "Failed to delete admin");
       });
   };
 

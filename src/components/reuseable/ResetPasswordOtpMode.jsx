@@ -8,7 +8,7 @@ import { resetPasswordSchema } from "@/schema/userSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { TextField } from "./TextField";
 
 
@@ -69,10 +69,10 @@ export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP, cnic 
 
         if (response.success) {
             setShowOtp(false);
-            toast.success(response.message || "OTP verified successfully");
+            showToast.success(response.message || "OTP verified successfully");
             onConfirmOTP?.();
         } else {
-            toast.error(response.message || "Invalid OTP. Please try again.");
+            showToast.error(response.message || "Invalid OTP. Please try again.");
         }
     };
 

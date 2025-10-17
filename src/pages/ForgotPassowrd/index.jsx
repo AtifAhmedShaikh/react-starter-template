@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { forgotPasswordSchema } from "../../schema/userSchema";
 
 const ForgotPasswordPage = () => {
@@ -37,12 +37,12 @@ const ForgotPasswordPage = () => {
         });
 
         if (response.success && response.data?.intent === RESPONSE_INTENTS.OTP_SENT) {
-            toast.success(response.message);
+            showToast.success(response.message);
             setShowOTPModal(true);
             setCnic(data?.cnic);
             return;
         } else {
-            toast.error(response.message || "Something went wrong during OTP request.");
+            showToast.error(response.message || "Something went wrong during OTP request.");
         }
     };
 

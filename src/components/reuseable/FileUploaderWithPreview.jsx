@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { X } from "lucide-react";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { ACCEPT_FILES, MAX_FILE_LIMIT, MAX_FILE_SIZE } from "@/constants/index";
 import Image from "@/components/ui/image";
 
@@ -41,7 +41,7 @@ const FileUploaderWithPreview = ({
       const fileArray = Array.from(selectedFiles);
 
       if (files.length + fileArray.length > maxFiles) {
-        return toast.error(`You can only upload a maximum of ${maxFiles} files.`);
+        return showToast.error(`You can only upload a maximum of ${maxFiles} files.`);
       }
 
       try {
@@ -51,7 +51,7 @@ const FileUploaderWithPreview = ({
         // Only add files if validation passes
         setFiles([...files, ...fileArray]);
       } catch (error) {
-        return toast.error(error.message);
+        return showToast.error(error.message);
       }
     },
     [files, setFiles, maxFiles, maxFileSize, acceptedTypes]

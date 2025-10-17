@@ -18,7 +18,7 @@ import { ChevronLeft, ChevronRight, Plus, X as CrossIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import ComboboxField from "../reuseable/SearchableSelectField";
 import ModalWrapper from "../reuseable/ModalWrapper";
 import { Button } from "../ui/button";
@@ -200,9 +200,9 @@ const ForwardToChargesModal = ({ isOpen, onClose, complaint, handleForwardSubmit
         data: formData,
       });
 
-      if (!res.success) return toast.error(res.message);
+      if (!res.success) return showToast.error(res.message);
 
-      toast.success("Complaint forwarded successfully");
+      showToast.success("Complaint forwarded successfully");
       handleForwardSubmit();
       handleClose();
 
@@ -216,7 +216,7 @@ const ForwardToChargesModal = ({ isOpen, onClose, complaint, handleForwardSubmit
       dispatch(fetchDashboardData(true))
     } catch (err) {
       console.error(err);
-      toast.error("Something went wrong");
+      showToast.error("Something went wrong");
     } finally {
       setIsSubmitting(false);
       dispatch(updateTabCountKey({ key: "sentCount", type: "increment" }));

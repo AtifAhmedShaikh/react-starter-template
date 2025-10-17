@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,10 +16,10 @@ const DeletePermissionModal = () => {
   const handleDelete = async () => {
     try {
       await dispatch(deletePermissionAsync(permission.id)).unwrap();
-      toast.success("Permission deleted successfully");
+      showToast.success("Permission deleted successfully");
       dispatch(closeModal());
     } catch (error) {
-      toast.error(error || "Failed to delete permission");
+      showToast.error(error || "Failed to delete permission");
     }
   };
 

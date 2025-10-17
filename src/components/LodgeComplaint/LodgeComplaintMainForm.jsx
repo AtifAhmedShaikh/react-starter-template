@@ -14,7 +14,7 @@ import { deFormatMobileNumber } from "@/utils/formatters";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import ComplaintFormTabs from "./ComplaintFormTabs";
 import AllegedPeronsForm from "./Steps/AllegedPersonsForm";
 import ComplaintDetailsForm from "./Steps/ComplaintDetailsForm";
@@ -112,7 +112,7 @@ const LodgeComplaintMainForm = () => {
       console.log(errors);
       const invalidFields = errors.join(", ");
       const errorMessage = invalidFields.includes("allegedPersons") ? "Please select the department field" : `Please fill all the required fields: ${invalidFields}`;
-      toast.error(errorMessage);
+      showToast.error(errorMessage);
       return;
     }
 
@@ -276,7 +276,7 @@ const LodgeComplaintMainForm = () => {
                 data: pendingPayload,
               });
               if (!response.success) {
-                toast.error(response?.message);
+                showToast.error(response?.message);
                 setIsSubmitting(false); // stop loading
                 return;
               }

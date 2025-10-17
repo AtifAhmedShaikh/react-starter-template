@@ -1,4 +1,4 @@
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 export const pdfGeneratedHandler = ({ fileName, mimeType, buffer }) => {
   try {
@@ -15,10 +15,10 @@ export const pdfGeneratedHandler = ({ fileName, mimeType, buffer }) => {
     link.click();
     document.body.removeChild(link);
 
-    toast.success("Download complete!");
+    showToast.success("Download complete!");
   } catch (error) {
     console.error("PDF Download Error:", error);
-    toast.error("PDF download failed");
+    showToast.error("PDF download failed");
   }
 };
 
@@ -41,15 +41,15 @@ export const pdfGeneratedPrintHandler = ({ mimeType, buffer }) => {
         setTimeout(() => {
           printWindow.focus();
           printWindow.print();
-          toast.success("Print dialog opened");
+          showToast.success("Print dialog opened");
         }, 500); // small delay to ensure PDF loads
       };
     } else {
-      toast.error("Popup blocked! Please allow popups and try again.");
+      showToast.error("Popup blocked! Please allow popups and try again.");
     }
   } catch (error) {
     console.error("PDF Print Error:", error);
-    toast.error("PDF printing failed");
+    showToast.error("PDF printing failed");
   }
 };
 
@@ -68,9 +68,9 @@ export const generatePdfReportHandler = ({ fileName, mimeType, buffer }) => {
     link.click();
     document.body.removeChild(link);
 
-    toast.success("Download complete!");
+    showToast.success("Download complete!");
   } catch (error) {
     console.error("PDF Download Error:", error);
-    toast.error("PDF download failed");
+    showToast.error("PDF download failed");
   }
 };

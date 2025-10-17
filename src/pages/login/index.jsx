@@ -13,7 +13,7 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { loginSchema } from "../../schema/userSchema";
 
 const Login = () => {
@@ -51,12 +51,12 @@ const Login = () => {
         return;
       }
 
-      toast.success(response?.message);
+      showToast.success(response?.message);
       localStorage.setItem("accessToken", response?.token);
       navigate(redirectTo || "/edit-profile");
     } else {
       const errorMessage = resultAction?.payload || "Error while login, please try again.";
-      toast.error(errorMessage);
+      showToast.error(errorMessage);
       setValue("password", "");
     }
   };

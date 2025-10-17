@@ -17,7 +17,7 @@ import { Pencil, Plus, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { AllegedPersonFormDialog } from "./AllegedPersonDialog";
 
 
@@ -65,13 +65,13 @@ const AllegedPersonsForm = () => {
 
   const handleSubmit = (data) => {
     if (editingIndex === null && removedEditedIndex.current !== null) {
-      toast.error("You removed the person you were editing. Cannot re-add it.");
+      showToast.error("You removed the person you were editing. Cannot re-add it.");
       return;
     }
 
     if (editingIndex !== null) {
       if (!fields[editingIndex]) {
-        toast.error("The person you were editing was removed.");
+        showToast.error("The person you were editing was removed.");
         setDialogOpen(false);
         setEditingIndex(null);
         return;

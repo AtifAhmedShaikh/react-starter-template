@@ -3,7 +3,7 @@ import {
   markNotificationAsRead,
   markNotificationAsDelivered,
 } from "@/stores/slices/notificationSlice";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { SOCKET_EVENTS } from "../constant";
 
 // Load the audio file (ensure the path is correct)
@@ -28,7 +28,7 @@ export const setupNotificationListenersRedux = async (socket, dispatch) => {
     dispatch(prependNotification(notification));
 
     console.log("📩 New notification received:", notification);
-    toast.success(notification.title, {
+    showToast.success(notification.title, {
       description: notification.message,
       duration: 4000,
       action: {
@@ -44,7 +44,7 @@ export const setupNotificationListenersRedux = async (socket, dispatch) => {
 
   socket.on(SOCKET_EVENTS.EMITTERS.NOTIFICATION_ERROR, (error) => {
     console.error("Notification Error:", error);
-    toast.error("Failed to receive notification");
+    showToast.error("Failed to receive notification");
   });
 
   // Listen for notification read confirmation

@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 
 import SelectField from "@/components/reuseable/SelectField";
 import { TextField } from "@/components/reuseable/TextField";
@@ -63,12 +63,12 @@ const AddAdminModal = () => {
     dispatch(createAdminAsync(adminData))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Admin created successfully");
+        showToast.success(response.message || "Admin created successfully");
         dispatch(closeModal());
         reset();
       })
       .catch((error) => {
-        toast.error(error || "Failed to create admin");
+        showToast.error(error || "Failed to create admin");
       });
   };
 

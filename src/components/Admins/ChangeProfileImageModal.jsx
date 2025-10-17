@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "sonner";
+import { showToast } from "@/utils/toastUtils";
 import { Upload, X, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -34,13 +34,13 @@ const ChangeProfileImageModal = () => {
     if (file) {
       // Validate file type
       if (!file.type.startsWith('image/')) {
-        toast.error('Please select a valid image file');
+        showToast.error('Please select a valid image file');
         return;
       }
 
       // Validate file size (5MB max)
       if (file.size > 5 * 1024 * 1024) {
-        toast.error('File size must be less than 5MB');
+        showToast.error('File size must be less than 5MB');
         return;
       }
 
@@ -62,7 +62,7 @@ const ChangeProfileImageModal = () => {
 
   const handleSubmit = () => {
     if (!selectedFile) {
-      toast.error('Please select an image file');
+      showToast.error('Please select an image file');
       return;
     }
 
@@ -73,13 +73,13 @@ const ChangeProfileImageModal = () => {
     dispatch(changeProfileImageAsync({ data: formData }))
       .unwrap()
       .then((response) => {
-        toast.success(response.message || "Profile image updated successfully");
+        showToast.success(response.message || "Profile image updated successfully");
         dispatch(closeModal());
         setSelectedFile(null);
         setPreview(null);
       })
       .catch((error) => {
-        toast.error(error || "Failed to update profile image");
+        showToast.error(error || "Failed to update profile image");
       });
   };
 
