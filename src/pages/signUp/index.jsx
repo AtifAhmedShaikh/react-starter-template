@@ -76,14 +76,14 @@ const SignUp = () => {
                 <title>Register - Application</title>
             </Helmet>
             <Navbar />
-            <div className="min-h-screen flex items-center justify-center bg-gray-100/50 p-4">
-                <div className="bg-white rounded-2xl shadow-lg max-w-lg w-full p-6 relative border-t-primary border-t-5 sm:mt-5 mt-14">
+            <div className="min-h-screen flex items-center justify-center bg-muted/50 p-4">
+                <div className="bg-card rounded-2xl shadow-lg max-w-lg w-full p-6 relative border-t-primary border-t-5 sm:mt-5 mt-14">
                     <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                         <Link to="/">
                             <LogoImage
                                 src="logo.png"
                                 alt="App Logo"
-                                className="w-28 h-28 rounded-full border-2 border-gray-700 shadow-lg bg-white p-0.5"
+                                className="w-28 h-28 rounded-full border-2 border-border shadow-lg bg-card p-0.5"
                             />
                         </Link>
                     </div>
@@ -91,7 +91,7 @@ const SignUp = () => {
                     <div className="text-center mt-16">
                         <h2 className="text-lg font-semibold text-primary">Create Account</h2>
                         <h1 className="text-2xl font-bold text-primary">Application</h1>
-                        <p className="text-sm text-gray-500 mt-1">Sign up to get started</p>
+                        <p className="text-sm text-muted-foreground mt-1">Sign up to get started</p>
                     </div>
 
                     <FormProvider {...formContext}>
@@ -179,7 +179,7 @@ const SignUp = () => {
 
                             <Button
                                 type="submit"
-                                className="bg-foreground text-background w-full rounded-lg hover:bg-gray-800 transition py-6"
+                                className="bg-foreground text-background w-full rounded-lg hover:bg-foreground/90 transition py-6"
                                 loading={loading}
                                 loadingLabel="Creating Account"
                             >

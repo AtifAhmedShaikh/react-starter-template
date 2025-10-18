@@ -6,6 +6,7 @@ import { verifyJwtToken } from "@/utils/helper";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const Navbar = () => {
   const landingPageURL = LANDING_PAGE_URL;
@@ -22,7 +23,7 @@ const Navbar = () => {
   const isActive = (path) => currentPath?.includes(path) ? "!text-primary font-semibold" : "text-foreground";
 
   return (
-    <header className="border-b bg-white shadow-sm sticky top-0 z-50">
+    <header className="border-b bg-background shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -56,30 +57,36 @@ const Navbar = () => {
             <Link to="/contact" className={`hover:text-primary transition-colors ${isActive("/contact")}`}>
               Contact
             </Link>
-            {isValidToken ? (
-              <div className="flex gap-2">
-                <Button onClick={() => {
-                  if (user?.roleKey === USER_ROLES.COMPLAINANT) {
-                    navigate("/track-complaints");
-                    return;
-                  }
-                  navigate("/dashboard");
-                }}>
-                  {user?.roleKey === USER_ROLES.COMPLAINANT ? "Track Complaints" : "Dashboard"}
-                </Button>
-                <Button onClick={() => navigate("/logout")}>Logout</Button>
-              </div>
-            ) : (
-              <div className="flex gap-2">
-                <Button onClick={() => navigate("/login")}>Login</Button>
-                <Button onClick={() => navigate("/register")}>Register</Button>
-              </div>
-            )}
+            <Link to="/theme-demo" className={`hover:text-primary transition-colors ${isActive("/theme-demo")}`}>
+              Theme Demo
+            </Link>
+            <div className="flex items-center gap-2">
+              <ThemeSwitcher />
+              {isValidToken ? (
+                <>
+                  <Button onClick={() => {
+                    if (user?.roleKey === USER_ROLES.COMPLAINANT) {
+                      navigate("/track-complaints");
+                      return;
+                    }
+                    navigate("/dashboard");
+                  }}>
+                    {user?.roleKey === USER_ROLES.COMPLAINANT ? "Track Complaints" : "Dashboard"}
+                  </Button>
+                  <Button onClick={() => navigate("/logout")}>Logout</Button>
+                </>
+              ) : (
+                <>
+                  <Button onClick={() => navigate("/login")}>Login</Button>
+                  <Button onClick={() => navigate("/register")}>Register</Button>
+                </>
+              )}
+            </div>
           </nav>
 
           {/* Mobile Hamburger */}
           <button
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-lg hover:bg-muted"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -88,7 +95,7 @@ const Navbar = () => {
 
         {/* Mobile Dropdown */}
         {menuOpen && (
-          <div className="lg:hidden mt-4 flex flex-col gap-4 bg-white border-t pt-4">
+          <div className="lg:hidden mt-4 flex flex-col gap-4 bg-background border-t pt-4">
             <Link to={landingPageURL||"/"} className="hover:text-primary transition-colors" onClick={() => setMenuOpen(false)}>
               Home
             </Link>
@@ -104,32 +111,38 @@ const Navbar = () => {
             <Link to="/contact" className={`hover:text-primary transition-colors ${isActive("/contact")}`} onClick={() => setMenuOpen(false)}>
               Contact
             </Link>
-            {isValidToken ? (
-              <div className="flex flex-col gap-2">
-                <Button onClick={() => {
-                  setMenuOpen(false);
-                  if (user?.roleKey === USER_ROLES.COMPLAINANT) {
-                    navigate("/track-complaints");
-                    return;
-                  }
-                  navigate("/dashboard");
-                }}>
-                  {user?.roleKey === USER_ROLES.COMPLAINANT ? "Track Complaints" : "Dashboard"}
-                </Button>
-                <Button onClick={() => { setMenuOpen(false); navigate("/logout"); }}>
-                  Logout
-                </Button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-2">
-                <Button onClick={() => { setMenuOpen(false); navigate("/login"); }}>
-                  Login
-                </Button>
-                <Button onClick={() => { setMenuOpen(false); navigate("/register"); }}>
-                  Register
-                </Button>
-              </div>
-            )}
+            <Link to="/theme-demo" className={`hover:text-primary transition-colors ${isActive("/theme-demo")}`} onClick={() => setMenuOpen(false)}>
+              Theme Demo
+            </Link>
+            <div className="flex flex-col gap-2">
+              <ThemeSwitcher className="w-full justify-center" />
+              {isValidToken ? (
+                <>
+                  <Button onClick={() => {
+                    setMenuOpen(false);
+                    if (user?.roleKey === USER_ROLES.COMPLAINANT) {
+                      navigate("/track-complaints");
+                      return;
+                    }
+                    navigate("/dashboard");
+                  }}>
+                    {user?.roleKey === USER_ROLES.COMPLAINANT ? "Track Complaints" : "Dashboard"}
+                  </Button>
+                  <Button onClick={() => { setMenuOpen(false); navigate("/logout"); }}>
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button onClick={() => { setMenuOpen(false); navigate("/login"); }}>
+                    Login
+                  </Button>
+                  <Button onClick={() => { setMenuOpen(false); navigate("/register"); }}>
+                    Register
+                  </Button>
+                </>
+              )}
+            </div>
           </div>
         )}
       </div>

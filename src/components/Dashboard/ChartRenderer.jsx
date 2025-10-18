@@ -23,8 +23,8 @@ const COLORS = [
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-white p-2 border border-gray-200 rounded shadow-lg text-xs">
-        <p className="font-semibold text-gray-900 mb-1">{label}</p>
+      <div className="bg-card p-2 border border-border rounded shadow-lg text-xs">
+        <p className="font-semibold text-foreground mb-1">{label}</p>
         {payload.map((entry, index) => (
           <p key={index} style={{ color: entry.color }}>
             <span className="font-medium">{entry.name}:</span> {entry.value}

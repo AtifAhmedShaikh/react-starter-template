@@ -57,21 +57,21 @@ const ForgotPasswordPage = () => {
                 <title>Forgot Password - Anti-Corruption Establishment</title>
             </Helmet>
 
-            <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 ">
-                <div className="bg-white rounded-2xl shadow-xl max-w-xl w-full p-6 relative border-t-primary border-t-5" >
+            <div className="min-h-screen flex items-center justify-center bg-muted p-4 ">
+                <div className="bg-card rounded-2xl shadow-xl max-w-xl w-full p-6 relative border-t-primary border-t-5" >
                     <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
                         <Link to="/">
                             <LogoImage
                                 src="logo.png"
                                 alt="ACE Logo"
-                                className="w-28 h-28 rounded-full border-1 border-gray-700 shadow-lg bg-white p-0.5"
+                                className="w-28 h-28 rounded-full border-1 border-border shadow-lg bg-card p-0.5"
                             />
                         </Link>
                     </div>
 
                     <div className="text-center mt-16">
                         <h2 className="text-2xl font-semibold">Forgot Password</h2>
-                        <p className="txt-sm text-gray-500 mt-1">
+                        <p className="txt-sm text-muted-foreground mt-1">
                             Enter Your CNIC to Reset Your Password
                         </p>
                     </div>
@@ -104,7 +104,7 @@ const ForgotPasswordPage = () => {
 
                         <button
                             type="submit"
-                            className="bg-black text-white w-full py-2 rounded-lg hover:bg-gray-800 transition"
+                            className="bg-foreground text-background w-full py-2 rounded-lg hover:bg-foreground/90 transition"
                         >
                             Forgot Password
                         </button>

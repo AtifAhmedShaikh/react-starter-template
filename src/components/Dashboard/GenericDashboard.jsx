@@ -15,8 +15,8 @@ const summaryConfig = [
     key: "totalItems",
     title: "Total Items",
     icon: "📊",
-    bgColor: "bg-slate-900",
-    textColor: "text-white",
+    bgColor: "bg-foreground",
+    textColor: "text-background",
   },
   {
     key: "newItems",

@@ -98,21 +98,21 @@ const FileUploaderWithPreview = ({
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         className={`border-2 border-dashed rounded-md p-6 text-center transition-colors ${
-          isDragging ? "border-blue-500 bg-blue-50" : "border-gray-300"
+          isDragging ? "border-primary bg-primary/10" : "border-border"
         }`}
       >
-        <p className="text-sm text-gray-600">Drag & drop files here or click to select</p>
+        <p className="text-sm text-muted-foreground">Drag & drop files here or click to select</p>
         <input
           type="file"
           multiple
           accept={acceptedTypes}
           onChange={handleInputChange}
-          className="mt-2 block w-full text-sm text-gray-500
+          className="mt-2 block w-full text-sm text-muted-foreground
             file:mr-4 file:py-2 file:px-4
             file:rounded-lg file:border-0
             file:text-sm file:font-semibold
-            file:bg-blue-50 file:text-blue-700
-            hover:file:bg-blue-100
+            file:bg-primary/10 file:text-primary
+            hover:file:bg-primary/20
           "
           style={{ color: 'transparent' }}
         />
@@ -121,7 +121,7 @@ const FileUploaderWithPreview = ({
       {/* Previews */}
       <div className="flex flex-wrap gap-2 mt-2">
         {previews.map((file, index) => (
-          <div key={index} className={`relative w-32 h-32 rounded overflow-hidden border bg-gray-50 ${wrapperWidth}`}>  
+          <div key={index} className={`relative w-32 h-32 rounded overflow-hidden border bg-muted ${wrapperWidth}`}>  
             {file.type.startsWith("image/") ? (
               <Image
                 src={file.url}
@@ -136,14 +136,14 @@ const FileUploaderWithPreview = ({
                 className="w-full h-full"
               />
             ) : (
-              <div className="flex items-center justify-center w-full h-full text-xs text-gray-500 p-2 text-center">
+              <div className="flex items-center justify-center w-full h-full text-xs text-muted-foreground p-2 text-center">
                 {file.name}
               </div>
             )}
             <button
               type="button"
               onClick={() => removeFile(index)}
-              className="absolute top-1 right-1 bg-white rounded-full p-1 shadow"
+              className="absolute top-1 right-1 bg-background rounded-full p-1 shadow"
             >
               <X size={14} />
             </button>

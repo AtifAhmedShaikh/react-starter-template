@@ -78,11 +78,11 @@ const ChangeRoleModal = () => {
     <ModalWrapper isOpen={isOpen} title={`Change Role - ${admin?.fullName || "Admin"}`}>
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(handleChangeRole)} className="space-y-4">
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <p className="text-sm text-blue-800">
+          <div className="bg-primary/10 p-4 rounded-lg">
+            <p className="text-sm text-primary">
               <strong>Current Role:</strong> {admin?.role?.value || "No role assigned"}
             </p>
-            <p className="text-sm text-blue-800 mt-1">
+            <p className="text-sm text-primary mt-1">
               <strong>Admin:</strong> {admin?.fullName} ({admin?.email})
             </p>
           </div>
@@ -99,8 +99,8 @@ const ChangeRoleModal = () => {
             required
           />
 
-          <div className="bg-yellow-50 p-4 rounded-lg">
-            <p className="text-sm text-yellow-800">
+          <div className="bg-yellow-500/10 p-4 rounded-lg">
+            <p className="text-sm text-yellow-700">
               <strong>Warning:</strong> Changing the admin's role will affect their permissions and access to different parts of the system. Please ensure this change is intentional.
             </p>
           </div>

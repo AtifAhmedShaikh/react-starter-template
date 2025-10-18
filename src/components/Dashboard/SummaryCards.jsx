@@ -8,8 +8,8 @@ const summaryConfig = [
         key: "totalComplaints",
         title: "Total Complaints",
         icon: FileText,
-        bgColor: "bg-slate-900",
-        textColor: "text-white",
+    bgColor: "bg-foreground",
+    textColor: "text-background",
     },
     {
         key: "newComplaintsCount",

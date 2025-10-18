@@ -30,6 +30,7 @@ import {
   UnauthorizedAccessPage,
   UsersPage
 } from "@/pages";
+import ThemeDemo from "@/pages/ThemeDemo";
 
 
 import SocketLayout from "@/components/layouts/SocketLayout";
@@ -70,6 +71,10 @@ export const routesConfig = [
   {
     path: "/contact",
     element: <ContactUsPage />,
+  },
+  {
+    path: "/theme-demo",
+    element: <ThemeDemo />,
   },
   {
     path: "/logout",

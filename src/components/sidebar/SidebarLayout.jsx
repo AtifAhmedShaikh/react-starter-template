@@ -6,6 +6,7 @@ import { ErrorBoundary } from "react-error-boundary"
 import { Outlet } from "react-router-dom"
 import { ErrorBoundaryFallback } from "../Error/ErrorBoundaryFallback"
 import NotificationDropdown from "../Notifications/NotificationDropdown"
+import ThemeSwitcher from "../ThemeSwitcher"
 
 export default function SidebarLayout() {
   const { hasPermission } = usePermissions();
@@ -23,6 +24,7 @@ export default function SidebarLayout() {
               </div>
             </div>
             <div className="flex text-primary sm:text-sm text-xs justify-end w-full sm:w-auto items-center gap-3 sm:px-5 px-2">
+            <ThemeSwitcher />
               {hasPermission(PermissionKeys.can_view_notifications) ? <NotificationDropdown /> : ""}
             </div>
           </div>

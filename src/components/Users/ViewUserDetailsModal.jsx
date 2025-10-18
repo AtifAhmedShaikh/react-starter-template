@@ -28,8 +28,8 @@ const ViewUserDetailsModal = () => {
     <ModalWrapper isOpen={isOpen} title={`User Details - ${user.fullName}`}>
       <div className="space-y-6">
         {/* Profile Header */}
-        <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-          <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden">
+        <div className="flex items-center space-x-4 p-4 bg-muted rounded-lg">
+          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
             {user.profileImage ? (
               <ProfileImage
                 src={user.profileImage}
@@ -38,12 +38,12 @@ const ViewUserDetailsModal = () => {
                 className="w-full h-full"
               />
             ) : (
-              <User className="w-8 h-8 text-blue-600" />
+              <User className="w-8 h-8 text-primary" />
             )}
           </div>
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">{user.fullName}</h3>
-            <p className="text-sm text-gray-600">{user.email}</p>
+            <h3 className="text-lg font-semibold text-foreground">{user.fullName}</h3>
+            <p className="text-sm text-muted-foreground">{user.email}</p>
             <Badge variant="outline" className="mt-1">
               {user.gender || 'N/A'}
             </Badge>
@@ -61,41 +61,41 @@ const ViewUserDetailsModal = () => {
           <CardContent className="space-y-4">
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-gray-400" />
+                <Mail className="w-4 h-4 text-muted-foreground" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700">Email</p>
-                  <p className="text-sm text-gray-600">{user.email}</p>
+                  <p className="text-sm font-medium text-foreground">Email</p>
+                  <p className="text-sm text-muted-foreground">{user.email}</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-gray-400" />
+                <Phone className="w-4 h-4 text-muted-foreground" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700">Phone</p>
-                  <p className="text-sm text-gray-600">{user.phoneNumber || 'N/A'}</p>
+                  <p className="text-sm font-medium text-foreground">Phone</p>
+                  <p className="text-sm text-muted-foreground">{user.phoneNumber || 'N/A'}</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-3">
-                <CreditCard className="w-4 h-4 text-gray-400" />
+                <CreditCard className="w-4 h-4 text-muted-foreground" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700">CNIC</p>
-                  <p className="text-sm text-gray-600">{user.cnic || 'N/A'}</p>
+                  <p className="text-sm font-medium text-foreground">CNIC</p>
+                  <p className="text-sm text-muted-foreground">{user.cnic || 'N/A'}</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-3">
-                <Calendar className="w-4 h-4 text-gray-400" />
+                <Calendar className="w-4 h-4 text-muted-foreground" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700">Created At</p>
-                  <p className="text-sm text-gray-600">{formatDate(user.createdAt)}</p>
+                  <p className="text-sm font-medium text-foreground">Created At</p>
+                  <p className="text-sm text-muted-foreground">{formatDate(user.createdAt)}</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-3">
-                <Shield className="w-4 h-4 text-gray-400" />
+                <Shield className="w-4 h-4 text-muted-foreground" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700">Role</p>
+                  <p className="text-sm font-medium text-foreground">Role</p>
                   <Badge variant="outline" className="mt-1">
                     {user.role?.value || 'No role assigned'}
                   </Badge>
@@ -103,10 +103,10 @@ const ViewUserDetailsModal = () => {
               </div>
 
               <div className="flex items-center space-x-3">
-                <Building className="w-4 h-4 text-gray-400" />
+                <Building className="w-4 h-4 text-muted-foreground" />
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-gray-700">City</p>
-                  <p className="text-sm text-gray-600">{user.city?.value || 'N/A'}</p>
+                  <p className="text-sm font-medium text-foreground">City</p>
+                  <p className="text-sm text-muted-foreground">{user.city?.value || 'N/A'}</p>
                 </div>
               </div>
             </div>

@@ -82,12 +82,12 @@ export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP, cnic 
                 <DialogHeader className="space-y-6">
                     <DialogTitle className="text-center">Reset Your Password</DialogTitle>
                     
-                    <div className="text-center text-gray-600 text-sm mb-2">
+                    <div className="text-center text-muted-foreground text-sm mb-2">
                         <p>We have sent a 6-digit OTP to your registered email address and mobile number.</p>
                         <p className="mt-1">Please check both your <strong>email</strong> and <strong>SMS</strong> for the verification code.</p>
                     </div>
                     
-                    <div className="text-red-500 sm:text-sm mt-4">
+                    <div className="text-destructive sm:text-sm mt-4">
                         {timer > 0 ? `Time remaining: ${formatTime(timer)}` : "OTP has expired."}
                     </div>
 
@@ -116,7 +116,7 @@ export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP, cnic 
                                 </InputOTPGroup>
                             </InputOTP>
                         </div>
-                        {errors.otp && <p className="text-center text-red-500">{errors.otp.message}</p>}
+                        {errors.otp && <p className="text-center text-destructive">{errors.otp.message}</p>}
 
                         <TextField
                             error={errors?.newPassword?.message}
@@ -148,7 +148,7 @@ export function ResetPasswordOtpModal({ showOtp, setShowOtp, onConfirmOTP, cnic 
                             placeholder="Enter confirm password"
                         />
 
-                        <Button className="w-full bg-gray-800 text-white py-2" loading={isLoading} loadingLabel="Resetting...">
+                        <Button className="w-full bg-foreground text-background py-2" loading={isLoading} loadingLabel="Resetting...">
                             Reset Password
                         </Button>
                     </form>

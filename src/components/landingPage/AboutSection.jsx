@@ -14,21 +14,21 @@ const AboutUsSection = () => {
   return (
     <section
       id="about"
-      className="py-24 bg-gradient-to-br from-white via-green-25/60 to-emerald-50/80 relative overflow-hidden"
+      className="py-24 bg-gradient-to-br from-background via-primary/5 to-primary/10 relative overflow-hidden"
     >
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-green-100/40 to-emerald-200/30 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-emerald-100/40 to-green-200/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-primary/20 to-primary/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-primary/20 to-primary/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div
-          className="absolute top-1/3 left-1/4 w-64 h-64 bg-gradient-to-br from-green-200/20 to-emerald-300/15 rounded-full blur-2xl animate-bounce"
+          className="absolute top-1/3 left-1/4 w-64 h-64 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full blur-2xl animate-bounce"
           style={{ animationDuration: "4s" }}
         ></div>
         <div
-          className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-emerald-200/20 to-green-300/15 rounded-full blur-2xl animate-bounce delay-500"
+          className="absolute bottom-1/3 right-1/4 w-48 h-48 bg-gradient-to-br from-primary/10 to-primary/20 rounded-full blur-2xl animate-bounce delay-500"
           style={{ animationDuration: "5s" }}
         ></div>
         <div
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-green-50/30 via-emerald-50/20 to-green-100/30 rounded-full blur-3xl animate-spin"
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-primary/10 via-primary/5 to-primary/15 rounded-full blur-3xl animate-spin"
           style={{ animationDuration: "30s" }}
         ></div>
       </div>
@@ -36,13 +36,13 @@ const AboutUsSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-20">
           <div className="flex items-center justify-center gap-4 mb-8">
-            <div className="h-1 w-20 bg-gradient-to-r from-transparent via-green-500 to-green-600 rounded-full animate-pulse"></div>
-            <h2 className="bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border-green-200 px-8 py-4 text-lg font-bold shadow-lg animate-fade-in">
+            <div className="h-1 w-20 bg-gradient-to-r from-transparent via-primary to-primary/80 rounded-full animate-pulse"></div>
+            <h2 className="bg-gradient-to-r from-primary/10 to-primary/20 text-primary border-primary/20 px-8 py-4 text-lg font-bold shadow-lg animate-fade-in">
               🏛️ About
             </h2>
-            <div className="h-1 w-20 bg-gradient-to-r from-green-600 via-green-500 to-transparent rounded-full animate-pulse"></div>
+            <div className="h-1 w-20 bg-gradient-to-r from-primary/80 via-primary to-transparent rounded-full animate-pulse"></div>
           </div>
-          <h2 className="text-2xl md:text-5xl font-bold bg-gradient-to-r from-green-600 via-emerald-700 to-green-800 bg-clip-text text-transparent mb-6 animate-fade-in delay-300">
+          <h2 className="text-2xl md:text-5xl font-bold bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent mb-6 animate-fade-in delay-300">
             Enquiries & Anti-Corruption Establishment Sindh
           </h2>
           <div className="max-w-4xl mx-auto">

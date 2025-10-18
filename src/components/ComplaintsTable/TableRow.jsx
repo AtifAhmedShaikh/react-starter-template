@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 
 const STATUS_BG_COLORS = {
-    DISPOSED: "!bg-red-500/30 hover:!text-black",
-    FILE_NOT_RELAVENT: "!bg-red-500/40 hover:!text-black ",
-    REFER_COMPLAINT: "!bg-red-500/40 hover:!text-black ",
+    DISPOSED: "!bg-destructive/30 hover:!text-foreground",
+    FILE_NOT_RELAVENT: "!bg-destructive/40 hover:!text-foreground ",
+    REFER_COMPLAINT: "!bg-destructive/40 hover:!text-foreground ",
 }
 
 const HABITUAL_STATUS_BG_COLORS = {
-    SUSPECTED_HABITUAL_COMPLAINANT: "!bg-yellow-500/10 hover:!text-black ",
-    HABITUAL_COMPLAINANT: "!bg-yellow-500/40 hover:!text-black ",
+    SUSPECTED_HABITUAL_COMPLAINANT: "!bg-yellow-500/10 hover:!text-foreground ",
+    HABITUAL_COMPLAINANT: "!bg-yellow-500/40 hover:!text-foreground ",
 }
 
 export default function ComplaintTableRow({ complaint, searchKeyword = "" }) {
@@ -25,7 +25,7 @@ export default function ComplaintTableRow({ complaint, searchKeyword = "" }) {
     const habitualStatusColor = HABITUAL_STATUS_BG_COLORS[complaint?.user?.complainantTag?.key] || "";
     
     return (
-        <TableRow onClick={() => navigate(`/complaint-details/${complaint?.id}`)} className={cn(`[&_td]:sm:!py-3 sm:text-normal hover:bg-primary/80 hover:!text-white ${isMatchedWithRefNumber ? "bg-primary/30" : ""}`, statusColor, habitualStatusColor)}>
+        <TableRow onClick={() => navigate(`/complaint-details/${complaint?.id}`)} className={cn(`[&_td]:sm:!py-3 sm:text-normal hover:bg-primary/80 hover:!text-primary-foreground ${isMatchedWithRefNumber ? "bg-primary/30" : ""}`, statusColor, habitualStatusColor)}>
             <TableCell>{complaint.refNo}</TableCell>
             <TableCell className={"max-w-xl overflow-hidden"}>{complaint.subject}</TableCell>
             <TableCell>{formatDate(complaint?.createdAt)}</TableCell>
