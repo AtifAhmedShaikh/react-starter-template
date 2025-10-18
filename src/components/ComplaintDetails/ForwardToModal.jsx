@@ -361,7 +361,7 @@ const ForwardToChargesModal = ({ isOpen, onClose, complaint, handleForwardSubmit
 
             <Separator />
 
-            <div className="flex justify-between sticky bottom-0 bg-white py-3">
+            <div className="flex justify-between sticky bottom-0 bg-background py-3">
               <Button type="button" onClick={handlePrevious} disabled={currentStep === 0} variant="outline">
                 <ChevronLeft className="h-4 w-4" /> Previous
               </Button>

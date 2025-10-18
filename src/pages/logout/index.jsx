@@ -27,7 +27,7 @@ const LogoutPage = () => {
     }, []);
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-muted">
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>Logging Out - Anti-Corruption Establishment Sindh</title>
@@ -41,7 +41,7 @@ const LogoutPage = () => {
                 <div className="text-center">
                     <div className="mb-4">
                         <svg
-                            className="animate-spin h-10 w-10 text-blue-500 mx-auto"
+                            className="animate-spin h-10 w-10 text-primary mx-auto"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -61,12 +61,12 @@ const LogoutPage = () => {
                             />
                         </svg>
                     </div>
-                    <p className="text-lg font-semibold text-gray-700">
+                    <p className="text-lg font-semibold text-foreground">
                         Logging out... Please wait
                     </p>
                 </div>
             ) : (
-                <p className="text-lg font-semibold text-gray-700">
+                <p className="text-lg font-semibold text-foreground">
                     Logout complete. Redirecting...
                 </p>
             )}

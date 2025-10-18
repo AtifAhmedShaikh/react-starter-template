@@ -46,20 +46,20 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="bg-gradient-to-br from-green-50 via-emerald-25 to-green-100 py-14 relative overflow-hidden">
+    <section className="bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 py-14 relative overflow-hidden">
       {/* Background blur elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-green-100/30 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-amber-100/30 rounded-full blur-3xl animate-pulse delay-1000" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse delay-1000" />
       </div>
 
       <div className="container mx-auto px-4 text-center relative z-10">
         {/* Badges */}
         <div className="flex flex-wrap justify-center gap-4 mb-6">
-          <Badge className="bg-green-100 text-green-800 border-green-200 px-4 !py-1 rounded-full text-sm font-semibold">
+          <Badge className="bg-primary/10 text-primary border-primary/20 px-4 !py-1 rounded-full text-sm font-semibold">
             Government of Sindh Initiative
           </Badge>
-          <Badge className="bg-amber-100 text-amber-800 border-amber-200 px-4 !py-1 rounded-full text-sm font-semibold">
+          <Badge className="bg-accent/10 text-accent-foreground border-accent/20 px-4 !py-1 rounded-full text-sm font-semibold">
             ⚖️ Enquiries & Anti-Corruption Establishment
           </Badge>
         </div>
@@ -67,19 +67,19 @@ const HeroSection = () => {
         {/* Hero Text Slider */}
         <div className="transition-opacity duration-700 ease-in-out mb-8">
           <h1 className="text-2xl md:text-5xl  font-bold text-foreground mb-10 mt-2">
-            <span className="bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
             Complaint Management System
             </span>
           </h1>
           <h1 className="text-xl md:text-3xl font-bold text-foreground mb-4">
-            <span className="bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               {heroSlides[activeSlide].heading}
             </span>
           </h1>
-          <p className="text-xl font-bold text-green-700">
+          <p className="text-xl font-bold text-primary">
             {heroSlides[activeSlide].taglineEng}
           </p>
-          <p className="text-lg font-semibold text-green-600 font-nastaliq mt-2">
+          <p className="text-lg font-semibold text-primary/80 font-nastaliq mt-2">
             {heroSlides[activeSlide].taglineUrdu}
           </p>
         </div>
@@ -88,7 +88,7 @@ const HeroSection = () => {
         <div className="flex flex-col sm:flex-row gap-6 justify-center mb-12 mt-4">
           <Button
             size="lg"
-            className="bg-gradient-to-r cursor-pointer from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-lg px-10 py-6 shadow-xl hover:shadow-2xl transition-all duration-300"
+            className="bg-gradient-to-r cursor-pointer from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground text-lg px-10 py-6 shadow-xl hover:shadow-2xl transition-all duration-300"
             onClick={() => {
               console.log({ user })
               if (!user) {
@@ -115,7 +115,7 @@ const HeroSection = () => {
           </Button>
           <Button
             size="lg"
-            className="bg-gradient-to-r cursor-pointer from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-lg px-10 py-6 shadow-xl hover:shadow-2xl transition-all duration-300"
+            className="bg-gradient-to-r cursor-pointer from-primary to-primary/90 hover:from-primary/90 hover:to-primary text-primary-foreground text-lg px-10 py-6 shadow-xl hover:shadow-2xl transition-all duration-300"
             onClick={() => {
               console.log({ user })
               if (!user) {
@@ -145,15 +145,15 @@ const HeroSection = () => {
         {/* Bottom Trust Badges */}
         <div className="mt-16 flex flex-wrap justify-center items-center gap-6 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <Lock className="w-4 h-4 text-green-600" />
+            <Lock className="w-4 h-4 text-primary" />
             <span>high Security</span>
           </div>
           <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-green-600" />
+            <Shield className="w-4 h-4 text-primary" />
             <span>Legal Protection</span>
           </div>
           <div className="flex items-center gap-2">
-            <Award className="w-4 h-4 text-green-600" />
+            <Award className="w-4 h-4 text-primary" />
             <span>Govt of Sindh Authorized</span>
           </div>
         </div>

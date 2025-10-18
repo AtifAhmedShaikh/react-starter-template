@@ -96,7 +96,7 @@ export default function SettingsPage() {
       <div className="mx-auto max-w-7xl p-4">
         <Card className="border-0 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-2xl font-semibold text-gray-900">
+            <CardTitle className="text-2xl font-semibold text-foreground">
               Notification Preferences
             </CardTitle>
             <p className="text-sm text-muted-foreground">
@@ -148,11 +148,11 @@ export default function SettingsPage() {
                         <DialogTitle className="text-destructive">Delete Your Account</DialogTitle>
                       </DialogHeader>
                       <div className="space-y-4 py-4">
-                        <p className="text-sm text-gray-700">
+                        <p className="text-sm text-muted-foreground">
                           This will permanently delete your account and all associated data. 
                           You won't be able to recover any information after deletion.
                         </p>
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-foreground">
                           Are you absolutely sure?
                         </p>
                       </div>

@@ -92,15 +92,15 @@ const ChangeProfileImageModal = () => {
   return (
     <ModalWrapper isOpen={isOpen} title={`Change Profile Image - ${admin?.fullName || "Admin"}`}>
       <div className="space-y-4">
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <p className="text-sm text-blue-800">
+        <div className="bg-primary/10 p-4 rounded-lg">
+          <p className="text-sm text-primary">
             <strong>Admin:</strong> {admin?.fullName} ({admin?.email})
           </p>
         </div>
 
         {/* Current Profile Image */}
         <div className="flex items-center space-x-4">
-          <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
+          <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center overflow-hidden">
             {admin?.profileImage ? (
               <ProfileImage
                 src={admin.profileImage}
@@ -149,7 +149,7 @@ const ChangeProfileImageModal = () => {
               <button
                 type="button"
                 onClick={handleRemoveFile}
-                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-1 hover:bg-destructive/90"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -157,8 +157,8 @@ const ChangeProfileImageModal = () => {
           </div>
         )}
 
-        <div className="bg-yellow-50 p-4 rounded-lg">
-          <p className="text-sm text-yellow-800">
+        <div className="bg-yellow-500/10 p-4 rounded-lg">
+          <p className="text-sm text-yellow-700">
             <strong>Note:</strong> The new profile image will be visible to all users and will replace the current image immediately.
           </p>
         </div>

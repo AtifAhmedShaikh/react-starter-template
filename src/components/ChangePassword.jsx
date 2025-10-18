@@ -42,9 +42,9 @@ export default function ChangePasswordForm() {
         <div className="flex justify-center items-center h-full w-full px-4">
             <form
                 onSubmit={handleSubmit(submitHandler)}
-                className="w-full max-w-md bg-white shadow-md rounded-xl p-8 space-y-6 border"
+                className="w-full max-w-md bg-card shadow-md rounded-xl p-8 space-y-6 border"
             >
-                <h2 className="text-2xl font-bold text-center text-gray-800">Change Password</h2>
+                <h2 className="text-2xl font-bold text-center text-foreground">Change Password</h2>
 
                 <TextField
                     label="Current Password"

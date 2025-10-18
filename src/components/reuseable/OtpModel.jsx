@@ -112,7 +112,7 @@ export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp, showWelco
                     <DialogTitle className="text-center">Enter your OTP</DialogTitle>
 
                     <div className="flex justify-between items-center text-sm sm:text-base">
-                        <span className="text-red-500">
+                        <span className="text-destructive">
                             {timer > 0 ? `Time remaining: ${formatTime(timer)}` : "OTP has expired."}
                         </span>
                         <Button
@@ -143,7 +143,7 @@ export function OtpModalWithTimer({ showOtp, setShowOtp, onConfirmOtp, showWelco
                     </div>
 
                     <Button
-                        className="w-full bg-gray-800 px-2 text-white rounded-md py-2 hover:bg-black"
+                        className="w-full bg-foreground px-2 text-background rounded-md py-2 hover:bg-foreground/90"
                         disabled={isLoading || otp.length !== 6 || timer === 0}
                         onClick={() => handleOtp(cnic, otp)}
                         loading={isLoading}

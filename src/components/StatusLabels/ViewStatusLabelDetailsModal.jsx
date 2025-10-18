@@ -23,21 +23,21 @@ const ViewStatusLabelDetailsModal = () => {
         </DialogHeader>
         <div className="space-y-4">
           <div>
-            <h4 className="font-medium text-gray-900">User Label</h4>
-            <p className="text-gray-600">{statusLabel.userLabel}</p>
+            <h4 className="font-medium text-foreground">User Label</h4>
+            <p className="text-muted-foreground">{statusLabel.userLabel}</p>
           </div>
           <div>
-            <h4 className="font-medium text-gray-900">Admin Label</h4>
-            <p className="text-gray-600">{statusLabel.adminLabel}</p>
+            <h4 className="font-medium text-foreground">Admin Label</h4>
+            <p className="text-muted-foreground">{statusLabel.adminLabel}</p>
           </div>
           <div>
-            <h4 className="font-medium text-gray-900">Original Status</h4>
-            <p className="text-gray-600">{statusLabel.originalStatus}</p>
+            <h4 className="font-medium text-foreground">Original Status</h4>
+            <p className="text-muted-foreground">{statusLabel.originalStatus}</p>
           </div>
           {statusLabel.description && (
             <div>
-              <h4 className="font-medium text-gray-900">Description</h4>
-              <p className="text-gray-600 whitespace-pre-wrap">{statusLabel.description}</p>
+              <h4 className="font-medium text-foreground">Description</h4>
+              <p className="text-muted-foreground whitespace-pre-wrap">{statusLabel.description}</p>
             </div>
           )}
         </div>

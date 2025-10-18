@@ -56,8 +56,8 @@ const ChangePasswordModal = () => {
   return (
     <ModalWrapper isOpen={isOpen} title={`Change Password - ${admin?.fullName || "Admin"}`}>
       <form onSubmit={handleSubmit(handleChangePassword)} className="space-y-4">
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <p className="text-sm text-blue-800">
+        <div className="bg-primary/10 p-4 rounded-lg">
+          <p className="text-sm text-primary">
             <strong>Note:</strong> You are changing the password for <strong>{admin?.fullName}</strong> ({admin?.email}).
           </p>
         </div>
@@ -80,8 +80,8 @@ const ChangePasswordModal = () => {
           required
         />
 
-        <div className="bg-yellow-50 p-4 rounded-lg">
-          <p className="text-sm text-yellow-800">
+        <div className="bg-yellow-500/10 p-4 rounded-lg">
+          <p className="text-sm text-yellow-700">
             <strong>Password Requirements:</strong>
             <ul className="list-disc list-inside mt-2 space-y-1">
               <li>At least 8 characters long</li>

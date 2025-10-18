@@ -206,9 +206,9 @@ const EditProfilePage = () => {
             <FormProvider {...methods}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
-                    className="grid sm:grid-cols-2 gap-2 border profile-form rounded-md w-full bg-white shadow-md p-4 max-md:shadow-none max-md:border-none max-sm:p-2"
+                    className="grid sm:grid-cols-2 gap-2 border profile-form rounded-md w-full bg-card shadow-md p-4 max-md:shadow-none max-md:border-none max-sm:p-2"
                 >
-                    <div className="col-span-2 p-3 bg-green-50 border border-green-200 rounded-md sm:text-sm text-xs text-green-800 flex items-start gap-2">
+                    <div className="col-span-2 p-3 bg-primary/10 border border-primary/20 rounded-md sm:text-sm text-xs text-primary flex items-start gap-2">
                         <Info className="sm:block hidden" />
                         <p>
                             You can freely update your profile information.

@@ -51,20 +51,20 @@ const TextAreaWithSpeech = forwardRef(
       switch (variant) {
         case "filled":
           return cn(
-            "border-b-2 border-gray-300 bg-gray-100 rounded-t-lg",
-            !disabled && !error && "hover:bg-gray-200",
-            !disabled && !error && isFocused && "border-primary bg-primary-50"
+            "border-b-2 border-border bg-muted rounded-t-lg",
+            !disabled && !error && "hover:bg-muted/80",
+            !disabled && !error && isFocused && "border-primary bg-primary/10"
           );
         case "underlined":
           return cn(
-            "border-b-2 border-gray-300 rounded-none bg-transparent px-0",
-            !disabled && !error && "hover:border-gray-500",
+            "border-b-2 border-border rounded-none bg-transparent px-0",
+            !disabled && !error && "hover:border-primary/50",
             !disabled && !error && isFocused && "border-primary"
           );
         case "outlined":
         default:
           return cn(
-            "border-2 border-gray-300 bg-white rounded-lg",
+            "border-2 border-border bg-background rounded-lg",
             !disabled &&
             !error &&
             "hover:border-primary-400 hover:shadow-input-hover",
@@ -188,10 +188,10 @@ const TextAreaWithSpeech = forwardRef(
             className={cn(
               "w-full transition-all duration-200 outline-none px-2 py-2 min-h-[100px] resize-y sm:text-sm text-xs font-nastaliq",
               getVariantClasses(),
-              "placeholder:text-gray-400 border-primary/60 hover:border-primary/80 hover:bg-primary/10 hover:shadow-input-hover focus:border-primary focus:ring-2 focus:ring-primary/20",
+              "placeholder:text-muted-foreground border-primary/60 hover:border-primary/80 hover:bg-primary/10 hover:shadow-input-hover focus:border-primary focus:ring-2 focus:ring-primary/20",
               isValid && !error && "border-green-500 bg-green-50/50",
-              error && "border-red-500 bg-red-50/50",
-              disabled && "cursor-not-allowed border-gray-200 bg-gray-100/80 text-gray-500",
+              error && "border-destructive bg-destructive/10",
+              disabled && "cursor-not-allowed border-border bg-muted text-muted-foreground",
               className
             )}
             disabled={disabled}
@@ -253,7 +253,7 @@ const TextAreaWithSpeech = forwardRef(
                     className={cn(
                       "flex items-center gap-2 px-4 py-2 rounded-full text-white text-xs sm:text-sm font-medium transition-all duration-200 shadow-md",
                       isListening
-                        ? "bg-red-500 animate-pulse hover:bg-red-600"
+                        ? "bg-destructive animate-pulse hover:bg-destructive/90"
                         : "bg-primary hover:bg-primary/80"
                     )}
                   >

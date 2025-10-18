@@ -38,20 +38,20 @@ export const TextField = forwardRef(
       switch (variant) {
         case "filled":
           return cn(
-            "border-2 !border-primary !bg-gray-200 rounded-sm",
-            !disabled && !error && "hover:bg-gray-200",
-            !disabled && !error && isFocused && "border-primary bg-primary-50"
+            "border-2 !border-primary !bg-muted rounded-sm",
+            !disabled && !error && "hover:bg-muted",
+            !disabled && !error && isFocused && "border-primary bg-primary/10"
           );
         case "underlined":
           return cn(
-            "border-b-2 border-gray-300 rounded-none bg-transparent px-0",
-            !disabled && !error && "hover:border-gray-500",
+            "border-b-2 border-border rounded-none bg-transparent px-0",
+            !disabled && !error && "hover:border-primary/50",
             !disabled && !error && isFocused && "border-primary"
           );
         case "outlined":
         default:
           return cn(
-            "border-2 border-primary/60 bg-white rounded-sm",
+            "border-2 border-primary/60 bg-background rounded-sm",
             !disabled &&
             !error &&
             "hover:border-primary/80 hover:bg-primary/10 hover:shadow-input-hover",
@@ -69,14 +69,14 @@ export const TextField = forwardRef(
           htmlFor={inputId}
           className={cn(
             "block font-medium transition-colors duration-200 sm:text-sm text-xs",
-            disabled ? "text-gray-400" : "text-gray-700",
+            disabled ? "text-muted-foreground" : "text-foreground",
             isFocused && !disabled && "text-primary"
           )}
         >
           {label} {optional && <span className="ml-1 text-xs">(optional)</span>}
-          {required && <span className="ml-1 text-red-500">*</span>}
+          {required && <span className="ml-1 text-destructive">*</span>}
         </label>
-        {labelDescription && <p className="text-xs text-gray-500 mb-1">
+        {labelDescription && <p className="text-xs text-muted-foreground mb-1">
           {labelDescription}
         </p>}
 
@@ -93,7 +93,7 @@ export const TextField = forwardRef(
             <div
               className={cn(
                 "absolute inset-y-0 left-3 flex items-center pointer-events-none",
-                "text-gray-500 transition-colors duration-200",
+                "text-muted-foreground transition-colors duration-200",
                 isFocused && !disabled && "text-primary"
               )}
             >
@@ -114,18 +114,18 @@ export const TextField = forwardRef(
                 : isValid || error
                   ? "pr-10"
                   : "pr-3",
-              "placeholder:text-gray-400",
+              "placeholder:text-muted-foreground",
               isValid && !error && "border-green-500 bg-green-50/50",
               isValid &&
               !error &&
               isFocused &&
               "border-green-500 shadow-[0_0_0_2px_rgba(34,197,94,0.25)]",
-              error && "border-red-500 bg-red-50/50",
+              error && "border-destructive bg-destructive/10",
               error &&
               isFocused &&
-              "border-red-500 shadow-[0_0_0_2px_rgba(239,68,68,0.25)]",
+              "border-destructive shadow-[0_0_0_2px_rgba(239,68,68,0.25)]",
               disabled &&
-              "cursor-not-allowed border-gray-200 bg-gray-100/80 text-gray-500",
+              "cursor-not-allowed border-border bg-muted text-muted-foreground",
               isFocused &&
               !disabled &&
               !error &&
@@ -169,7 +169,7 @@ export const TextField = forwardRef(
             {error && (
               <AlertCircle
                 className={cn(
-                  "text-red-500 transition-all duration-300",
+                  "text-destructive transition-all duration-300",
                   isFocused ? "h-5 w-5" : "h-4 w-4"
                 )}
                 aria-hidden="true"
@@ -184,9 +184,9 @@ export const TextField = forwardRef(
               onClick={() => setIsShowPassword(!isShowPassword)}
               className={cn(
                 "absolute inset-y-0 right-10 flex items-center px-2",
-                "text-gray-400 hover:text-primary",
+                "text-muted-foreground hover:text-primary",
                 "transition-colors focus:outline-none",
-                disabled && "pointer-events-none text-gray-300"
+                disabled && "pointer-events-none text-muted-foreground"
               )}
               disabled={disabled}
               aria-label={isShowPassword ? "Hide password" : "Show password"}
@@ -233,16 +233,16 @@ export const TextField = forwardRef(
         <div className={cn("min-h-5 flex items-start gap-1")}>
           {error && (
             <>
-              <AlertCircle className="h-3.5 w-3.5 text-red-500 mt-0.5 flex-shrink-0" />
-              <span className="text-red-500 animate-fadeIn text-xs sm:text-sm">
+              <AlertCircle className="h-3.5 w-3.5 text-destructive mt-0.5 flex-shrink-0" />
+              <span className="text-destructive animate-fadeIn text-xs sm:text-sm">
                 {error}
               </span>
             </>
           )}
           {!error && helperText && (
             <>
-              <Info className="h-3.5 w-3.5 text-gray-400 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-500">{helperText}</span>
+              <Info className="h-3.5 w-3.5 text-muted-foreground mt-0.5 flex-shrink-0" />
+              <span className="text-muted-foreground">{helperText}</span>
             </>
           )}
           {icon && <span>{icon}</span>}

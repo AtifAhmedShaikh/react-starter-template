@@ -8,19 +8,22 @@ import { Toaster } from "sonner";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ErrorBoundaryFallback } from "./components/Error/ErrorBoundaryFallback";
 import { ErrorBoundary } from "react-error-boundary";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Toaster position="top-right" icons={true} richColors />
-    <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
-          <AppRouter />
-        </ErrorBoundary>
-      </QueryClientProvider>
-    </Provider>
+    <ThemeProvider>
+      <Toaster position="top-right" icons={true} richColors />
+      <Provider store={store}>
+        <QueryClientProvider client={queryClient}>
+          <ErrorBoundary FallbackComponent={ErrorBoundaryFallback}>
+            <AppRouter />
+          </ErrorBoundary>
+        </QueryClientProvider>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );
