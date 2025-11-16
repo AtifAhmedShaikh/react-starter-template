@@ -57,10 +57,10 @@ const HeroSection = () => {
         {/* Badges */}
         <div className="flex flex-wrap justify-center gap-4 mb-6">
           <Badge className="bg-primary/10 text-primary border-primary/20 px-4 !py-1 rounded-full text-sm font-semibold">
-            Government of Sindh Initiative
+            Atif Ahmed Shaikh | Hash Devs Team
           </Badge>
           <Badge className="bg-accent/10 text-accent-foreground border-accent/20 px-4 !py-1 rounded-full text-sm font-semibold">
-            ⚖️ Enquiries & Anti-Corruption Establishment
+            ⚖️ Developers Team
           </Badge>
         </div>
 
@@ -68,7 +68,7 @@ const HeroSection = () => {
         <div className="transition-opacity duration-700 ease-in-out mb-8">
           <h1 className="text-2xl md:text-5xl  font-bold text-foreground mb-10 mt-2">
             <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-            Complaint Management System
+            Starter Template By Hash Devs Team
             </span>
           </h1>
           <h1 className="text-xl md:text-3xl font-bold text-foreground mb-4">
