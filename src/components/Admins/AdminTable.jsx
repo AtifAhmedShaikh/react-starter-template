@@ -188,9 +188,9 @@ const AdminTable = () => {
                   <TableCell className="text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
+                        <Button variant="ghost" className="h-8 w-8 p-0 group">
                           <span className="sr-only">Open menu</span>
-                          <Settings className="h-4 w-4" />
+                          <Settings className="h-4 w-4 group-hover:text-primary-foreground" />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
@@ -205,7 +205,7 @@ const AdminTable = () => {
                             )
                           }
                         >
-                          <Eye className="mr-2 h-4 w-4" />
+                          <Eye className="mr-2 h-4 w-4 text-foreground-hover" />
                           View Details
                         </DropdownMenuItem>
 
@@ -220,7 +220,7 @@ const AdminTable = () => {
                               )
                             }
                           >
-                            <Edit className="mr-2 h-4 w-4" />
+                            <Edit className="mr-2 h-4 w-4 text-foreground-hover" />
                             Edit Admin
                           </DropdownMenuItem>
                         )}
@@ -236,7 +236,7 @@ const AdminTable = () => {
                               )
                             }
                           >
-                            <Key className="mr-2 h-4 w-4" />
+                            <Key className="mr-2 h-4 w-4 text-foreground-hover" />
                             Change Password
                           </DropdownMenuItem>
                         )}
@@ -252,7 +252,7 @@ const AdminTable = () => {
                               )
                             }
                           >
-                            <User className="mr-2 h-4 w-4" />
+                            <User className="mr-2 h-4 w-4 text-foreground-hover" />
                             Change Role
                           </DropdownMenuItem>
                         )}
@@ -268,7 +268,7 @@ const AdminTable = () => {
                               )
                             }
                           >
-                            <User className="mr-2 h-4 w-4" />
+                            <User className="mr-2 h-4 w-4 text-foreground-hover" />
                             Change Profile Image
                           </DropdownMenuItem>
                         )}
@@ -279,7 +279,7 @@ const AdminTable = () => {
                           <AlertDialog>
                             <AlertDialogTrigger asChild>
                               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                                <Trash className="mr-2 h-4 w-4" />
+                                <Trash className="mr-2 h-4 w-4 text-foreground-hover"  />
                                 Delete Admin
                               </DropdownMenuItem>
                             </AlertDialogTrigger>
